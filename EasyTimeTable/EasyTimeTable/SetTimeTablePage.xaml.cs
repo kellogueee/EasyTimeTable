@@ -13,25 +13,50 @@ using Xamarin.Forms.Xaml;
 
 namespace EasyTimeTable
 {
+
+    //리펙토링 시작.
+    //1. 변수 이름 정리해서 다시 싹다 바꾸기.
+    //2. 중복되는 메서드들 정리해서 새로운 함수로 만들기.
+    //3. 데이터 통합 후 데이터베이스 인터페이스 만들기.
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SetTimeTablePage : ContentPage
     {
+
+        private readonly ISetTimeTablePageViewModel _setTimeTable;
+
+
 
         public SetTimeTablePage(string[] idx)
         {
             InitializeComponent();
 
-            //List<string> firstRow = new List<string>();
-            //for(var i = 0; i < 6; i++)
-            //{
-            //    firstRow.Add(string.Format("{0:00}", i));
-            //}
+            //현재 이 페이지에 선택을 해야하는 오브젝트 총 8개.
+            //1. 색깔
+            //2. 요일
+            //3. 시작 오전오후
+            //4. 시작 시
+            //5. 시작 분
+            //6. 종료 오전오후
+            //7. 종료 시
+            //8. 종료 분
+            //선택의 의미가 있는 오브젝트는 모두 접두어 Select를 붙여서 통일
+            //접미어는 해당 오브젝트 구현 오브젝트.
 
-            //List<string> secondRow= new List<string>();
-            //for (var i = 0; i < 6; i++)
-            //{
-            //    secondRow.Add(string.Format("{0:00}", i+6));
-            //}
+            //SelectColorCollectionView
+            //SelectDateCollectionView
+
+            //SelectStartAMPMCollectionView
+            //SelectStartHourCollectionView
+            //SelectStartMinuteSlider
+
+            //SelectEndAMPMCollectionView
+            //SelectEndHourCollectionView
+            //SelectEndMinuteSlider
+
+
+            //각 오브젝트별로 공통적으로 사용되는 메서드가 있으므로 인터페이스를 상속받도록 하자.
+            //최종적으로 데이터를 모두 조합해야하므로 합쳐놓은 인터페이스와 클래스를 만들도록 하자.
 
             ColorCollectionView.BindingContext = new SelectedColorViewModel();
             DateSelectCollectionView.BindingContext = new SelectDatesViewModel();
@@ -42,66 +67,9 @@ namespace EasyTimeTable
             StartAMPM.BindingContext = new AMPMViewModel();
             EndAMPM.BindingContext = new AMPMViewModel();
 
-            //for (var i = 0; i < 2; i++)
-            //{
-            //    for(var j = 0; j < 6; j++)
-            //    {
-            //        var box = new BoxView()
-            //        {
-            //            BackgroundColor = Color.White,
-            //            Margin = new Thickness(0.1),
-            //        };
-            //        var text = new Label()
-            //        {
-            //            VerticalOptions = LayoutOptions.CenterAndExpand,
-            //            HorizontalOptions = LayoutOptions.CenterAndExpand
-            //        };
-            //        if (i == 0)
-            //        {
-            //            int times = 0 + j;
-            //            text.Text = string.Format("{0:00}", times);
-            //        }
-            //        else
-            //        {
-            //            int times = 6 + j;
-            //            text.Text = string.Format("{0:00}", times);
-            //        }
 
 
-            //        selectTimeTableStart.Children.Add(box, j, i);
-            //        selectTimeTableStart.Children.Add(text, j, i);
-            //    }
-            //}
 
-            //for (var i = 0; i < 2; i++)
-            //{
-            //    for (var j = 0; j < 6; j++)
-            //    {
-            //        var box = new BoxView()
-            //        {
-            //            BackgroundColor = Color.White,
-            //            Margin = new Thickness(0.1),
-            //        };
-            //        var text = new Label()
-            //        {
-            //            VerticalOptions = LayoutOptions.CenterAndExpand,
-            //            HorizontalOptions = LayoutOptions.CenterAndExpand
-            //        };
-            //        if (i == 0)
-            //        {
-            //            int times = 0 + j;
-            //            text.Text = string.Format("{0:00}", times);
-            //        }
-            //        else
-            //        {
-            //            int times = 6 + j;
-            //            text.Text = string.Format("{0:00}", times);
-            //        }
-
-            //        selectTimeTableEnd.Children.Add(box, j, i);
-            //        selectTimeTableEnd.Children.Add(text, j, i);
-            //    }
-            //}
 
         }
 
@@ -201,23 +169,35 @@ namespace EasyTimeTable
             EndAMPM.ItemsSource = itemsource_EndAMPM;
 
 
-
-            ObservableCollection<Times> itemsource_EndAMPM = new ObservableCollection<AMPM>();
-            foreach (var item in EndAMPM.ItemsSource)
+            ObservableCollection<Times> itemsource_StartTime = new ObservableCollection<Times>();
+            foreach (var item in StartTimeFirstRow.ItemsSource)
             {
-                var temp = (AMPM)item;
+                var temp = (Times)item;
                 if (temp.RectangleBackgroundDefaultColor != Color.White)
                 {
                     temp.RectangleBackgroundDefaultColor = currentColor.BackgroundColor;
                 }
-                itemsource_EndAMPM.Add(temp);
+                itemsource_StartTime.Add(temp);
+
             }
 
-
-            EndAMPM.ItemsSource = itemsource_EndAMPM;
-
+            StartTimeFirstRow.ItemsSource = itemsource_StartTime;
 
 
+
+            ObservableCollection<Times> itemsource_EndTime = new ObservableCollection<Times>();
+            foreach (var item in EndTimeFirstRow.ItemsSource)
+            {
+                var temp = (Times)item;
+                if (temp.RectangleBackgroundDefaultColor != Color.White)
+                {
+                    temp.RectangleBackgroundDefaultColor = currentColor.BackgroundColor;
+                }
+                itemsource_EndTime.Add(temp);
+
+            }
+
+            EndTimeFirstRow.ItemsSource = itemsource_EndTime;
 
         }
 
@@ -308,6 +288,11 @@ namespace EasyTimeTable
             EndTimeFirstRow.ItemsSource = itemsource_Times;
         }
 
-       
+
+        async void OnSaveButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopModalAsync();
+        }
+
     }
 }

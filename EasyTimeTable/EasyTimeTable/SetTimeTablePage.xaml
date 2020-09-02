@@ -398,7 +398,9 @@
                 </StackLayout>
 
                 <StackLayout Margin="0,30,0,0">
-                    <Button Text="저장하기" BackgroundColor="{Binding Source={x:Reference currentColor},Path=BackgroundColor}"/>
+                    <Button Text="저장하기"
+                            BackgroundColor="{Binding Source={x:Reference currentColor},Path=BackgroundColor}"
+                            Clicked="OnSaveButtonClicked"/>
                 </StackLayout>
             </StackLayout>
 

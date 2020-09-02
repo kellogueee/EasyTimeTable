@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EasyTimeTable.ViewModels
 {
-    public interface ISetTimeTablePageVewModel
+    public interface ISetTimeTablePageViewModel
     {
         void CreateDataCollection();
     }

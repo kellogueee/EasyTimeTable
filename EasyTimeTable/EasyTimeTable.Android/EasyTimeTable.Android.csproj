@@ -16,7 +16,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -90,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EasyTimeTable\EasyTimeTable.csproj">
-      <Project>{99FA889B-C869-4FD5-9F79-0E0B70EF6C3A}</Project>
+      <Project>{81ECE92C-2075-4F77-9552-0A8619A6B12E}</Project>
       <Name>EasyTimeTable</Name>
     </ProjectReference>
   </ItemGroup>

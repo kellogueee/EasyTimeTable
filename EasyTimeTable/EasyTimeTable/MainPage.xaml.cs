@@ -97,33 +97,37 @@ namespace EasyTimeTable
                 Text = "설정",
                 HorizontalOptions = LayoutOptions.StartAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
-                TextColor = Color.White
+                TextColor = Color.Black
             };
             Label titleText = new Label()
             {
                 Text = "시간표",
                 HorizontalOptions=LayoutOptions.CenterAndExpand,
                 VerticalOptions= LayoutOptions.CenterAndExpand,
-                TextColor =Color.White
+                TextColor =Color.Black
             };
             Label itemText1 = new Label()
             {
                 Text = "주말",
                 HorizontalOptions = LayoutOptions.EndAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
-                TextColor = Color.White
+                TextColor = Color.Black
             };
             Label itemText2 = new Label()
             {
                 Text = "심야",
                 HorizontalOptions = LayoutOptions.End,
                 VerticalOptions= LayoutOptions.CenterAndExpand,
-                TextColor = Color.White
+                TextColor = Color.Black
             };
-            TitleStack.Children.Add(itemText0);
-            TitleStack.Children.Add(titleText);
-            TitleStack.Children.Add(itemText1);
-            TitleStack.Children.Add(itemText2);
+            if (TitleStack.Children.Count == 0)
+            {
+                TitleStack.Children.Add(itemText0);
+                TitleStack.Children.Add(titleText);
+                TitleStack.Children.Add(itemText1);
+                TitleStack.Children.Add(itemText2);
+            }
+            
         }
 
 
