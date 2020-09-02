@@ -1,0 +1,27 @@
+<CollectionView x:Name="DateSelectCollectionView"
+                                     ItemsSource="{Binding WeekDates}"
+                                    ItemsLayout="HorizontalList"
+                                    SelectionMode="Single"
+                                    SelectedItem="{Binding SelectedDate}"
+                                    SelectionChangedCommand="{Binding DateSelectionChangedCommand}"
+                                    HeightRequest="50">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="7">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle 
+                                        BackgroundColor="{Binding BackgroundColor}"/>
+                                    <Label 
+                                           Text="{Binding WDates}"
+                                           Padding="10"
+                                           VerticalOptions="CenterAndExpand"
+                                           HorizontalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>

@@ -1,0 +1,3 @@
+<Setter 
+                                        Property="BackgroundColor" 
+                                        Value="{Binding Source={x:Reference tempBoxForBackgroundColor},Path=BackgroundColor}"/>
