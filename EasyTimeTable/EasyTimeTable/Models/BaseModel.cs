@@ -5,9 +5,8 @@ using Xamarin.Forms;
 
 namespace EasyTimeTable.Models
 {
-    public class AMPM
+    public class BaseModel
     {
-        public string AMorPM { get; set; }
         public Color RectangleBackgroundDefaultColor { get; set; } = Color.White;
     }
 }

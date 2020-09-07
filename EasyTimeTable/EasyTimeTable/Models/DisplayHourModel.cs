@@ -5,8 +5,9 @@ using Xamarin.Forms;
 
 namespace EasyTimeTable.Models
 {
-    public class ColorSelect
+    public class DisplayHourModel:BaseModel
     {
-        public Color SelectionColor { get; set; }
+        public string DisplayHour { get; set; }
+
     }
 }

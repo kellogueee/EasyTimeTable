@@ -1,0 +1,575 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EasyTimeTable.TimetablePageDetail">
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem Text="{Binding NightDayLAbel}"
+                     Clicked="OnNightDayChangeClicked"
+                     x:Name="NightDay"/>
+        <ToolbarItem Text="{Binding WeekendLabel}"
+                     Clicked="OnWeekendDayChangeClicked"
+                     x:Name="WeekendDay"/>-->
+        <ToolbarItem Text="야간"
+                     Clicked="OnNightDayChangeClicked"
+                     x:Name="NightDay"/>
+        <ToolbarItem Text="주말"
+                     Clicked="OnWeekendDayChangeClicked"
+                     x:Name="WeekendDay"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <Style TargetType="BoxView">
+            <Setter Property="BackgroundColor" Value="White"/>
+        </Style>
+    </ContentPage.Resources>
+    
+    
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackLayout
+            x:Name="TableHeadStack"
+            Grid.Row="0" 
+            BackgroundColor="Gray" 
+            Spacing="0" 
+            Padding="0,0,0,2">
+            
+            <!--Head Weekday-->
+            <Grid x:Name="Weekday"
+                  ColumnSpacing="1"
+                  RowSpacing="1"
+                  IsVisible="true">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--<BoxView Grid.Column="0"/>
+                <Label   Grid.Column="0" Text="{Binding HourLabel}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                
+                <BoxView Grid.Column="1"/>
+                <Label   Grid.Column="1" Text="{Binding Monday}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                
+                <BoxView Grid.Column="2"/>
+                <Label   Grid.Column="2" Text="{Binding Tuesday}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                
+                <BoxView Grid.Column="3"/>
+                <Label   Grid.Column="3" Text="{Binding Wednesday}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                
+                <BoxView Grid.Column="4"/>
+                <Label   Grid.Column="4" Text="{Binding Thursday}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                
+                <BoxView Grid.Column="5"/>
+                <Label   Grid.Column="5" Text="{Binding Friday}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>-->
+                
+                <BoxView Grid.Column="0"/>
+                <Label   Grid.Column="0" Text="시간" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="1"/>
+                <Label   Grid.Column="1" Text="월" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="2"/>
+                <Label   Grid.Column="2" Text="화" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="3"/>
+                <Label   Grid.Column="3" Text="수" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="4"/>
+                <Label   Grid.Column="4" Text="목" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="5"/>
+                <Label   Grid.Column="5" Text="금" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+            </Grid>
+
+
+            <!--Head Weekend-->
+            <Grid x:Name="Weekend"
+                  ColumnSpacing="1"
+                  RowSpacing="1"
+                  IsVisible="false">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--<BoxView Grid.Column="0"/>
+                <Label   Grid.Column="0" Text="{Binding HourLabel}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="1"/>
+                <Label   Grid.Column="1" Text="{Binding Saturday}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="2"/>
+                <Label   Grid.Column="2" Text="{Binding Sunday}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>-->
+                <BoxView Grid.Column="0"/>
+                <Label   Grid.Column="0" Text="시간" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="1"/>
+                <Label   Grid.Column="1" Text="토" TextColor="CornflowerBlue" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <BoxView Grid.Column="2"/>
+                <Label   Grid.Column="2" Text="일"  TextColor="IndianRed" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                
+            </Grid>
+        </StackLayout>
+        
+        
+        
+        
+        <ScrollView Grid.Row="1">
+            <StackLayout 
+                x:Name="TableBodyStack"
+                BackgroundColor="LightGray">
+
+                <Grid x:Name="DayHourWeekdayTableBody"
+                      ColumnSpacing="1"
+                      RowSpacing="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <BoxView Grid.Row="0" Grid.Column="0"/>
+                    <Label   Grid.Row="0" Grid.Column="0" Text="08" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="0" Grid.Column="1"/>
+                    <BoxView Grid.Row="0" Grid.Column="2"/>
+                    <BoxView Grid.Row="0" Grid.Column="3"/>
+                    <BoxView Grid.Row="0" Grid.Column="4"/>
+                    <BoxView Grid.Row="0" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="1" Grid.Column="0"/>
+                    <Label   Grid.Row="1" Grid.Column="0" Text="09" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="1" Grid.Column="1"/>
+                    <BoxView Grid.Row="1" Grid.Column="2"/>
+                    <BoxView Grid.Row="1" Grid.Column="3"/>
+                    <BoxView Grid.Row="1" Grid.Column="4"/>
+                    <BoxView Grid.Row="1" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="2" Grid.Column="0"/>
+                    <Label   Grid.Row="2" Grid.Column="0" Text="10" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="2" Grid.Column="1"/>
+                    <BoxView Grid.Row="2" Grid.Column="2"/>
+                    <BoxView Grid.Row="2" Grid.Column="3"/>
+                    <BoxView Grid.Row="2" Grid.Column="4"/>
+                    <BoxView Grid.Row="2" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="3" Grid.Column="0"/>
+                    <Label   Grid.Row="3" Grid.Column="0" Text="11" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="3" Grid.Column="1"/>
+                    <BoxView Grid.Row="3" Grid.Column="2"/>
+                    <BoxView Grid.Row="3" Grid.Column="3"/>
+                    <BoxView Grid.Row="3" Grid.Column="4"/>
+                    <BoxView Grid.Row="3" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="4" Grid.Column="0"/>
+                    <Label   Grid.Row="4" Grid.Column="0" Text="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="4" Grid.Column="1"/>
+                    <BoxView Grid.Row="4" Grid.Column="2"/>
+                    <BoxView Grid.Row="4" Grid.Column="3"/>
+                    <BoxView Grid.Row="4" Grid.Column="4"/>
+                    <BoxView Grid.Row="4" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="5" Grid.Column="0"/>
+                    <Label   Grid.Row="5" Grid.Column="0" Text="13" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="5" Grid.Column="1"/>
+                    <BoxView Grid.Row="5" Grid.Column="2"/>
+                    <BoxView Grid.Row="5" Grid.Column="3"/>
+                    <BoxView Grid.Row="5" Grid.Column="4"/>
+                    <BoxView Grid.Row="5" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="6" Grid.Column="0"/>
+                    <Label   Grid.Row="6" Grid.Column="0" Text="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="6" Grid.Column="1"/>
+                    <BoxView Grid.Row="6" Grid.Column="2"/>
+                    <BoxView Grid.Row="6" Grid.Column="3"/>
+                    <BoxView Grid.Row="6" Grid.Column="4"/>
+                    <BoxView Grid.Row="6" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="7" Grid.Column="0"/>
+                    <Label   Grid.Row="7" Grid.Column="0" Text="15" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="7" Grid.Column="1"/>
+                    <BoxView Grid.Row="7" Grid.Column="2"/>
+                    <BoxView Grid.Row="7" Grid.Column="3"/>
+                    <BoxView Grid.Row="7" Grid.Column="4"/>
+                    <BoxView Grid.Row="7" Grid.Column="5"/>
+
+                    
+                    <BoxView Grid.Row="8" Grid.Column="0"/>
+                    <Label   Grid.Row="8" Grid.Column="0" Text="16" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="8" Grid.Column="1"/>
+                    <BoxView Grid.Row="8" Grid.Column="2"/>
+                    <BoxView Grid.Row="8" Grid.Column="3"/>
+                    <BoxView Grid.Row="8" Grid.Column="4"/>
+                    <BoxView Grid.Row="8" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="9" Grid.Column="0"/>
+                    <Label   Grid.Row="9" Grid.Column="0" Text="17" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="9" Grid.Column="1"/>
+                    <BoxView Grid.Row="9" Grid.Column="2"/>
+                    <BoxView Grid.Row="9" Grid.Column="3"/>
+                    <BoxView Grid.Row="9" Grid.Column="4"/>
+                    <BoxView Grid.Row="9" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="10" Grid.Column="0"/>
+                    <Label   Grid.Row="10" Grid.Column="0" Text="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="10" Grid.Column="1"/>
+                    <BoxView Grid.Row="10" Grid.Column="2"/>
+                    <BoxView Grid.Row="10" Grid.Column="3"/>
+                    <BoxView Grid.Row="10" Grid.Column="4"/>
+                    <BoxView Grid.Row="10" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="11" Grid.Column="0"/>
+                    <Label   Grid.Row="11" Grid.Column="0" Text="19" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="11" Grid.Column="1"/>
+                    <BoxView Grid.Row="11" Grid.Column="2"/>
+                    <BoxView Grid.Row="11" Grid.Column="3"/>
+                    <BoxView Grid.Row="11" Grid.Column="4"/>
+                    <BoxView Grid.Row="11" Grid.Column="5"/>
+
+
+                </Grid>
+
+
+
+                <Grid x:Name="NightHourWeekdayTableBody"
+                      IsVisible="false"
+                      ColumnSpacing="1"
+                      RowSpacing="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <BoxView Grid.Row="0" Grid.Column="0"/>
+                    <Label   Grid.Row="0" Grid.Column="0" Text="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="0" Grid.Column="1"/>
+                    <BoxView Grid.Row="0" Grid.Column="2"/>
+                    <BoxView Grid.Row="0" Grid.Column="3"/>
+                    <BoxView Grid.Row="0" Grid.Column="4"/>
+                    <BoxView Grid.Row="0" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="1" Grid.Column="0"/>
+                    <Label   Grid.Row="1" Grid.Column="0" Text="21" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="1" Grid.Column="1"/>
+                    <BoxView Grid.Row="1" Grid.Column="2"/>
+                    <BoxView Grid.Row="1" Grid.Column="3"/>
+                    <BoxView Grid.Row="1" Grid.Column="4"/>
+                    <BoxView Grid.Row="1" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="2" Grid.Column="0"/>
+                    <Label   Grid.Row="2" Grid.Column="0" Text="22" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="2" Grid.Column="1"/>
+                    <BoxView Grid.Row="2" Grid.Column="2"/>
+                    <BoxView Grid.Row="2" Grid.Column="3"/>
+                    <BoxView Grid.Row="2" Grid.Column="4"/>
+                    <BoxView Grid.Row="2" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="3" Grid.Column="0"/>
+                    <Label   Grid.Row="3" Grid.Column="0" Text="23" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="3" Grid.Column="1"/>
+                    <BoxView Grid.Row="3" Grid.Column="2"/>
+                    <BoxView Grid.Row="3" Grid.Column="3"/>
+                    <BoxView Grid.Row="3" Grid.Column="4"/>
+                    <BoxView Grid.Row="3" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="4" Grid.Column="0"/>
+                    <Label   Grid.Row="4" Grid.Column="0" Text="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="4" Grid.Column="1"/>
+                    <BoxView Grid.Row="4" Grid.Column="2"/>
+                    <BoxView Grid.Row="4" Grid.Column="3"/>
+                    <BoxView Grid.Row="4" Grid.Column="4"/>
+                    <BoxView Grid.Row="4" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="5" Grid.Column="0"/>
+                    <Label   Grid.Row="5" Grid.Column="0" Text="01" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="5" Grid.Column="1"/>
+                    <BoxView Grid.Row="5" Grid.Column="2"/>
+                    <BoxView Grid.Row="5" Grid.Column="3"/>
+                    <BoxView Grid.Row="5" Grid.Column="4"/>
+                    <BoxView Grid.Row="5" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="6" Grid.Column="0"/>
+                    <Label   Grid.Row="6" Grid.Column="0" Text="02" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="6" Grid.Column="1"/>
+                    <BoxView Grid.Row="6" Grid.Column="2"/>
+                    <BoxView Grid.Row="6" Grid.Column="3"/>
+                    <BoxView Grid.Row="6" Grid.Column="4"/>
+                    <BoxView Grid.Row="6" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="7" Grid.Column="0"/>
+                    <Label   Grid.Row="7" Grid.Column="0" Text="03" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="7" Grid.Column="1"/>
+                    <BoxView Grid.Row="7" Grid.Column="2"/>
+                    <BoxView Grid.Row="7" Grid.Column="3"/>
+                    <BoxView Grid.Row="7" Grid.Column="4"/>
+                    <BoxView Grid.Row="7" Grid.Column="5"/>
+
+
+                    <BoxView Grid.Row="8" Grid.Column="0"/>
+                    <Label   Grid.Row="8" Grid.Column="0" Text="04" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="8" Grid.Column="1"/>
+                    <BoxView Grid.Row="8" Grid.Column="2"/>
+                    <BoxView Grid.Row="8" Grid.Column="3"/>
+                    <BoxView Grid.Row="8" Grid.Column="4"/>
+                    <BoxView Grid.Row="8" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="9" Grid.Column="0"/>
+                    <Label   Grid.Row="9" Grid.Column="0" Text="05" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="9" Grid.Column="1"/>
+                    <BoxView Grid.Row="9" Grid.Column="2"/>
+                    <BoxView Grid.Row="9" Grid.Column="3"/>
+                    <BoxView Grid.Row="9" Grid.Column="4"/>
+                    <BoxView Grid.Row="9" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="10" Grid.Column="0"/>
+                    <Label   Grid.Row="10" Grid.Column="0" Text="06" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="10" Grid.Column="1"/>
+                    <BoxView Grid.Row="10" Grid.Column="2"/>
+                    <BoxView Grid.Row="10" Grid.Column="3"/>
+                    <BoxView Grid.Row="10" Grid.Column="4"/>
+                    <BoxView Grid.Row="10" Grid.Column="5"/>
+
+                    <BoxView Grid.Row="11" Grid.Column="0"/>
+                    <Label   Grid.Row="11" Grid.Column="0" Text="07" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="11" Grid.Column="1"/>
+                    <BoxView Grid.Row="11" Grid.Column="2"/>
+                    <BoxView Grid.Row="11" Grid.Column="3"/>
+                    <BoxView Grid.Row="11" Grid.Column="4"/>
+                    <BoxView Grid.Row="11" Grid.Column="5"/>
+
+
+                </Grid>
+
+
+
+                <Grid x:Name="DayHourWeekendTableBody"
+                      IsVisible="false"
+                      ColumnSpacing="1"
+                      RowSpacing="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <BoxView Grid.Row="0" Grid.Column="0"/>
+                    <Label   Grid.Row="0" Grid.Column="0" Text="08" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="0" Grid.Column="1"/>
+                    <BoxView Grid.Row="0" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="1" Grid.Column="0"/>
+                    <Label   Grid.Row="1" Grid.Column="0" Text="09" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="1" Grid.Column="1"/>
+                    <BoxView Grid.Row="1" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="2" Grid.Column="0"/>
+                    <Label   Grid.Row="2" Grid.Column="0" Text="10" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="2" Grid.Column="1"/>
+                    <BoxView Grid.Row="2" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="3" Grid.Column="0"/>
+                    <Label   Grid.Row="3" Grid.Column="0" Text="11" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="3" Grid.Column="1"/>
+                    <BoxView Grid.Row="3" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="4" Grid.Column="0"/>
+                    <Label   Grid.Row="4" Grid.Column="0" Text="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="4" Grid.Column="1"/>
+                    <BoxView Grid.Row="4" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="5" Grid.Column="0"/>
+                    <Label   Grid.Row="5" Grid.Column="0" Text="13" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="5" Grid.Column="1"/>
+                    <BoxView Grid.Row="5" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="6" Grid.Column="0"/>
+                    <Label   Grid.Row="6" Grid.Column="0" Text="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="6" Grid.Column="1"/>
+                    <BoxView Grid.Row="6" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="7" Grid.Column="0"/>
+                    <Label   Grid.Row="7" Grid.Column="0" Text="15" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="7" Grid.Column="1"/>
+                    <BoxView Grid.Row="7" Grid.Column="2"/>
+
+
+                    <BoxView Grid.Row="8" Grid.Column="0"/>
+                    <Label   Grid.Row="8" Grid.Column="0" Text="16" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="8" Grid.Column="1"/>
+                    <BoxView Grid.Row="8" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="9" Grid.Column="0"/>
+                    <Label   Grid.Row="9" Grid.Column="0" Text="17" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="9" Grid.Column="1"/>
+                    <BoxView Grid.Row="9" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="10" Grid.Column="0"/>
+                    <Label   Grid.Row="10" Grid.Column="0" Text="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="10" Grid.Column="1"/>
+                    <BoxView Grid.Row="10" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="11" Grid.Column="0"/>
+                    <Label   Grid.Row="11" Grid.Column="0" Text="19" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="11" Grid.Column="1"/>
+                    <BoxView Grid.Row="11" Grid.Column="2"/>
+
+                </Grid>
+
+
+
+                <Grid x:Name="NightHourWeekendTableBody"
+                      IsVisible="false"
+                      ColumnSpacing="1"
+                      RowSpacing="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+
+
+                    <BoxView Grid.Row="0" Grid.Column="0"/>
+                    <Label   Grid.Row="0" Grid.Column="0" Text="20" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="0" Grid.Column="1"/>
+                    <BoxView Grid.Row="0" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="1" Grid.Column="0"/>
+                    <Label   Grid.Row="1" Grid.Column="0" Text="21" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="1" Grid.Column="1"/>
+                    <BoxView Grid.Row="1" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="2" Grid.Column="0"/>
+                    <Label   Grid.Row="2" Grid.Column="0" Text="22" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="2" Grid.Column="1"/>
+                    <BoxView Grid.Row="2" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="3" Grid.Column="0"/>
+                    <Label   Grid.Row="3" Grid.Column="0" Text="23" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="3" Grid.Column="1"/>
+                    <BoxView Grid.Row="3" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="4" Grid.Column="0"/>
+                    <Label   Grid.Row="4" Grid.Column="0" Text="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="4" Grid.Column="1"/>
+                    <BoxView Grid.Row="4" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="5" Grid.Column="0"/>
+                    <Label   Grid.Row="5" Grid.Column="0" Text="01" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="5" Grid.Column="1"/>
+                    <BoxView Grid.Row="5" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="6" Grid.Column="0"/>
+                    <Label   Grid.Row="6" Grid.Column="0" Text="02" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="6" Grid.Column="1"/>
+                    <BoxView Grid.Row="6" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="7" Grid.Column="0"/>
+                    <Label   Grid.Row="7" Grid.Column="0" Text="03" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="7" Grid.Column="1"/>
+                    <BoxView Grid.Row="7" Grid.Column="2"/>
+
+
+                    <BoxView Grid.Row="8" Grid.Column="0"/>
+                    <Label   Grid.Row="8" Grid.Column="0" Text="04" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="8" Grid.Column="1"/>
+                    <BoxView Grid.Row="8" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="9" Grid.Column="0"/>
+                    <Label   Grid.Row="9" Grid.Column="0" Text="05" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="9" Grid.Column="1"/>
+                    <BoxView Grid.Row="9" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="10" Grid.Column="0"/>
+                    <Label   Grid.Row="10" Grid.Column="0" Text="06" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="10" Grid.Column="1"/>
+                    <BoxView Grid.Row="10" Grid.Column="2"/>
+
+                    <BoxView Grid.Row="11" Grid.Column="0"/>
+                    <Label   Grid.Row="11" Grid.Column="0" Text="07" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <BoxView Grid.Row="11" Grid.Column="1"/>
+                    <BoxView Grid.Row="11" Grid.Column="2"/>
+
+                </Grid>
+
+
+
+
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

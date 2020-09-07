@@ -5,9 +5,8 @@ using Xamarin.Forms;
 
 namespace EasyTimeTable.Models
 {
-    public class WeekDate
+    public class WeekdatesModel:BaseModel
     {
         public string DateName { get; set; }
-        public Color RectangleBackgroundDefaultColor { get; set; } = Color.White;
     }
 }

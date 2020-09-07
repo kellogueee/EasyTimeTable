@@ -7,5 +7,9 @@
              x:Class="EasyTimeTable.App">
     <Application.Resources>
         <Color x:Key="MppGreen">#5dc2c4</Color>
+        <Color x:Key="ThemeColor">#2196F3</Color>
+        <Style TargetType="NavigationPage">
+            <Setter Property="NavigationPage.BarBackgroundColor" Value="#2196F3"/>
+        </Style>
     </Application.Resources>
 </Application>
