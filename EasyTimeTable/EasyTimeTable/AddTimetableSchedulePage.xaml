@@ -22,7 +22,7 @@
                             <VisualState.Setters>
                                 <Setter 
                                         Property="BackgroundColor" 
-                                        Value="#f5f5f5"/>
+                                        Value="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"/>
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>

@@ -36,10 +36,15 @@ namespace EasyTimeTable
         private void OnColorSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var color = (ColorModel)(e.CurrentSelection.FirstOrDefault());
+            var colorList = ColorSelectCollectionView.ItemsSource;
+           
             currentSelectedColor.BackgroundColor = color.ColortoSelect;
             try
             {
                 ChangeCurrentSelectedColor(color.ColortoSelect);
+                ColorSelectCollectionView.ItemsSource = null;
+                ColorSelectCollectionView.ItemsSource = colorList;
+                ColorSelectCollectionView.SelectedItem = e.CurrentSelection.FirstOrDefault();
             }
             catch(Exception ex)
             {
@@ -48,6 +53,8 @@ namespace EasyTimeTable
         } 
         private void ChangeCurrentSelectedColor(Color ColortoChange)
         {
+
+
             //DateCollectionChange
             var DateList= DateSelectCollectionView.ItemsSource;
             foreach (var temp in DateList)

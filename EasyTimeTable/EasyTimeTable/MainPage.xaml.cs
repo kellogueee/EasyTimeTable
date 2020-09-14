@@ -53,7 +53,7 @@ namespace EasyTimeTable
 
             var sunSchedules = await App.Database.GetAllScheduleByWeekdate(6);
 
-           
+
 
         }
 
@@ -71,12 +71,12 @@ namespace EasyTimeTable
                         var displaySchedule = new StackLayout
                         {
                             BackgroundColor = Color.FromHex(item.SelectedColor),
-                            StyleId = "MonSchedule1"
+                            StyleId = "MonDaySchedule"
                         };
                         Grid.SetRow(displaySchedule, item.StartHour - 8);
                         Grid.SetColumn(displaySchedule, item.WeekDate + 1);
                         Grid.SetRowSpan(displaySchedule, span);
-                        
+
                         var title = new Label
                         {
                             Text = item.ScheduleTitle,
@@ -87,13 +87,13 @@ namespace EasyTimeTable
                         var box_top = new BoxView
                         {
                             BackgroundColor = Color.White,
-                            HeightRequest=20
+                            HeightRequest = 20 * (int)(item.StartMinute / 6)
                         };
 
                         var box_bottom = new BoxView
                         {
                             BackgroundColor = Color.White,
-                            HeightRequest=20
+                            HeightRequest = 20 * (6 - (int)(item.StartMinute / 6))
                         };
 
                         displaySchedule.Children.Add(box_top);
@@ -108,12 +108,54 @@ namespace EasyTimeTable
                     {
                         //19시까지
                     }
+                }//weekday schedule End
+                if (IsNight(item.StartHour))
+                {
+
+                    var difference = item.EndHour = item.StartHour;
+                    var span = difference < 0 ? difference + 24 : difference;
+                    var displaySchedule = new StackLayout
+                    {
+                        BackgroundColor = Color.FromHex(item.SelectedColor),
+                        StyleId = "MonNightSchedule"
+                    };
+                    Grid.SetRow(displaySchedule, item.StartHour - 8);
+                    Grid.SetColumn(displaySchedule, item.WeekDate + 1);
+                    Grid.SetRowSpan(displaySchedule, span);
+
+                    var title = new Label
+                    {
+                        Text = item.ScheduleTitle,
+                        VerticalOptions = LayoutOptions.CenterAndExpand,
+                        HorizontalOptions = LayoutOptions.CenterAndExpand
+                    };
+
+                    var box_top = new BoxView
+                    {
+                        BackgroundColor = Color.White,
+                        HeightRequest = 20 * (int)(item.StartMinute / 6)
+                    };
+
+                    var box_bottom = new BoxView
+                    {
+                        BackgroundColor = Color.White,
+                        HeightRequest = 20 * (6 - (int)(item.StartMinute / 6))
+                    };
+
+                    displaySchedule.Children.Add(box_top);
+                    displaySchedule.Children.Add(title);
+                    displaySchedule.Children.Add(box_bottom);
+
+                    NightHourWeekdayTableBody.Children.Add(displaySchedule);
+
+
+
                 }
 
 
 
             }
-            
+
         }
 
         private void SetTuesdaySchedule(List<ScheduleTimetable> Monschedules)
@@ -144,7 +186,7 @@ namespace EasyTimeTable
 
         private bool IsNight(int hour)
         {
-            if(hour < 20&& hour > 07)
+            if (hour < 20 && hour > 07)
             {
                 return false;
             }
