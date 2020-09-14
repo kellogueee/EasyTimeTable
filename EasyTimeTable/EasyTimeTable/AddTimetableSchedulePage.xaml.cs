@@ -118,6 +118,8 @@ namespace EasyTimeTable
 
         private void OnStartHourSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            //try  catch 문으로 작성해야합니데이.
             var CollectionList = StartHourSelctCollectionView.ItemsSource;
             var selectedItem = (DisplayHourModel)(e.CurrentSelection.FirstOrDefault());
 
@@ -234,7 +236,8 @@ namespace EasyTimeTable
                 return;
             }
 
-            await Navigation.PopToRootAsync();
+            await Navigation.PopModalAsync();
+           
 
         }
 
