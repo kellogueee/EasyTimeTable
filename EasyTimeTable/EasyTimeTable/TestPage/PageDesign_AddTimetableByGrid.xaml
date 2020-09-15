@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EasyTimeTable.TestPage.PageDesign_AddTimetableByGrid">
+    <ContentPage.Resources>
+        <x:Double x:Key="PageFontsize">14</x:Double>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource PageFontsize}"/>
+        </Style>
+        <Style TargetType="Entry">
+            <Setter Property="FontSize" Value="{StaticResource PageFontsize}"/>
+        </Style>
+        <x:Double x:Key="ColorSquareBoxSide">40</x:Double>
+        <Style TargetType="BoxView" x:Key="DateBoxOuter">
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+        <Style TargetType="BoxView" x:Key="DateBoxInner">
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <Style TargetType="Label" x:Key="DateName">
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="BoxView" x:Key="HourBox">
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView Padding="15">
+            <StackLayout>
+                
+                <!--색깔 선택박스-->
+                <StackLayout>
+                    <Label Text="색깔"/>
+                    <StackLayout Orientation="Horizontal">
+                        <ScrollView>
+                            <Grid ColumnSpacing="10"
+                              x:Name="ColorBoxGridList">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="{StaticResource ColorSquareBoxSide}"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                </Grid.ColumnDefinitions>
+                                <BoxView Grid.Column="0" BackgroundColor="#ff837f"/>
+                                <BoxView Grid.Column="1" BackgroundColor="#89a5ea"/>
+                                <BoxView Grid.Column="2" BackgroundColor="#a5ea89"/>
+                                <BoxView Grid.Column="3" BackgroundColor="#ffcb6b"/>
+                                <BoxView Grid.Column="4" BackgroundColor="#e96ec2"/>
+                                <BoxView Grid.Column="5" BackgroundColor="#5dc2c4"/>
+                                <BoxView Grid.Column="6" BackgroundColor="#cbde8c"/>
+                            </Grid>
+                        </ScrollView>
+                    </StackLayout>
+                </StackLayout>
+                
+
+                <!--제목-->
+                <StackLayout Margin="0,20,0,0">
+                    <Label Text="제목"/>
+                    <Entry Placeholder="제목을 입력하세요"
+                           x:Name="ScheduleTitle"/>
+                </StackLayout>
+                
+                <!--요일-->
+                <StackLayout Margin="0,20,0,0">
+                    <Label Text="요일"/>
+                    <StackLayout Orientation="Horizontal">
+                        <ScrollView>
+                            <Grid ColumnSpacing="10"
+                              x:Name="DateBoxGridList">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="{StaticResource ColorSquareBoxSide}"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                </Grid.ColumnDefinitions>
+                                <BoxView Style="{StaticResource DateBoxOuter}" Grid.Column="0" BackgroundColor="#ff837f"/>
+                                <BoxView Style="{StaticResource DateBoxInner}" Grid.Column="0" BackgroundColor="White"/>
+                                <Label Style="{StaticResource DateName}" Text="월" Grid.Column="0"/>
+
+
+                                <BoxView Style="{StaticResource DateBoxOuter}" Grid.Column="1" BackgroundColor="#89a5ea"/>
+                                <BoxView Style="{StaticResource DateBoxInner}" Grid.Column="1" BackgroundColor="White"/>
+                                <Label Style="{StaticResource DateName}" Text="화" Grid.Column="1"/>
+
+                                <BoxView Style="{StaticResource DateBoxOuter}" Grid.Column="2" BackgroundColor="#a5ea89"/>
+                                <BoxView Style="{StaticResource DateBoxInner}" Grid.Column="2" BackgroundColor="White"/>
+                                <Label Style="{StaticResource DateName}" Text="수" Grid.Column="2"/>
+
+                                <BoxView Style="{StaticResource DateBoxOuter}" Grid.Column="3" BackgroundColor="#ffcb6b"/>
+                                <BoxView Style="{StaticResource DateBoxInner}" Grid.Column="3" BackgroundColor="White"/>
+                                <Label Style="{StaticResource DateName}" Text="목" Grid.Column="3"/>
+
+                                <BoxView Style="{StaticResource DateBoxOuter}" Grid.Column="4" BackgroundColor="#e96ec2"/>
+                                <BoxView Style="{StaticResource DateBoxInner}" Grid.Column="4" BackgroundColor="White"/>
+                                <Label Style="{StaticResource DateName}" Text="금" Grid.Column="4"/>
+
+                                <BoxView Style="{StaticResource DateBoxOuter}" Grid.Column="5" BackgroundColor="#5dc2c4"/>
+                                <BoxView Style="{StaticResource DateBoxInner}" Grid.Column="5" BackgroundColor="White"/>
+                                <Label Style="{StaticResource DateName}" Text="토" Grid.Column="5"/>
+
+                                <BoxView Style="{StaticResource DateBoxOuter}" Grid.Column="6" BackgroundColor="#cbde8c"/>
+                                <BoxView Style="{StaticResource DateBoxInner}" Grid.Column="6" BackgroundColor="White"/>
+                                <Label Style="{StaticResource DateName}" Text="일" Grid.Column="6"/>
+                                
+                            </Grid>
+                        </ScrollView>
+                    </StackLayout>
+                </StackLayout>
+                
+                <!--시작시간-->
+                <StackLayout Margin="0,20,0,0">
+                    <Label Text="시작시간"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label VerticalOptions="CenterAndExpand" Text="오전">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                    <Setter Property="IsVisible"
+                                            Value="true"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Label VerticalOptions="CenterAndExpand" Text="오후" IsVisible="false">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                    <Setter Property="IsVisible"
+                                            Value="true"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Switch x:Name="DayNightSwitch"
+                            OnColor="#2196F3"
+                            HorizontalOptions="Start"/>
+                    </StackLayout>
+                    <Grid RowSpacing="0"
+                          ColumnSpacing="0"
+                          BackgroundColor="Gray">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="0" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="1" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="2" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="3" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="4" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="5" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="6" />
+
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="0" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="1" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="2" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="3" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="4" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="5" />
+                        <BoxView Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="6" />
+                        
+                    </Grid>
+                </StackLayout>
+                
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

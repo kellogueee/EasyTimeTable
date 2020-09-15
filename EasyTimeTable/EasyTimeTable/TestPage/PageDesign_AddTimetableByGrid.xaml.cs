@@ -1,5 +1,4 @@
-﻿using EasyTimeTable.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace EasyTimeTable.TestPage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ColorChagneTest : ContentPage
+    public partial class PageDesign_AddTimetableByGrid : ContentPage
     {
-        public ColorChagneTest()
+        public PageDesign_AddTimetableByGrid()
         {
             InitializeComponent();
-            ColorSelectCollectionView.BindingContext = new ColorSelectViewModel();
         }
     }
 }
