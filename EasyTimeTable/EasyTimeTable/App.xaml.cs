@@ -35,7 +35,7 @@ namespace EasyTimeTable
             InitializeComponent();
 
             //MainPage = new NavigationPage(new MainPage());
-            MainPage = new ColorChangeTest();
+            //MainPage = new ColorChangeTest();
         }
 
         protected override void OnStart()
