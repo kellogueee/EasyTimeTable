@@ -7,12 +7,11 @@ using EasyTimeTable.Constants;
 
 namespace EasyTimeTable.DataAccessLayer
 {
-    public class Database
+    public class SQLiteDatabase:IDatabase<ScheduleTimetable>
     {
         readonly SQLiteAsyncConnection _database;
 
-
-        public Database(string dbPath)
+        public SQLiteDatabase(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<ScheduleTimetable>().Wait();

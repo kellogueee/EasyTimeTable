@@ -10,7 +10,12 @@ namespace EasyTimeTable.ViewModels
 
         public ScheduleTitleViewModel()
         {
-            ScheduleTitle = "Testing";
+           
+        }
+
+        public ScheduleTitleViewModel(string title)
+        {
+            ScheduleTitle = title;
         }
     }
 }

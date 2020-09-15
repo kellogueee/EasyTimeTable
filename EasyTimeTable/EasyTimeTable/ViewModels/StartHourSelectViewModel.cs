@@ -36,9 +36,13 @@ namespace EasyTimeTable.ViewModels
         {
             source = new List<DisplayHourModel>();
             CreateSetofStartTime();
-            Random rnd = new Random();
-            preSelectedStartHour = SetofStartHour.Skip(rnd.Next(0, 6)).FirstOrDefault();
-            
+        }
+
+        public StartHourSelectViewModel(int hour)
+        {
+            source = new List<DisplayHourModel>();
+            CreateSetofStartTime();
+            preSelectedStartHour = SetofStartHour[hour];
         }
 
 

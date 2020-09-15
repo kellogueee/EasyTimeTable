@@ -4,6 +4,7 @@ using EasyTimeTable.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,42 +19,110 @@ namespace EasyTimeTable
     public partial class AddTimetableSchedulePage : ContentPage
     {
 
-        static int startHourScrollFirstItem=0;
-        static int endHourScrollFirstItem=0;
+
+        private readonly IDatabase<ScheduleTimetable> _database;
+
+        static int startHourScrollCenter = 0;
+        static int endHourScrollCenter = 0;
+
+        private readonly ColorSelectViewModel _colorvm;
+        private readonly DateSelectViewModel _datevm;
+        private readonly ScheduleTitleViewModel _titlevm;
+        private readonly StartHourSelectViewModel _startHvm;
+        private readonly StartMinuteViewModel _startMvm;
+        private readonly EndHourSelectViewModel _endHvm;
+        private readonly EndMinuteViewModel _endMvm;
 
         public AddTimetableSchedulePage()
         {
             InitializeComponent();
-            ColorSelectCollectionView.BindingContext = new ColorSelectViewModel();
-            DateSelectCollectionView.BindingContext = new DateSelectViewModel();
-            ScheduleTitle.BindingContext = new ScheduleTitleViewModel();
-            StartHourSelctCollectionView.BindingContext = new StartHourSelectViewModel();
-            StartMinuteSilder.BindingContext = new StartMinuteViewModel();
-            EndHourSelctCollectionView.BindingContext = new EndHourSelectViewModel();
-            EndMinuteSlider.BindingContext = new EndMinuteViewModel();
+            _database = new DatabaseService().SQLiteDatabase;
+
+            _colorvm = new ColorSelectViewModel();
+            _titlevm = new ScheduleTitleViewModel();
+            _datevm = new DateSelectViewModel();
+            _startHvm = new StartHourSelectViewModel();
+            _startMvm = new StartMinuteViewModel();
+            _endHvm = new EndHourSelectViewModel();
+            _endMvm = new EndMinuteViewModel();
+
+            ColorSelectCollectionView.BindingContext = _colorvm;
+            ScheduleTitle.BindingContext = _titlevm;
+            DateSelectCollectionView.BindingContext = _datevm;
+            StartHourSelctCollectionView.BindingContext = _startHvm;
+            StartMinuteSilder.BindingContext = _startMvm;
+            EndHourSelctCollectionView.BindingContext = _endHvm;
+            EndMinuteSlider.BindingContext = _endMvm;
+
+        }
+        public AddTimetableSchedulePage(int starthour, int date)
+        {
+            InitializeComponent();
+            _database = new DatabaseService().SQLiteDatabase;
+
+            _colorvm = new ColorSelectViewModel();
+            _titlevm = new ScheduleTitleViewModel();
+            _datevm = new DateSelectViewModel(date);
+            _startHvm = new StartHourSelectViewModel(starthour);
+            _startMvm = new StartMinuteViewModel();
+            _endHvm = new EndHourSelectViewModel();
+            _endMvm = new EndMinuteViewModel();
+
+            ColorSelectCollectionView.BindingContext = _colorvm;
+            ScheduleTitle.BindingContext = _titlevm;
+            DateSelectCollectionView.BindingContext = _datevm;
+            StartHourSelctCollectionView.BindingContext = _startHvm;
+            StartMinuteSilder.BindingContext = _startMvm;
+            EndHourSelctCollectionView.BindingContext = _endHvm;
+            EndMinuteSlider.BindingContext = _endMvm;
+
+        }
+
+        public AddTimetableSchedulePage(ScheduleTimetable schedule)
+        {
+            InitializeComponent();
+            _database = new DatabaseService().SQLiteDatabase;
+
+            _colorvm = new ColorSelectViewModel(schedule.SelectedColor);
+            _titlevm = new ScheduleTitleViewModel(schedule.ScheduleTitle);
+            _datevm = new DateSelectViewModel(schedule.WeekDate);
+            _startHvm = new StartHourSelectViewModel(schedule.StartHour);
+            _startMvm = new StartMinuteViewModel(schedule.StartMinute);
+            _endHvm = new EndHourSelectViewModel(schedule.EndHour);
+            _endMvm = new EndMinuteViewModel(schedule.EndMinute);
+
+            ColorSelectCollectionView.BindingContext = _colorvm;
+            ScheduleTitle.BindingContext = _titlevm;
+            DateSelectCollectionView.BindingContext = _datevm;
+            StartHourSelctCollectionView.BindingContext = _startHvm;
+            StartMinuteSilder.BindingContext = _startMvm;
+            EndHourSelctCollectionView.BindingContext = _endHvm;
+            EndMinuteSlider.BindingContext = _endMvm;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            
         }
 
         private void OnColorSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var color = (ColorModel)(e.CurrentSelection.FirstOrDefault());
-            var colorList = ColorSelectCollectionView.ItemsSource;
-           
             currentSelectedColor.BackgroundColor = color.ColortoSelect;
             try
             {
                 ChangeCurrentSelectedColor(color.ColortoSelect);
-                ColorSelectCollectionView.ItemsSource = null;
-                ColorSelectCollectionView.ItemsSource = colorList;
-                ColorSelectCollectionView.SelectedItem = e.CurrentSelection.FirstOrDefault();
+
             }
             catch(Exception ex)
             {
-
+                Debug.WriteLine(ex.Message);
             }
+
         } 
         private void ChangeCurrentSelectedColor(Color ColortoChange)
         {
-
 
             //DateCollectionChange
             var DateList= DateSelectCollectionView.ItemsSource;
@@ -81,6 +150,7 @@ namespace EasyTimeTable
             }
             StartHourSelctCollectionView.ItemsSource = null;
             StartHourSelctCollectionView.ItemsSource = StartHourList;
+            StartHourSelctCollectionView.ScrollTo(startHourScrollCenter, position: ScrollToPosition.Center, animate: false);
 
 
             //EndHourCollectionChange
@@ -95,10 +165,9 @@ namespace EasyTimeTable
             }
             EndHourSelctCollectionView.ItemsSource = null;
             EndHourSelctCollectionView.ItemsSource = EndHourList;
+            EndHourSelctCollectionView.ScrollTo(endHourScrollCenter, position: ScrollToPosition.Center, animate: false);
 
         }
-        
-
         
         private void OnWeekdateSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -122,12 +191,11 @@ namespace EasyTimeTable
             DateSelectCollectionView.ItemsSource = CollectionList;
         }
 
-
         private void OnStartHourSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             //try  catch 문으로 작성해야합니데이.
-            var CollectionList = StartHourSelctCollectionView.ItemsSource;
+            var CollectionList = _startHvm.SetofStartHour;
             var selectedItem = (DisplayHourModel)(e.CurrentSelection.FirstOrDefault());
 
             foreach (var temp in CollectionList)
@@ -145,17 +213,17 @@ namespace EasyTimeTable
 
             StartHourSelctCollectionView.ItemsSource = null;
             StartHourSelctCollectionView.ItemsSource = CollectionList;
-            StartHourSelctCollectionView.ScrollTo(startHourScrollFirstItem,animate:false);
+            StartHourSelctCollectionView.ScrollTo(startHourScrollCenter, position: ScrollToPosition.Center, animate: false);
         }
 
         private void OnStartHourSelectCollectionViewScrolled(object sender, ItemsViewScrolledEventArgs e)
         {
-            startHourScrollFirstItem=e.FirstVisibleItemIndex;
+            startHourScrollCenter=e.CenterItemIndex;
         }
 
         private void OnEndHourSelectCollectionViewScrolled(object sender, ItemsViewScrolledEventArgs e)
         {
-            endHourScrollFirstItem = e.FirstVisibleItemIndex;
+            endHourScrollCenter = e.CenterItemIndex;
         }
 
         private void OnEndHourSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -178,7 +246,7 @@ namespace EasyTimeTable
 
             EndHourSelctCollectionView.ItemsSource = null;
             EndHourSelctCollectionView.ItemsSource = CollectionList;
-            EndHourSelctCollectionView.ScrollTo(endHourScrollFirstItem, animate: false);
+            EndHourSelctCollectionView.ScrollTo(endHourScrollCenter, position: ScrollToPosition.Center, animate: false);
         }
 
         private async void OnSaveButtonClicked(object sender, EventArgs e)
@@ -193,6 +261,7 @@ namespace EasyTimeTable
             catch(Exception ex)
             {
                 await DisplayAlert("요일 선택", "요일을 선택해주세요.", "OK");
+                Debug.WriteLine(ex.Message);
                 return;
             }
 
@@ -206,6 +275,7 @@ namespace EasyTimeTable
             catch(Exception ex)
             {
                 await DisplayAlert("시간 선택", "시간을 선택해주세요.", "OK");
+                Debug.WriteLine(ex.Message);
                 return;
             }
             
@@ -219,6 +289,7 @@ namespace EasyTimeTable
             catch(Exception ex)
             {
                 await DisplayAlert("시간 선택", "시간을 선택해주세요.", "OK");
+                Debug.WriteLine(ex.Message);
                 return;
             }
             
@@ -226,7 +297,7 @@ namespace EasyTimeTable
 
             try
             {
-                await App.Database.AddSchedule(new ScheduleTimetable
+                await _database.AddSchedule(new ScheduleTimetable
                 {
                     SelectedColor = color,
                     WeekDate = GetWeekdateValue(date),
@@ -237,9 +308,10 @@ namespace EasyTimeTable
                     EndMinute = endMin
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await DisplayAlert("저장 실패", "저장에 실패했습니다. 개발자에게 문의하세요.", "OK");
+                Debug.WriteLine(ex.Message);
                 return;
             }
 

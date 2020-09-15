@@ -10,7 +10,12 @@ namespace EasyTimeTable.ViewModels
 
         public EndMinuteViewModel()
         {
-            EndMinute = 45;
+            
+        }
+
+        public EndMinuteViewModel(int endMinute)
+        {
+            EndMinute = endMinute;
         }
     }
 }

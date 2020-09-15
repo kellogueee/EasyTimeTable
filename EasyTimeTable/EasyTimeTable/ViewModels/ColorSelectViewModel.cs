@@ -38,6 +38,14 @@ namespace EasyTimeTable.ViewModels
             preSelectedColor = SetofColors.Skip(rnd.Next(0,6)).FirstOrDefault();
         }
 
+
+        public ColorSelectViewModel(string color)
+        {
+            source = new List<ColorModel>();
+            CreateSetofColors();
+            preSelectedColor = SetofColors.Where(x => x.ColortoSelect == Color.FromHex(color)).FirstOrDefault();
+        }
+
         void CreateSetofColors()
         {
             source.Add(new ColorModel

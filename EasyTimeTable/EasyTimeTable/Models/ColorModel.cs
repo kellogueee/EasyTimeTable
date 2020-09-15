@@ -9,4 +9,5 @@ namespace EasyTimeTable.Models
     {
         public Color ColortoSelect { get; set; }
     }
+
 }

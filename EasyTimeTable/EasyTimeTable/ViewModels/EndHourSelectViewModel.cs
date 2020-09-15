@@ -35,11 +35,14 @@ namespace EasyTimeTable.ViewModels
         {
             source = new List<DisplayHourModel>();
             CreateSetofEndTime();
-            Random rnd = new Random();
-            preSelectedEndHour = SetofEndHour.Skip(rnd.Next(0, 6)).FirstOrDefault();
-           
         }
 
+        public EndHourSelectViewModel(int hour)
+        {
+            source = new List<DisplayHourModel>();
+            CreateSetofEndTime();
+            preSelectedEndHour = SetofEndHour[hour];
+        }
 
         void CreateSetofEndTime()
         {

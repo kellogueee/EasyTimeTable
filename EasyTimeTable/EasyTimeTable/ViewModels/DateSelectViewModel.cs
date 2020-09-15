@@ -12,6 +12,8 @@ namespace EasyTimeTable.ViewModels
     {
         private readonly IList<WeekdatesModel> source;
 
+
+
         WeekdatesModel preSelectedDate;
 
         public WeekdatesModel PreSelectedDate
@@ -35,8 +37,13 @@ namespace EasyTimeTable.ViewModels
         {
             source = new List<WeekdatesModel>();
             CreateSetofWeekdates();
-            Random rnd = new Random();
-            preSelectedDate = SetofWeekdates.Skip(rnd.Next(0, 6)).FirstOrDefault();
+        }
+
+        public DateSelectViewModel(int date)
+        {
+            source = new List<WeekdatesModel>();
+            CreateSetofWeekdates();
+            preSelectedDate = SetofWeekdates[date];
         }
 
         private void CreateSetofWeekdates()

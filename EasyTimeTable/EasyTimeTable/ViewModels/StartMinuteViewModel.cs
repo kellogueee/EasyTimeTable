@@ -9,7 +9,11 @@ namespace EasyTimeTable.ViewModels
         public int StartMinute { get; set; }
         public StartMinuteViewModel()
         {
-            StartMinute = 15;
+            
+        }
+        public StartMinuteViewModel(int startMinute)
+        {
+            StartMinute = startMinute;
         }
     }
 }
