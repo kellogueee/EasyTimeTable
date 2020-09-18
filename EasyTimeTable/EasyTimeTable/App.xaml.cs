@@ -36,7 +36,9 @@ namespace EasyTimeTable
 
             //MainPage = new NavigationPage(new MainPage());
             //MainPage = new ColorChagneTest();
-            MainPage = new PageDesign_AddTimetableByGrid();
+            //MainPage = new PageDesign_AddTimetableByGrid();
+            //MainPage = new PageDesignTest(20,0);
+            MainPage = new NavigationPage(new MainPageDesignTest());
         }
 
         protected override void OnStart()

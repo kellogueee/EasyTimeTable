@@ -15,28 +15,31 @@ namespace EasyTimeTable.TestPage
         public PageDesign_AddTimetableByGrid()
         {
             InitializeComponent();
-
-            //var t = new EventTrigger();
-            //t.Event = "Toggled";
-            //t.Actions.Add(new LabelTriggerTest());
-            //var temp = new Label();
-            //DataTrigger test = new DataTrigger(typeof(Label));
-            //test.Binding = DayNightSwitch.IsToggled;
+            
             var trigger1 = new DataTrigger(typeof(Label));
-            //trigger1.BindingContext = DayNightSwitch;
-            Binding b = new Binding();
-            b.Source = DayNightSwitch;
-            b.Path = "IsToggled";
+            Binding b = new Binding
+            {
+                Source = DayNightSwitch,
+                Path = "IsToggled"
+            };
             trigger1.Binding = b;
             trigger1.Value = true;
             trigger1.Setters.Add(new Setter { Property = Label.IsVisibleProperty, Value = false });
-            //temp.Triggers.Add(test);
-            //temp.IsVisible = false;
-            //DayNightSwitch.Triggers.Add(t);
             temp.Triggers.Add(trigger1);
-            //temp.Triggers.Add(t);
-            //testStack.Children.Add(temp);
+            int row = 0;
+            int col = 0;
+            CreateHourBoxStack(row, col);
+        }
 
+        private StackLayout CreateHourBoxStack(int row, int col)
+        {
+            var test = (Style)Resources.Where(x => x.Key == "HourBox").FirstOrDefault().Value;
+            var boxStack = new StackLayout
+            {
+                //Style = (Style)Resources.Where(x => x.Key == "HourBox").FirstOrDefault().Value
+                
+            };
+            return boxStack;
         }
     }
 }

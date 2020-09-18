@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EasyTimeTable.TestPage.MainPageDesignTest"
+             xmlns:local="clr-namespace:EasyTimeTable;assembly=EasyTimeTable">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <ImageButton BackgroundColor="Transparent" 
+                         Source="{local:EmbeddedImageResource EasyTimeTable.Assets.Image.AddIcon.png}"
+                         HeightRequest="30"
+                         WidthRequest="30"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="야간"
+                     Clicked="OnNightDayChangeClicked"
+                     x:Name="NightDay"/>
+        <ToolbarItem Text="주말"
+                     Clicked="OnWeekendDayChangeClicked"
+                     x:Name="WeekendDay"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <Style TargetType="BoxView">
+            <Setter Property="BackgroundColor" Value="White"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,264 @@
+<StackLayout Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="0">
+                            <Label   Style="{StaticResource Hours}" Text="08">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="20" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="1">
+                            <Label   Style="{StaticResource Hours}" Text="09">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="21" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="2">
+                            <Label   Style="{StaticResource Hours}" Text="10">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="22" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="3">
+                            <Label   Style="{StaticResource Hours}" Text="11">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="23" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="4">
+                            <Label   Style="{StaticResource Hours}" Text="12">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="00" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="0" Grid.Column="5">
+                            <Label   Style="{StaticResource Hours}" Text="13">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="01" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="0">
+                            <Label   Style="{StaticResource Hours}" Text="14">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="02" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="1">
+                            <Label   Style="{StaticResource Hours}" Text="15">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="03" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="2">
+                            <Label   Style="{StaticResource Hours}" Text="16">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="04" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="3">
+                            <Label   Style="{StaticResource Hours}" Text="17">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="05" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="4">
+                            <Label   Style="{StaticResource Hours}" Text="18">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="06" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                        <StackLayout Style="{StaticResource HourBox}" Grid.Row="1" Grid.Column="5">
+                            <Label   Style="{StaticResource Hours}" Text="19">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="false">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label   Style="{StaticResource Hours}" Text="07" IsVisible="false">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch},Path=IsToggled}"
+                                             Value="true">
+                                        <Setter Property="IsVisible"
+                                            Value="true"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
