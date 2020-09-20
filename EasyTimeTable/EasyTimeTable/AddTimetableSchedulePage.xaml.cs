@@ -2,12 +2,7 @@
 using EasyTimeTable.Models;
 using EasyTimeTable.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -20,314 +15,400 @@ namespace EasyTimeTable
     {
 
 
-        private readonly IDatabase<ScheduleTimetable> _database;
+        private static string[] colorArray = new string[] { "#ff837f", "#89a5ea", "#a5ea89", "#ffcb6b", "#e96ec2", "#5dc2c4", "#cbde8c" };
+        private static string[] dateNameArray = new string[] {"시간", "월", "화", "수", "목", "금", "토", "일" };
+        //private static readonly int[] dayHours = new int[] { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+        //private static readonly int[] nightHours = new int[] { 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7 };
+        private static Color currentSelectedItemBackgroundColor = Color.LightGray;
 
-        static int startHourScrollCenter = 0;
-        static int endHourScrollCenter = 0;
 
-        private readonly ColorSelectViewModel _colorvm;
-        private readonly DateSelectViewModel _datevm;
-        private readonly ScheduleTitleViewModel _titlevm;
-        private readonly StartHourSelectViewModel _startHvm;
-        private readonly StartMinuteViewModel _startMvm;
-        private readonly EndHourSelectViewModel _endHvm;
-        private readonly EndMinuteViewModel _endMvm;
-
+        //그냥 추가 눌렀을때
         public AddTimetableSchedulePage()
         {
             InitializeComponent();
-            _database = new DatabaseService().SQLiteDatabase;
 
-            _colorvm = new ColorSelectViewModel();
-            _titlevm = new ScheduleTitleViewModel();
-            _datevm = new DateSelectViewModel();
-            _startHvm = new StartHourSelectViewModel();
-            _startMvm = new StartMinuteViewModel();
-            _endHvm = new EndHourSelectViewModel();
-            _endMvm = new EndMinuteViewModel();
-
-            ColorSelectCollectionView.BindingContext = _colorvm;
-            ScheduleTitle.BindingContext = _titlevm;
-            DateSelectCollectionView.BindingContext = _datevm;
-            StartHourSelctCollectionView.BindingContext = _startHvm;
-            StartMinuteSilder.BindingContext = _startMvm;
-            EndHourSelctCollectionView.BindingContext = _endHvm;
-            EndMinuteSlider.BindingContext = _endMvm;
+            CreateColorBoxs(ColorBoxGridList);
+            CreateDateBoxStacks(DateBoxGridList);
+            CreateHourBoxStacks(StartHourBoxGrid, DayNightSwitch_Start);
+            CreateHourBoxStacks(EndHourBoxGrid, DayNightSwitch_End);
 
         }
-        public AddTimetableSchedulePage(int starthour, int date)
+
+        //시간표 빈칸 눌렀을 때
+        public AddTimetableSchedulePage(int hour, int date)
         {
             InitializeComponent();
-            _database = new DatabaseService().SQLiteDatabase;
 
-            _colorvm = new ColorSelectViewModel();
-            _titlevm = new ScheduleTitleViewModel();
-            _datevm = new DateSelectViewModel(date);
-            _startHvm = new StartHourSelectViewModel(starthour);
-            _startMvm = new StartMinuteViewModel();
-            _endHvm = new EndHourSelectViewModel();
-            _endMvm = new EndMinuteViewModel();
+            //기본세팅
+            CreateColorBoxs(ColorBoxGridList);
+            CreateDateBoxStacks(DateBoxGridList);
+            CreateHourBoxStacks(StartHourBoxGrid, DayNightSwitch_Start);
+            CreateHourBoxStacks(EndHourBoxGrid, DayNightSwitch_End);
 
-            ColorSelectCollectionView.BindingContext = _colorvm;
-            ScheduleTitle.BindingContext = _titlevm;
-            DateSelectCollectionView.BindingContext = _datevm;
-            StartHourSelctCollectionView.BindingContext = _startHvm;
-            StartMinuteSilder.BindingContext = _startMvm;
-            EndHourSelctCollectionView.BindingContext = _endHvm;
-            EndMinuteSlider.BindingContext = _endMvm;
-
+            //추가세팅
+            SetDayNightSwitchToggled(hour, DayNightSwitch_Start, StartHourBoxGrid);
+            SetDateBoxGridList(date);
         }
 
+        //시간표 스케줄 눌렀을 때
         public AddTimetableSchedulePage(ScheduleTimetable schedule)
         {
             InitializeComponent();
-            _database = new DatabaseService().SQLiteDatabase;
 
-            _colorvm = new ColorSelectViewModel(schedule.SelectedColor);
-            _titlevm = new ScheduleTitleViewModel(schedule.ScheduleTitle);
-            _datevm = new DateSelectViewModel(schedule.WeekDate);
-            _startHvm = new StartHourSelectViewModel(schedule.StartHour);
-            _startMvm = new StartMinuteViewModel(schedule.StartMinute);
-            _endHvm = new EndHourSelectViewModel(schedule.EndHour);
-            _endMvm = new EndMinuteViewModel(schedule.EndMinute);
-
-            ColorSelectCollectionView.BindingContext = _colorvm;
-            ScheduleTitle.BindingContext = _titlevm;
-            DateSelectCollectionView.BindingContext = _datevm;
-            StartHourSelctCollectionView.BindingContext = _startHvm;
-            StartMinuteSilder.BindingContext = _startMvm;
-            EndHourSelctCollectionView.BindingContext = _endHvm;
-            EndMinuteSlider.BindingContext = _endMvm;
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            
-        }
-
-        private void OnColorSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var color = (ColorModel)(e.CurrentSelection.FirstOrDefault());
-            currentSelectedColor.BackgroundColor = color.ColortoSelect;
-            try
-            {
-                ChangeCurrentSelectedColor(color.ColortoSelect);
-
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-
-        } 
-        private void ChangeCurrentSelectedColor(Color ColortoChange)
-        {
-
-            //DateCollectionChange
-            var DateList= DateSelectCollectionView.ItemsSource;
-            foreach (var temp in DateList)
-            {
-                var item = (WeekdatesModel)temp;
-                if (item.RectangleBackgroundDefaultColor != Color.White)
-                {
-                    item.RectangleBackgroundDefaultColor = ColortoChange;
-                }
-            }
-            DateSelectCollectionView.ItemsSource = null;
-            DateSelectCollectionView.ItemsSource = DateList;
+            //기본세팅
+            CreateColorBoxs(ColorBoxGridList);
+            CreateDateBoxStacks(DateBoxGridList);
+            CreateHourBoxStacks(StartHourBoxGrid, DayNightSwitch_Start);
+            CreateHourBoxStacks(EndHourBoxGrid, DayNightSwitch_End);
 
 
-            //StartHourCollectionChange
-            var StartHourList = StartHourSelctCollectionView.ItemsSource;
-            foreach (var temp in StartHourList)
-            {
-                var item = (DisplayHourModel)temp;
-                if (item.RectangleBackgroundDefaultColor != Color.White)
-                {
-                    item.RectangleBackgroundDefaultColor = ColortoChange;
-                }
-            }
-            StartHourSelctCollectionView.ItemsSource = null;
-            StartHourSelctCollectionView.ItemsSource = StartHourList;
-            StartHourSelctCollectionView.ScrollTo(startHourScrollCenter, position: ScrollToPosition.Center, animate: false);
-
-
-            //EndHourCollectionChange
-            var EndHourList = EndHourSelctCollectionView.ItemsSource;
-            foreach (var temp in EndHourList)
-            {
-                var item = (DisplayHourModel)temp;
-                if (item.RectangleBackgroundDefaultColor != Color.White)
-                {
-                    item.RectangleBackgroundDefaultColor = ColortoChange;
-                }
-            }
-            EndHourSelctCollectionView.ItemsSource = null;
-            EndHourSelctCollectionView.ItemsSource = EndHourList;
-            EndHourSelctCollectionView.ScrollTo(endHourScrollCenter, position: ScrollToPosition.Center, animate: false);
 
         }
-        
-        private void OnWeekdateSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var CollectionList = DateSelectCollectionView.ItemsSource;
-            var selectedItem = (WeekdatesModel)(e.CurrentSelection.FirstOrDefault());
 
-            foreach (var temp in CollectionList)
+        private void SetDateBoxGridList(int date)
+        {
+            foreach (var item in DateBoxGridList.Children)
             {
-                var item = (WeekdatesModel)temp;
-                if (item.DateName == selectedItem.DateName)
+                var parent = (StackLayout)item;
+                var child = (StackLayout)parent.Children.FirstOrDefault();
+                var childchild = (Label)child.Children.FirstOrDefault();
+                if (dateNameArray.IndexOf(childchild.Text) == date)
                 {
-                    item.RectangleBackgroundDefaultColor = currentSelectedColor.BackgroundColor;
+                    child.BackgroundColor = currentSelectedItemBackgroundColor;
+                    break;
+                }
+            }
+        }
+
+
+        private void SetDayNightSwitchToggled(int hour, Switch DayOrNight, Grid HourBoxGrid)
+        {
+            //주간표다.
+            if (hour > 7 && hour < 20)
+            {
+                DayOrNight.IsToggled = false;
+                SetHourGridBox(HourBoxGrid, hour);
+            }
+
+            //야간표다.
+            else
+            {
+                DayOrNight.IsToggled = true;
+                SetHourGridBox(HourBoxGrid, hour);
+            }
+        }
+
+        private void SetHourGridBox(Grid StartOrEnd, int hour)
+        {
+            foreach (var item in StartOrEnd.Children)
+            {
+                var stack = (StackLayout)item;
+                var label = (Label)stack.Children.FirstOrDefault();
+
+                if (int.Parse(label.Text) == hour)
+                {
+                    stack.BackgroundColor = currentSelectedItemBackgroundColor;
+                    break;
+                }
+            }
+        }
+
+
+        #region 색깔 설정 박스 부분
+        private void CreateColorBoxs(Grid ColorBoxGridList)
+        {
+            int GridRowCount = ColorBoxGridList.RowDefinitions.Count;
+            int GridColCount = ColorBoxGridList.ColumnDefinitions.Count;
+
+            for (var row = 0; row < GridRowCount; row++)
+            {
+                for (var col = 0; col < GridColCount; col++)
+                {
+                    var box = CreateColorBox(row, col);
+                    Grid.SetRow(box, row);
+                    Grid.SetColumn(box, col);
+                    ColorBoxGridList.Children.Add(box);
+                }
+            }
+        }
+
+        private BoxView CreateColorBox(int row, int col)
+        {
+            var box = new BoxView()
+            {
+                BackgroundColor = Color.FromHex(colorArray[col])
+            };
+
+            TapGestureRecognizer tap = new TapGestureRecognizer();
+            tap.Tapped += OnColorTapGestureRecognizerTapped;
+            box.GestureRecognizers.Add(tap);
+
+            return box;
+        }
+
+        private void OnColorTapGestureRecognizerTapped(object sender, EventArgs e)
+        {
+            var colorBox = (BoxView)sender;
+            currentSelectedItemBackgroundColor = colorBox.BackgroundColor;
+            ChangeSelectedItemsBackgroundColor(currentSelectedItemBackgroundColor);
+        }
+
+        private void ChangeSelectedItemsBackgroundColor(Color selectedBackgroundColor)
+        {
+            ChangeSelecedDateItemBackgroundColor(selectedBackgroundColor);
+            ChangeSelectedStartHourItemBackgroundColor(selectedBackgroundColor);
+            ChangeSelectedEndHourItemBackgroundColor(selectedBackgroundColor);
+        }
+
+        private void ChangeSelecedDateItemBackgroundColor(Color selectedBackgroundColor)
+        {
+            foreach (var DateBoxStack in DateBoxGridList.Children)
+            {
+                var parent = (StackLayout)DateBoxStack;
+                var childStack = (StackLayout)parent.Children.FirstOrDefault();
+                if (childStack.BackgroundColor != Color.White)
+                {
+                    childStack.BackgroundColor = selectedBackgroundColor;
+                    break;
+                }
+            }
+        }
+
+        private void ChangeSelectedStartHourItemBackgroundColor(Color selectedBackgroundColor)
+        {
+            foreach (var item in StartHourBoxGrid.Children)
+            {
+                var stack = (StackLayout)item;
+                if (stack.BackgroundColor != Color.White)
+                {
+                    stack.BackgroundColor = selectedBackgroundColor;
+                    break;
+                }
+            }
+        }
+
+        private void ChangeSelectedEndHourItemBackgroundColor(Color selectedBackgroundColor)
+        {
+            foreach (var item in EndHourBoxGrid.Children)
+            {
+                var stack = (StackLayout)item;
+                if (stack.BackgroundColor != Color.White)
+                {
+                    stack.BackgroundColor = selectedBackgroundColor;
+                    break;
+                }
+
+            }
+        }
+        #endregion
+
+        #region 요일 설정 박스 부분
+
+        private void CreateDateBoxStacks(Grid DateBoxGridList)
+        {
+            int GridRowCount = DateBoxGridList.RowDefinitions.Count;
+            int GridColCount = DateBoxGridList.ColumnDefinitions.Count;
+
+            for (var row = 0; row < GridRowCount; row++)
+            {
+                for (var col = 0; col < GridColCount; col++)
+                {
+                    var stack = CreateDateOutterStack(col);
+                    Grid.SetRow(stack, row);
+                    Grid.SetColumn(stack, col);
+                    DateBoxGridList.Children.Add(stack);
+                }
+            }
+        }
+
+        private StackLayout CreateDateOutterStack(int col)
+        {
+            var outterStack = new StackLayout
+            {
+                BackgroundColor = Color.LightGray
+            };
+
+            var innerStack = CreateDateInnerStack(col);
+            outterStack.Children.Add(innerStack);
+
+            return outterStack;
+        }
+
+        private StackLayout CreateDateInnerStack(int col)
+        {
+            var innerStack = new StackLayout
+            {
+                Style = (Style)Resources.Where(x => x.Key == "DateInnerStack").FirstOrDefault().Value
+            };
+
+            var dateName = CreateDateNameLabel(col);
+            innerStack.Children.Add(dateName);
+
+            TapGestureRecognizer tap = new TapGestureRecognizer();
+            tap.Tapped += OnDateTapGestureRecognizerTapped;
+            innerStack.GestureRecognizers.Add(tap);
+
+            return innerStack;
+        }
+
+        private Label CreateDateNameLabel(int col)
+        {
+            var dateName = new Label
+            {
+                Style = (Style)Resources.Where(x => x.Key == "DateName").FirstOrDefault().Value,
+                Text = dateNameArray[col+1]
+            };
+
+            return dateName;
+        }
+
+        private void OnDateTapGestureRecognizerTapped(object sender, EventArgs e)
+        {
+            var middleStack = (StackLayout)sender;
+            DateBoxGridClear();
+            middleStack.BackgroundColor = currentSelectedItemBackgroundColor;
+        }
+
+        private void DateBoxGridClear()
+        {
+            foreach (var item in DateBoxGridList.Children)
+            {
+                var parent = (StackLayout)item;
+                var child = (StackLayout)parent.Children.FirstOrDefault();
+                child.BackgroundColor = Color.White;
+            }
+        }
+
+        #endregion
+
+        #region 시간 설정 박스 부분
+        private void CreateHourBoxStacks(Grid hourGrid, Switch dayNightSwitch)
+        {
+            int GridRowCount = hourGrid.RowDefinitions.Count;
+            int GridColCount = hourGrid.ColumnDefinitions.Count;
+
+            for (var row = 0; row < GridRowCount; row++)
+            {
+                for (var col = 0; col < GridColCount; col++)
+                {
+                    var stack = CreateHourBoxStack(row, col, dayNightSwitch);
+                    Grid.SetRow(stack, row);
+                    Grid.SetColumn(stack, col);
+                    hourGrid.Children.Add(stack);
+
+                }
+            }
+        }
+
+        private StackLayout CreateHourBoxStack(int row, int col, Switch dayNightSwitch)
+        {
+            var boxStack = new StackLayout
+            {
+                Style = (Style)Resources.Where(x => x.Key == "HourBox").FirstOrDefault().Value
+            };
+
+            TapGestureRecognizer tap = new TapGestureRecognizer();
+            tap.Tapped += OnHourTapGestureRecognizerTapped;
+            boxStack.GestureRecognizers.Add(tap);
+
+            boxStack.Children.Add(CreateHourLabel(row, col, dayNightSwitch));
+
+            return boxStack;
+        }
+
+        private Label CreateHourLabel(int row, int col, Switch dayNightSwitch)
+        {
+            var DayNightTrigger = new DataTrigger(typeof(Label));
+            Binding b = new Binding
+            {
+                Source = dayNightSwitch,
+                Path = "IsToggled"
+            };
+            DayNightTrigger.Binding = b;
+            DayNightTrigger.Value = true;
+
+            var label = new Label
+            {
+                Style = (Style)Resources.Where(x => x.Key == "Hours").FirstOrDefault().Value
+            };
+
+            if (row == 0)
+            {
+                var hour = col + 8;
+                label.Text = string.Format("{0:00}", hour);
+                if (col < 4)
+                {
+                    hour += 12;
+                    DayNightTrigger.Setters.Add(new Setter
+                    {
+                        Property = Label.TextProperty,
+                        Value = string.Format("{0:00}", hour)
+                    });
                 }
                 else
                 {
-                    item.RectangleBackgroundDefaultColor = Color.White;
+                    hour -= 12;
+                    DayNightTrigger.Setters.Add(new Setter
+                    {
+                        Property = Label.TextProperty,
+                        Value = string.Format("{0:00}", hour)
+                    });
                 }
+
+
             }
-
-            DateSelectCollectionView.ItemsSource = null;
-            DateSelectCollectionView.ItemsSource = CollectionList;
-        }
-
-        private void OnStartHourSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-            //try  catch 문으로 작성해야합니데이.
-            var CollectionList = _startHvm.SetofStartHour;
-            var selectedItem = (DisplayHourModel)(e.CurrentSelection.FirstOrDefault());
-
-            foreach (var temp in CollectionList)
+            else if (row == 1)
             {
-                var item = (DisplayHourModel)temp;
-                if (item.DisplayHour == selectedItem.DisplayHour)
+                var hour = col + 14;
+                label.Text = string.Format("{0:00}", hour);
+                DayNightTrigger.Setters.Add(new Setter
                 {
-                    item.RectangleBackgroundDefaultColor = currentSelectedColor.BackgroundColor;
-                }
-                else
-                {
-                    item.RectangleBackgroundDefaultColor = Color.White;
-                }
-            }
-
-            StartHourSelctCollectionView.ItemsSource = null;
-            StartHourSelctCollectionView.ItemsSource = CollectionList;
-            StartHourSelctCollectionView.ScrollTo(startHourScrollCenter, position: ScrollToPosition.Center, animate: false);
-        }
-
-        private void OnStartHourSelectCollectionViewScrolled(object sender, ItemsViewScrolledEventArgs e)
-        {
-            startHourScrollCenter=e.CenterItemIndex;
-        }
-
-        private void OnEndHourSelectCollectionViewScrolled(object sender, ItemsViewScrolledEventArgs e)
-        {
-            endHourScrollCenter = e.CenterItemIndex;
-        }
-
-        private void OnEndHourSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var CollectionList = EndHourSelctCollectionView.ItemsSource;
-            var selectedItem = (DisplayHourModel)(e.CurrentSelection.FirstOrDefault());
-
-            foreach (var temp in CollectionList)
-            {
-                var item = (DisplayHourModel)temp;
-                if (item.DisplayHour == selectedItem.DisplayHour)
-                {
-                    item.RectangleBackgroundDefaultColor = currentSelectedColor.BackgroundColor;
-                }
-                else
-                {
-                    item.RectangleBackgroundDefaultColor = Color.White;
-                }
-            }
-
-            EndHourSelctCollectionView.ItemsSource = null;
-            EndHourSelctCollectionView.ItemsSource = CollectionList;
-            EndHourSelctCollectionView.ScrollTo(endHourScrollCenter, position: ScrollToPosition.Center, animate: false);
-        }
-
-        private async void OnSaveButtonClicked(object sender, EventArgs e)
-        {
-            var color = ((ColorModel)ColorSelectCollectionView.SelectedItem).ColortoSelect.ToHex();
-
-            WeekdatesModel date;
-            try
-            {
-                date = ((WeekdatesModel)DateSelectCollectionView.SelectedItem);
-            }
-            catch(Exception ex)
-            {
-                await DisplayAlert("요일 선택", "요일을 선택해주세요.", "OK");
-                Debug.WriteLine(ex.Message);
-                return;
-            }
-
-            var title = ScheduleTitle.Text;
-
-            int startHour=0;
-            try
-            {
-                startHour =int.Parse(((DisplayHourModel)StartHourSelctCollectionView.SelectedItem).DisplayHour);
-            }
-            catch(Exception ex)
-            {
-                await DisplayAlert("시간 선택", "시간을 선택해주세요.", "OK");
-                Debug.WriteLine(ex.Message);
-                return;
-            }
-            
-            var startMin = (int)StartMinuteSilder.Value;
-
-            int endHour = 0;
-            try
-            {
-                endHour = int.Parse(((DisplayHourModel)EndHourSelctCollectionView.SelectedItem).DisplayHour);
-            }
-            catch(Exception ex)
-            {
-                await DisplayAlert("시간 선택", "시간을 선택해주세요.", "OK");
-                Debug.WriteLine(ex.Message);
-                return;
-            }
-            
-            var endMin = (int)EndMinuteSlider.Value;
-
-            try
-            {
-                await _database.AddSchedule(new ScheduleTimetable
-                {
-                    SelectedColor = color,
-                    WeekDate = GetWeekdateValue(date),
-                    ScheduleTitle = title,
-                    StartHour = startHour,
-                    StartMinute = startMin,
-                    EndHour = endHour,
-                    EndMinute = endMin
+                    Property = Label.TextProperty,
+                    Value = string.Format("{0:00}", hour - 12)
                 });
             }
-            catch (Exception ex)
+            label.Triggers.Add(DayNightTrigger);
+
+            return label;
+        }
+
+        private void HourBoxBackgroundColorClear(Grid DayOrNight)
+        {
+            foreach (var item in DayOrNight.Children)
             {
-                await DisplayAlert("저장 실패", "저장에 실패했습니다. 개발자에게 문의하세요.", "OK");
-                Debug.WriteLine(ex.Message);
-                return;
+                var stack = (StackLayout)item;
+                stack.BackgroundColor = Color.White;
+            }
+        }
+
+        private void OnHourTapGestureRecognizerTapped(object sender, EventArgs e)
+        {
+            var stack = (StackLayout)sender;
+            var grid = (Grid)stack.Parent;
+            var gridName = grid.Id.ToString();
+
+            if (gridName == "StartHourBoxGrid")
+            {
+
+            }
+            else if (gridName == "EndHourBoxGrid")
+            {
+
             }
 
-            await Navigation.PopModalAsync();
-           
-
+            HourBoxBackgroundColorClear(grid);
+            stack.BackgroundColor = currentSelectedItemBackgroundColor;
         }
 
-        private int GetWeekdateValue(WeekdatesModel date)
+        private void OnStartSwitchToggled(object sender, EventArgs e)
         {
-            var vm = new DateSelectViewModel();
-
-            var temp = vm.SetofWeekdates.Select(x => x.DateName).ToList();
-
-            return temp.IndexOf(date.DateName);
+            HourBoxBackgroundColorClear(StartHourBoxGrid);
         }
 
+        private void OnEndSwitchToggled(object sender, EventArgs e)
+        {
+            HourBoxBackgroundColorClear(EndHourBoxGrid);
+        }
+        #endregion
     }
 }

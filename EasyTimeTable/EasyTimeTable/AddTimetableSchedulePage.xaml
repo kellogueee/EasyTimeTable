@@ -1,208 +1,207 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EasyTimeTable.AddTimetableSchedulePage"
-             BackgroundColor="#f5f5f5">
+             x:Class="EasyTimeTable.AddTimetableSchedulePage">
     <ContentPage.Resources>
+        <x:Double x:Key="PageFontsize">14</x:Double>
         <Style TargetType="Label">
-            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="FontSize" Value="{StaticResource PageFontsize}"/>
         </Style>
-        <Style TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent"/>
-            <Setter Property="BorderColor" Value="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"/>
-            <Setter Property="BorderWidth" Value="2"/>
-            <Setter Property="CornerRadius" Value="5"/>
+        <Style TargetType="Entry">
+            <Setter Property="FontSize" Value="{StaticResource PageFontsize}"/>
         </Style>
-        <Style TargetType="Grid">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
-                        <VisualState x:Name="Selected">
-                            <VisualState.Setters>
-                                <Setter 
-                                        Property="BackgroundColor" 
-                                        Value="#f5f5f5"/>
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
+        <x:Double x:Key="ColorSquareBoxSide">44</x:Double>
+        <Style TargetType="Label" x:Key="DateName">
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="Label" x:Key="Hours">
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="StackLayout" x:Key="HourBox">
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+        </Style>
+        <Style TargetType="StackLayout" x:Key="DateInnerStack">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            <Setter Property="BackgroundColor" Value="White"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView Padding="5">
+        <ScrollView Padding="15">
+            <StackLayout>
 
-            <StackLayout Padding="10">
-                <!--바인딩을 위한 임시 박스뷰-->
-                <BoxView IsVisible="false"
-                         BackgroundColor="LightGray"
-                         x:Name="currentSelectedColor"/>
-
-                <Label Text="색깔"/>
-                <CollectionView x:Name="ColorSelectCollectionView"
-                                ItemsSource="{Binding SetofColors}"
-                                ItemsLayout="HorizontalList"
-                                SelectionMode="Single"
-                                SelectionChanged="OnColorSelectionChanged"
-                                SelectedItem="{Binding PreSelectedColor}"
-                                HeightRequest="44">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="7"
-                                  VerticalOptions="CenterAndExpand">
+                <!--색깔 선택박스-->
+                <!--밑에 컬럼, 로우 데피니션도 c#코드로 바꿀것 나중에-->
+                <StackLayout>
+                    <Label Text="색깔"/>
+                    <StackLayout Orientation="Horizontal">
+                        <ScrollView>
+                            <Grid ColumnSpacing="10"
+                              x:Name="ColorBoxGridList">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="{StaticResource ColorSquareBoxSide}"/>
                                 </Grid.RowDefinitions>
-                                <Rectangle WidthRequest="40"
-                                           HeightRequest="40"
-                                           BackgroundColor="{Binding ColortoSelect}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                </Grid.ColumnDefinitions>
 
-                <StackLayout Margin="0,10,0,0"
-                         VerticalOptions="Start">
+                            </Grid>
+                        </ScrollView>
+                    </StackLayout>
+                </StackLayout>
+
+
+                <!--제목-->
+                <StackLayout Margin="0,20,0,0">
                     <Label Text="제목"/>
                     <Entry Placeholder="제목을 입력하세요"
-                           x:Name="ScheduleTitle"
-                           Text="{Binding ScheduleTitle}"/>
+                           x:Name="ScheduleTitle"/>
                 </StackLayout>
 
-                <StackLayout Margin="0,30,0,0"
-                             VerticalOptions="Start">
-                    <Label HorizontalOptions="StartAndExpand" Text="요일"/>
-                    <CollectionView x:Name="DateSelectCollectionView"
-                                    ItemsSource="{Binding SetofWeekdates}"
-                                    SelectedItem="{Binding PreSelectedDate}"
-                                    ItemsLayout="HorizontalList"
-                                    SelectionMode="Single"
-                                    SelectionChanged="OnWeekdateSelectionChanged"
-                                    HeightRequest="44">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="0,0,9,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <BoxView BackgroundColor="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"
-                                             CornerRadius="2"/>
-                                    <BoxView BackgroundColor="{Binding RectangleBackgroundDefaultColor}"
-                                             CornerRadius="2"
-                                             Margin="2"/>
-                                    <Label Text="{Binding DateName}"
-                                           VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="CenterAndExpand"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                <!--요일-->
+                <StackLayout Margin="0,20,0,0">
+                    <Label Text="요일"/>
+                    <StackLayout Orientation="Horizontal">
+                        <ScrollView>
+                            <Grid ColumnSpacing="10"
+                              x:Name="DateBoxGridList">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="{StaticResource ColorSquareBoxSide}"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                </Grid.ColumnDefinitions>
+
+                            </Grid>
+                        </ScrollView>
+                    </StackLayout>
                 </StackLayout>
 
-                <StackLayout VerticalOptions="Start" Margin="0,30,0,0">
+                <!--시작시간-->
+                <StackLayout Margin="0,20,0,0">
                     <Label Text="시작시간"/>
-                    <Label HorizontalOptions="End" FontSize="10" Text="시"/>
-                    <CollectionView x:Name="StartHourSelctCollectionView"
-                                    Scrolled="OnStartHourSelectCollectionViewScrolled"
-                                    SelectionMode="Single"
-                                    ItemsSource="{Binding SetofStartHour}"
-                                    SelectedItem="{Binding PreSelectedStartHour}"
-                                    SelectionChanged="OnStartHourSelectionChanged"
-                                    ItemsLayout="HorizontalList"
-                                    HeightRequest="44">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="0,0,5,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <BoxView BackgroundColor="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"
-                                             CornerRadius="2"/>
-                                    <BoxView BackgroundColor="{Binding RectangleBackgroundDefaultColor}"
-                                             CornerRadius="2"
-                                             Margin="2"/>
-                                    <Label Text="{Binding DisplayHour}"
-                                           VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="CenterAndExpand"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                    <StackLayout Orientation="Horizontal"
-                                 HorizontalOptions="End">
-                        <Label Text="{Binding Source={x:Reference StartMinuteSilder},Path=Value,StringFormat='{0:F0}'}" FontSize="10"/>
-                        <Label HorizontalOptions="End" FontSize="10" Text="분"/>
+                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label VerticalOptions="CenterAndExpand" Text="주간">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch_Start},Path=IsToggled}"
+                                             Value="true">
+                                    <Setter Property="Text"
+                                            Value="야간"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Switch x:Name="DayNightSwitch_Start"
+                                OnColor="#2196F3"
+                                ThumbColor="LightGray"
+                                Toggled="OnStartSwitchToggled"
+                                HorizontalOptions="StartAndExpand"
+                                />
+                        <Label Text="08" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
+                        <Label VerticalOptions="CenterAndExpand" HorizontalOptions="End" Text="시"/>
                     </StackLayout>
-                    <Slider x:Name="StartMinuteSilder"
+                    <Grid RowSpacing="0"
+                          ColumnSpacing="0"
+                          BackgroundColor="LightGray"
+                          x:Name="StartHourBoxGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                    </Grid>
+                    <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="EndAndExpand">
+                        <Label Text="{Binding Source={x:Reference StartMinute},Path=Value,StringFormat='{0:F0}'}"/>
+                        <Label Text="분"/>
+                    </StackLayout>
+
+                    <Slider MinimumTrackColor="{StaticResource ThemeColor}"
+                            MaximumTrackColor="{StaticResource MppGreen}"
+                            ThumbColor="{StaticResource ThemeColor}"
                             Maximum="59"
-                            BackgroundColor="#f5f5f5"
-                            ThumbColor="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"
-                            MinimumTrackColor="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"
-                            MaximumTrackColor="{StaticResource ThemeColor}"
-                            Value="{Binding StartMinute}"/>
+                            x:Name="StartMinute"/>
                 </StackLayout>
 
 
-
-                <StackLayout VerticalOptions="Start" Margin="0,30,0,0">
+                <!--종료시간-->
+                <StackLayout Margin="0,20,0,0">
                     <Label Text="종료시간"/>
-                    <Label HorizontalOptions="End" FontSize="10" Text="시"/>
-                    <CollectionView x:Name="EndHourSelctCollectionView"
-                                     Scrolled="OnEndHourSelectCollectionViewScrolled"
-                                    SelectionMode="Single"
-                                    ItemsSource="{Binding SetofEndHour}"
-                                    SelectedItem="{Binding PreSelectedEndHour}"
-                                    SelectionChanged="OnEndHourSelectionChanged"
-                                    ItemsLayout="HorizontalList"
-                                    HeightRequest="44">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="0,0,5,0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <BoxView BackgroundColor="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"
-                                             CornerRadius="2"/>
-                                    <BoxView BackgroundColor="{Binding RectangleBackgroundDefaultColor}"
-                                             CornerRadius="2"
-                                             Margin="2"/>
-                                    <Label Text="{Binding DisplayHour}"
-                                           VerticalOptions="CenterAndExpand"
-                                           HorizontalOptions="CenterAndExpand"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                    <StackLayout Orientation="Horizontal"
-                                 HorizontalOptions="End">
-                        <Label Text="{Binding Source={x:Reference EndMinuteSlider},Path=Value,StringFormat='{0:F0}'}" FontSize="10"/>
-                        <Label HorizontalOptions="End" FontSize="10" Text="분"/>
+                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label VerticalOptions="CenterAndExpand" Text="주간">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding Source={x:Reference DayNightSwitch_End},Path=IsToggled}"
+                                             Value="true">
+                                    <Setter Property="Text"
+                                            Value="야간"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Switch x:Name="DayNightSwitch_End"
+                                OnColor="#2196F3"
+                                ThumbColor="LightGray"
+                                Toggled="OnEndSwitchToggled"
+                                HorizontalOptions="StartAndExpand"/>
+                        <Label Text="08" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
+                        <Label VerticalOptions="CenterAndExpand" HorizontalOptions="End" Text="시"/>
                     </StackLayout>
-                    <Slider x:Name="EndMinuteSlider"
+                    <Grid RowSpacing="0"
+                          ColumnSpacing="0"
+                          BackgroundColor="LightGray"
+                          x:Name="EndHourBoxGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                    </Grid>
+                    <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="EndAndExpand">
+                        <Label Text="{Binding Source={x:Reference StartMinute},Path=Value, StringFormat='{0:F0}'}"/>
+                        <Label Text="분"/>
+                    </StackLayout>
+
+                    <Slider MinimumTrackColor="{StaticResource ThemeColor}"
+                            MaximumTrackColor="{StaticResource MppGreen}"
+                            ThumbColor="{StaticResource ThemeColor}"
                             Maximum="59"
-                            BackgroundColor="#f5f5f5"
-                            ThumbColor="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"
-                            MinimumTrackColor="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"
-                            MaximumTrackColor="{StaticResource ThemeColor}"
-                            Value="{Binding EndMinute}"/>
+                            x:Name="EndMinute"/>
                 </StackLayout>
 
-                <Button Text="저장하기"
-                        BackgroundColor="{Binding Source={x:Reference currentSelectedColor},Path=BackgroundColor}"
-                        Margin="0,30,0,0"
-                        Clicked="OnSaveButtonClicked"/>
-                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

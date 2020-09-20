@@ -13,16 +13,25 @@
 
   <ItemGroup>
     <None Remove="Assets\Image\AddIcon.png" />
+    <None Remove="Assets\Image\moon.png" />
+    <None Remove="Assets\Image\sun.png" />
+    <None Remove="Assets\Image\sunny-day.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\Image\AddIcon.png" />
+    <EmbeddedResource Include="Assets\Image\moon.png" />
+    <EmbeddedResource Include="Assets\Image\sun.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="Assets\Image\sunny-day.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,17 +47,9 @@
     <EmbeddedResource Update="MenuItemPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="TestPage\ColorChagneTest.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="TestPage\MainPageDesignTest.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="TestPage\PageDesignTest.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="TestPage\PageDesign_AddTimetableByGrid.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestPage\" />
   </ItemGroup>
 </Project>

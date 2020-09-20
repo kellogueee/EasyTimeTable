@@ -1,4 +1,4 @@
-﻿using EasyTimeTable.Constants;
+﻿using EasyTimeTable.Constant;
 using EasyTimeTable.DataAccessLayer;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Markup;
+using Xamarin.Forms.Xaml;
 
 namespace EasyTimeTable
 {
@@ -20,435 +21,388 @@ namespace EasyTimeTable
     public partial class MainPage : ContentPage
     {
 
-        private static bool currentDisplayIsNight = false;
-        private static bool currentDisplayIsWeekend = false;
-        
-        private static readonly int[] dayHours = new int[] { 8,9,10,11,12,13,14,15,16,17,18,19 };
-        private static readonly int[] nightHours = new int[] { 20,21,22,23,0,1,2,3,4,5,6,7};
-        
+        private static string[] tableHeadNameArray = new string[] { "시간", "월", "화", "수", "목", "금", "토", "일" };
+        private static string DisplayedTimetableHead = "DisplayedTimetableHead";
+        private static string DisplayedTimetableBody = "DisplayedTimetableBody";
+        private int[] weekday = new int[] { 0, 1, 2, 3, 4, 5 };
+        private int[] weekend = new int[] { 0, 6, 7 };
+        private int[] DefaultDayHours = new int[] { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+        private int[] DefaultNightHours = new int[] { 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7 };
 
         private readonly IDatabase<ScheduleTimetable> _database;
 
         public MainPage()
         {
             InitializeComponent();
-            _database = new DatabaseService().SQLiteDatabase;
 
-            var DHWDTB = DayHourWeekdayTableBody.Children;
-            var DHWETB = DayHourWeekendTableBody.Children;
-            var NHWDTB = NightHourWeekdayTableBody.Children;
-            var NHWETB = NightHourWeekendTableBody.Children;
+            _database= new DatabaseService().SQLiteDatabase;
+            
+            InitializeBasicTable();
+            GenerateTable(DefaultDayHours, weekday);
+        }
 
-            foreach (var gridBox in DHWDTB)
+
+        #region GenesisTable
+        private void InitializeBasicTable()
+        {
+            int gridCol = 8;
+            int gridRow = 24;
+
+            //Head
+            for (var col = 0; col < gridCol; col++)
             {
-                var col = Grid.GetColumn(gridBox);
-                if (col == 0)
-                {
-                    continue;
-                }
-                var row = Grid.GetRow(gridBox);
+                var box = new BoxView { StyleId = "0," + col.ToString() };
+                Grid.SetColumn(box, col);
+                TableHeadGrid.Children.Add(box);
 
-                var gridBoxTapGestureRecognizer = new TapGestureRecognizer();
-                gridBoxTapGestureRecognizer.Tapped += async (s, e) =>
+                var date = new Label
                 {
-                    int date = col - 1;
-                    await Navigation.PushModalAsync(new AddTimetableSchedulePage(dayHours[row], date));
+                    Text = tableHeadNameArray[col],
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    StyleId = "0,"+col.ToString()
                 };
-                gridBox.GestureRecognizers.Add(gridBoxTapGestureRecognizer);
-            }
 
-            foreach (var gridBox in DHWETB)
-            {
-                var col = Grid.GetColumn(gridBox);
-                if (col == 0)
+                //토요일
+                if (col == 6)
                 {
-                    continue;
+                    date.TextColor = Color.Blue;
                 }
-                var row = Grid.GetRow(gridBox);
-
-                var gridBoxTapGestureRecognizer = new TapGestureRecognizer();
-                gridBoxTapGestureRecognizer.Tapped += async (s, e) =>
+                //일요일
+                else if (col == 7)
                 {
-                    int date = col +4;
-                    await Navigation.PushModalAsync(new AddTimetableSchedulePage(dayHours[row], date));
-                };
-                gridBox.GestureRecognizers.Add(gridBoxTapGestureRecognizer);
-            }
-
-            foreach (var gridBox in NHWDTB)
-            {
-                var col = Grid.GetColumn(gridBox);
-                if (col == 0)
-                {
-                    continue;
+                    date.TextColor = Color.Red;
                 }
-                var row = Grid.GetRow(gridBox);
-
-                var gridBoxTapGestureRecognizer = new TapGestureRecognizer();
-                gridBoxTapGestureRecognizer.Tapped += async (s, e) =>
-                {
-                    int date = col - 1;
-                    await Navigation.PushModalAsync(new AddTimetableSchedulePage(nightHours[row], date));
-                };
-                gridBox.GestureRecognizers.Add(gridBoxTapGestureRecognizer);
-            }
-
-            foreach (var gridBox in NHWETB)
-            {
-                var col = Grid.GetColumn(gridBox);
-                if (col == 0)
-                {
-                    continue;
-                }
-                var row = Grid.GetRow(gridBox);
-
-                var gridBoxTapGestureRecognizer = new TapGestureRecognizer();
-                gridBoxTapGestureRecognizer.Tapped += async (s, e) =>
-                {
-                    int date = col + 4;
-                    await Navigation.PushModalAsync(new AddTimetableSchedulePage(nightHours[row], date));
-                };
-                gridBox.GestureRecognizers.Add(gridBoxTapGestureRecognizer);
-            }
-
-        }
-
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-
-            var monSchedules = await _database.GetAllScheduleByWeekdate(0);
-            var tueSchedules = await _database.GetAllScheduleByWeekdate(1);
-            var wedSchedules = await _database.GetAllScheduleByWeekdate(2);
-            var thuSchedules = await _database.GetAllScheduleByWeekdate(3);
-            var friSchedules = await _database.GetAllScheduleByWeekdate(4);
-            var satSchedules = await _database.GetAllScheduleByWeekdate(5);
-            var sunSchedules = await _database.GetAllScheduleByWeekdate(6);
-
-            List<ScheduleTimetable>[] WeekdaySchedules = new List<ScheduleTimetable>[]
-            {
-                monSchedules,tueSchedules,wedSchedules,thuSchedules,friSchedules,satSchedules,sunSchedules
-            };
-            List<ScheduleTimetable>[] WeekendSchedules = new List<ScheduleTimetable>[]
-            {
-                satSchedules,sunSchedules
-            };
-
-
-            foreach (var schedules in WeekdaySchedules)
-            {
-                SetWeekdaySchedule(schedules);
+                Grid.SetColumn(date, col);
+                TableHeadGrid.Children.Add(date);
             }
 
 
-            foreach (var schedules in WeekendSchedules)
+            //Body
+            for (var row = 0; row < gridRow; row++)
             {
-
-                SetWeekendSchedule(schedules);
-            }
-
-        }
-
-        private void SetWeekdaySchedule(List<ScheduleTimetable> schedules)
-        {
-            foreach (var schedule in schedules)
-            {
-                //시작시간이 주간이다.
-                if (!IsNight(schedule.StartHour))
+                for (var col = 0; col < gridCol; col++)
                 {
-                    DayHourWeekdayTableBody.Children.Add(SetScheduleStack_day(schedule));
-                }
+                    var box = new BoxView { StyleId = row.ToString()+"," + col.ToString() };
+                    Grid.SetColumn(box, col);
+                    Grid.SetRow(box, row);
+                    TableBodyGrid.Children.Add(box);
 
-                else
-                {
-                    NightHourWeekdayTableBody.Children.Add(SetScheduleStack_night(schedule));
+                    if (col == 0)
+                    {
+                        var hour = new Label
+                        {
+                            Text = string.Format("{0:00}", row),
+                            VerticalOptions = LayoutOptions.CenterAndExpand,
+                            HorizontalOptions = LayoutOptions.CenterAndExpand,
+                            StyleId = row.ToString() + "," + col.ToString()
+                        };
+                        Grid.SetColumn(hour, col);
+                        Grid.SetRow(hour, row);
+                        TableBodyGrid.Children.Add(hour);
+                    }
                 }
             }
-        }
 
-        private void SetWeekendSchedule(List<ScheduleTimetable> schedules)
-        {
-            foreach (var schedule in schedules)
+
+            TableBodyGrid.Children.GroupBy(x => Grid.GetRow(x));
+
+            foreach (var eachRow in TableBodyGrid.Children.GroupBy(x => Grid.GetRow(x)))
             {
-                //시작시간이 주간이다.
-                if (!IsNight(schedule.StartHour))
+                foreach (var item in eachRow)
                 {
-                    DayHourWeekendTableBody.Children.Add(SetScheduleStack_day(schedule));
+                    var col = GetColumnOfItem(item);
+                    if (col > 0)
+                    {
+                        TapGestureRecognizer tap = new TapGestureRecognizer();
+                        tap.Tapped += async (s, e) =>
+                        {
+                            int hour = GetRowofItem(item);
+                            int date = col;
+                            await Navigation.PushModalAsync(new AddTimetableSchedulePage(hour, date));
+                        };
+                        item.GestureRecognizers.Add(tap);
+                    }
+                    
                 }
-
-                else
-                {
-                    NightHourWeekendTableBody.Children.Add(SetScheduleStack_night(schedule));
-                }
             }
+
+            InitializeScheduleInTabletable();
         }
 
 
-        private StackLayout SetScheduleStack_day(ScheduleTimetable schedule)
+        private async void InitializeScheduleInTabletable()
         {
-            //마감시간이 저녁시간이라면
-            if (IsNight(schedule.EndHour))
+            var schedules = await _database.GetAllSchedule();
+
+
+            foreach (var item in schedules)
             {
-                schedule.EndHour = 19;
+                string colorHex = item.SelectedColor;
+                //+1을 하는 이유는 DB에 저장한 Weekdate는 월요일부터 일요일까지 차례로 0부터 6까지 숫자가 부여.
+                //그러나 운용하고있는 리스트는 {"시간", "월", ... , "일"}이기 때문에 인덱스를 위하여 +1을함.
+                int date = item.WeekDate+1;
+                string title = item.ScheduleTitle;
+                int startHour = item.StartHour;
+                int startMinute = item.StartMinute;
+                int endHour = item.EndHour;
+                int endMinute = item.EndMinute;
+
+
+                //startHour와 endHour가 dayHourArray 또는 nightHourArray에 모두 들어 있는지 확인한다.
+                //
+
+
             }
 
-            var startHourRowIDX = dayHours.IndexOf(schedule.StartHour);
-            var endHourRowIDX = dayHours.IndexOf(schedule.EndHour);
-            int scheduleColIDX = 0;
-
-            //주말이면
-            if (IsWeekend(schedule.WeekDate))
-            {
-                scheduleColIDX= schedule.WeekDate -4;
-            }
-            //평일이면
-            else
-            {
-                scheduleColIDX = schedule.WeekDate + 1;
-            }
-            var span = endHourRowIDX - startHourRowIDX;
-
-            var displaySchedule = new StackLayout
-            {
-                BackgroundColor = Color.FromHex(schedule.SelectedColor),
-                StyleId = schedule.ID.ToString()
-            };
-
-            displaySchedule.Children.Add(SetBlankBox_TopinScheduleStack(schedule.StartMinute));
-            displaySchedule.Children.Add(SetTitleinScheduleStack(schedule.ScheduleTitle));
-            displaySchedule.Children.Add(SetBlackBox_BottominScheduleStack(schedule.EndMinute));
-
-            Grid.SetRow(displaySchedule, startHourRowIDX);
-            Grid.SetColumn(displaySchedule, scheduleColIDX);
-            Grid.SetRowSpan(displaySchedule, span);
-
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += async (s, e) =>
-            {
-                await Navigation.PushModalAsync(new AddTimetableSchedulePage(schedule));
-            };
-
-            displaySchedule.GestureRecognizers.Add(tapGestureRecognizer);
-
-            return displaySchedule;
         }
 
-        private StackLayout SetScheduleStack_night(ScheduleTimetable schedule)
+        private bool IsDayHour(int Hour)
         {
-            //마감시간이 저녁시간이라면
-            if (IsNight(schedule.EndHour))
-            {
-                schedule.EndHour = 19;
-            }
-
-            var startHourRowIDX = nightHours.IndexOf(schedule.StartHour);
-            var endHourRowIDX = nightHours.IndexOf(schedule.EndHour);
-            int scheduleColIDX = 0;
-
-            //주말이면
-            if (IsWeekend(schedule.WeekDate))
-            {
-                scheduleColIDX = schedule.WeekDate - 4;
-            }
-            //평일이면
-            else
-            {
-                scheduleColIDX = schedule.WeekDate + 1;
-            }
-            var span = endHourRowIDX - startHourRowIDX;
-
-            var displaySchedule = new StackLayout
-            {
-                BackgroundColor = Color.FromHex(schedule.SelectedColor),
-                StyleId = schedule.ID.ToString()
-            };
-
-            displaySchedule.Children.Add(SetBlankBox_TopinScheduleStack(schedule.StartMinute));
-            displaySchedule.Children.Add(SetTitleinScheduleStack(schedule.ScheduleTitle));
-            displaySchedule.Children.Add(SetBlackBox_BottominScheduleStack(schedule.EndMinute));
-
-            Grid.SetRow(displaySchedule, startHourRowIDX);
-            Grid.SetColumn(displaySchedule, scheduleColIDX);
-            Grid.SetRowSpan(displaySchedule, span);
-
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += async (s, e) =>
-            {
-
-                var temp = await DisplayActionSheet("스케쥴 관리", "취소", "삭제", "수정");
-                await DisplayAlert("", temp, "ok");
-                //bool answer=await DisplayAlert("클릭", "클릭했다", "취소","확인");
-                //if (!answer)
-                //{
-                //    await DisplayAlert("", "취소버튼눌렀음", "ok");
-                //}
-                //테스트용이었다.
-
-            };
-
-            displaySchedule.GestureRecognizers.Add(tapGestureRecognizer);
-
-            return displaySchedule;
-        }
-
-        private Label SetTitleinScheduleStack(string title)
-        {
-            var Title = new Label
-            {
-                Text = title,
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalOptions = LayoutOptions.CenterAndExpand
-            };
-            return Title;
-        }
-
-        private BoxView SetBlankBox_TopinScheduleStack(int startMinute)
-        {
-            var box_top = new BoxView
-            {
-                BackgroundColor = Color.White,
-                HeightRequest = GetStartMinuteHeightRequest(startMinute)
-            };
-            return box_top;
-        }
-        
-        private BoxView SetBlackBox_BottominScheduleStack(int endMinute)
-        {
-            var box_bottom = new BoxView
-            {
-                BackgroundColor = Color.White,
-                HeightRequest = GetEndMinuteHeightRequest(endMinute)
-            };
-            return box_bottom;
-        }
-
-        private double GetStartMinuteHeightRequest(int minute)
-        {
-            double heightRequest= 20 * ((minute / 6) * 0.4);
-            return heightRequest;
-        }
-
-        private double GetEndMinuteHeightRequest(int minute)
-        {
-            double heightRequest = 80-(20 * ((minute / 6) * 0.4));
-            return heightRequest;
-        }
-
-        private bool IsNight(int hour)
-        {
-            if (hour < 20 && hour > 07)
-            {
-                return false;
-            }
-            else
+            if (DefaultDayHours.IndexOf(Hour) > -1)
             {
                 return true;
             }
+
+            return false;
         }
 
-        private bool IsWeekend(int weekdate)
+
+        private int GetColumnOfItem(View item)
         {
-            if (weekdate > 5)
-            {
-                return true;
-            }
-            else return false;
+            var id = GetSplitedRowCol(item.StyleId);
+
+            return int.Parse(id[1]);
         }
 
-        private async void OnAddButtonClicked(object sender, EventArgs e)
+        private int GetRowofItem(View item)
+        {
+            var id = GetSplitedRowCol(item.StyleId);
+
+            return int.Parse(id[0]);
+        }
+
+        private string[] GetSplitedRowCol(string id)
+        {
+            return id.Split(',');
+        }
+        #endregion
+
+        #region WillDisplayTable
+        private void GenerateTable(int[] hours, int[] dates)
+        {
+
+            //Head
+            var head = TableHeadGrid.Children.Where(x => dates.Contains(Grid.GetColumn(x))).OrderBy(x => Grid.GetColumn(x)).GroupBy(x => Grid.GetColumn(x)).ToList();
+            GenerateTableHead(head);
+
+            //Body
+            var body = TableBodyGrid.Children.Where(x => hours.Contains(Grid.GetRow(x)) && dates.Contains(Grid.GetColumn(x))).OrderBy(x => Grid.GetColumn(x)).GroupBy(x => Grid.GetColumn(x)).ToList();
+            GenerateTableBody(body, hours);
+        }
+
+
+        private void GenerateTableHead(List<IGrouping<int, View>> SelectedDates)
+        {
+            var tableHead = new Grid
+            {
+                ColumnSpacing = 1,
+                RowSpacing = 1,
+                StyleId = DisplayedTimetableHead
+            };
+            int colIDX = 0;
+            foreach (var GroupedView in SelectedDates)
+            {
+                if (GroupedView.Key == 0)
+                {
+                    tableHead.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
+                    foreach (var item in GroupedView)
+                    {
+                        Grid.SetColumn(item, colIDX);
+                        tableHead.Children.Add(item);
+                    }
+                    colIDX++;
+                }
+                else
+                {
+                    tableHead.ColumnDefinitions.Add(new ColumnDefinition());
+                    foreach (var item in GroupedView)
+                    {
+                        Grid.SetColumn(item, colIDX);
+                        tableHead.Children.Add(item);
+                    }
+                    colIDX++;
+                }
+            }
+            TableHeadStack.Children.Add(tableHead);
+        }
+
+        //int[] dates는 키 역할을 한다.
+        private void GenerateTableBody(List<IGrouping<int, View>> SelectedHours, int[] hours)
+        {
+            var tableBody = new Grid
+            {
+                ColumnSpacing = 1,
+                RowSpacing = 1,
+                StyleId = DisplayedTimetableBody
+            };
+
+            for (var i = 0; i < hours.Length; i++)
+            {
+                tableBody.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
+            }
+
+            int colIDX = 0;
+            foreach (var GroupedView in SelectedHours)
+            {
+                if (GroupedView.Key == 0)
+                {
+                    tableBody.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
+                    foreach (var item in GroupedView)
+                    {
+                        Grid.SetColumn(item, colIDX);
+                        Grid.SetRow(item, hours.IndexOf(Grid.GetRow(item)));
+                        tableBody.Children.Add(item);
+
+                    }
+                    colIDX++;
+                }
+                else
+                {
+                    tableBody.ColumnDefinitions.Add(new ColumnDefinition());
+                    foreach (var item in GroupedView)
+                    {
+                        Grid.SetColumn(item, colIDX);
+                        Grid.SetRow(item, hours.IndexOf(Grid.GetRow(item)));
+                        tableBody.Children.Add(item);
+                    }
+                    colIDX++;
+                }
+            }
+            TableBodyStack.Children.Add(tableBody);
+        }
+
+
+        private void RemoveCurrentTable()
+        {
+            var displayedHead=(Grid)TableHeadStack.Children.Where(x=>x.StyleId== DisplayedTimetableHead).FirstOrDefault();
+
+            View[] CopiedHead = new View[displayedHead.Children.Count];
+            displayedHead.Children.CopyTo(CopiedHead, 0);
+
+            foreach (var item in CopiedHead)
+            {
+                var row = GetRowofItem(item);
+                var col = GetColumnOfItem(item);
+                Grid.SetRow(item, row);
+                Grid.SetColumn(item, col);
+                TableHeadGrid.Children.Add(item);
+            }
+
+            TableHeadStack.Children.Remove(displayedHead);
+
+
+
+            var displayedBody= (Grid)TableBodyStack.Children.Where(x => x.StyleId == DisplayedTimetableBody).FirstOrDefault();
+
+            View[] CopiedBody = new View[displayedBody.Children.Count];
+            displayedBody.Children.CopyTo(CopiedBody, 0);
+
+            foreach (var item in CopiedBody)
+            {
+                var row = GetRowofItem(item);
+                var col = GetColumnOfItem(item);
+                Grid.SetRow(item, row);
+                Grid.SetColumn(item, col);
+                TableBodyGrid.Children.Add(item);
+            }
+
+            TableBodyStack.Children.Remove(displayedBody);
+        }
+        #endregion
+
+        #region RelatedWithNavigationBarButton
+        private async void OnMenuPageButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new MenuItemPage());
         }
 
-        #region NightDayWeekendWeekday
-        private void OnNightDayChangeClicked(object sender, EventArgs e)
+
+        private void OnChangeDayToNightButtonClicked(object sender, EventArgs e)
         {
-            DayHourWeekdayTableBody.IsVisible = false;
-            NightHourWeekdayTableBody.IsVisible = false;
-            DayHourWeekendTableBody.IsVisible = false;
-            NightHourWeekendTableBody.IsVisible = false;
+            var imgButton = (ImageButton)sender;
+            imgButton.IsVisible = false;
+            Day.IsVisible = true;
+            RemoveCurrentTable();
 
-            //현재 페이지: 주간 주일 
-            if (!currentDisplayIsNight && !currentDisplayIsWeekend)
+            //평일이라는 글자가 보인다면 현재 페이지는 주말을 나타내고 있다.
+            if (Weekday.IsVisible)
             {
-                currentDisplayIsNight = true;
-                NightDay.Text = "주간";
-                NightHourWeekdayTableBody.IsVisible = true;
+                GenerateTable(DefaultNightHours, weekend);
             }
-
-            //주간 주말
-            else if (!currentDisplayIsNight && currentDisplayIsWeekend)
+            else
             {
-                currentDisplayIsNight = true;
-                NightDay.Text = "주간";
-                NightHourWeekendTableBody.IsVisible = true;
+                GenerateTable(DefaultNightHours, weekday);
             }
-
-            //야간 주일
-            else if (currentDisplayIsNight && !currentDisplayIsWeekend)
-            {
-                currentDisplayIsNight = false;
-                NightDay.Text = "야간";
-                DayHourWeekdayTableBody.IsVisible = true;
-            }
-
-            //야간 주말
-            else if (currentDisplayIsNight && currentDisplayIsWeekend)
-            {
-                currentDisplayIsNight = false;
-                NightDay.Text = "야간";
-                DayHourWeekendTableBody.IsVisible = true;
-            }
-
 
         }
 
-        private void OnWeekendDayChangeClicked(object sender, EventArgs e)
+        private void OnChangeNightToDayButtonClicked(object sender, EventArgs e)
         {
+            var imgButton = (ImageButton)sender;
+            imgButton.IsVisible = false;
+            Night.IsVisible = true;
+            RemoveCurrentTable();
 
-            DayHourWeekdayTableBody.IsVisible = false;
-            NightHourWeekdayTableBody.IsVisible = false;
-            DayHourWeekendTableBody.IsVisible = false;
-            NightHourWeekendTableBody.IsVisible = false;
-            Weekday.IsVisible = false;
-            Weekend.IsVisible = false;
-            //현재 페이지: 주간 주일 
-            if (!currentDisplayIsNight && !currentDisplayIsWeekend)
+            //평일이라는 글자가 보인다면 현재 페이지는 주말을 나타내고 있다.
+            if (Weekday.IsVisible)
             {
-                currentDisplayIsWeekend = true;
-                WeekendDay.Text = "주일";
-                DayHourWeekendTableBody.IsVisible = true;
-                Weekend.IsVisible = true;
+                GenerateTable(DefaultDayHours, weekend);
             }
-
-            //주간 주말
-            else if (!currentDisplayIsNight && currentDisplayIsWeekend)
+            else
             {
-                currentDisplayIsWeekend = false;
-                WeekendDay.Text = "주말";
-                DayHourWeekdayTableBody.IsVisible = true;
-                Weekday.IsVisible = true;
+                GenerateTable(DefaultDayHours, weekday);
             }
+        }
 
-            //야간 주일
-            else if (currentDisplayIsNight && !currentDisplayIsWeekend)
+        private void OnChangeWeekdaysToWeekendButtonClicked(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            button.IsVisible = false;
+            Weekday.IsVisible = true;
+            RemoveCurrentTable();
+
+            //달이 보인다면 현재 페이지는 낮 시간표를 보이고 있다.
+            if (Night.IsVisible)
             {
-                currentDisplayIsWeekend = true;
-                WeekendDay.Text = "주일";
-                NightHourWeekendTableBody.IsVisible = true;
-                Weekend.IsVisible = true;
+                GenerateTable(DefaultDayHours, weekend);
             }
-
-            //야간 주말
-            else if (currentDisplayIsNight && currentDisplayIsWeekend)
+            else
             {
-                currentDisplayIsWeekend = false;
-                WeekendDay.Text = "주말";
-                NightHourWeekdayTableBody.IsVisible = true;
-                Weekday.IsVisible = true;
+                GenerateTable(DefaultNightHours, weekend);
             }
 
         }
+        private void OnChangeWeekendToWeekdaysButtonClicked(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            button.IsVisible = false;
+            Weekend.IsVisible = true;
+            RemoveCurrentTable();
+
+            //달이 보인다면 현재 페이지는 낮 시간표를 보이고 있다.
+            if (Night.IsVisible)
+            {
+                GenerateTable(DefaultDayHours, weekday);
+            }
+            else
+            {
+                GenerateTable(DefaultNightHours, weekday);
+            }
+        }
+
+
+
         #endregion
     }
 }
