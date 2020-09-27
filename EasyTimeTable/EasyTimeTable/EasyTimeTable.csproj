@@ -13,19 +13,42 @@
 
   <ItemGroup>
     <None Remove="Assets\Image\AddIcon.png" />
+    <None Remove="Assets\Image\AddIcon128.png" />
+    <None Remove="Assets\Image\AddIcon64.png" />
+    <None Remove="Assets\Image\AddIcon96.png" />
     <None Remove="Assets\Image\moon.png" />
+    <None Remove="Assets\Image\moon128.png" />
+    <None Remove="Assets\Image\moon64.png" />
+    <None Remove="Assets\Image\moon96.png" />
     <None Remove="Assets\Image\sun.png" />
+    <None Remove="Assets\Image\sun128.png" />
+    <None Remove="Assets\Image\sun64.png" />
+    <None Remove="Assets\Image\sun96.png" />
     <None Remove="Assets\Image\sunny-day.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\Image\AddIcon.png" />
+    <EmbeddedResource Include="Assets\Image\AddIcon128.png" />
+    <EmbeddedResource Include="Assets\Image\AddIcon64.png" />
+    <EmbeddedResource Include="Assets\Image\AddIcon96.png" />
     <EmbeddedResource Include="Assets\Image\moon.png" />
+    <EmbeddedResource Include="Assets\Image\moon128.png" />
+    <EmbeddedResource Include="Assets\Image\moon64.png" />
+    <EmbeddedResource Include="Assets\Image\moon96.png" />
     <EmbeddedResource Include="Assets\Image\sun.png" />
+    <EmbeddedResource Include="Assets\Image\sun128.png" />
+    <EmbeddedResource Include="Assets\Image\sun64.png" />
+    <EmbeddedResource Include="Assets\Image\sun96.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="sqlite-net" Version="1.6.292" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+    <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
@@ -41,15 +64,23 @@
     <EmbeddedResource Update="ConfigurationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="DisplayCalendarPage.xaml">
+    <EmbeddedResource Update="CalendarPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="DailySchedulePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="MenuItemPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="TestPage\DragSelectTestPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestPage\" />
+    <Compile Update="CalendarPage.xaml.cs">
+      <DependentUpon>CalendarPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

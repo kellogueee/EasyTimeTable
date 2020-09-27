@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             x:Class="EasyTimeTable.DailySchedulePage"
+             >
+    <ContentPage.Resources>
+        <x:Double x:Key="FirstColWidth">100</x:Double>
+        <x:Double x:Key="ScheduleRowHeight">80</x:Double>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <!--"처음 스케줄이 있는 순간부터 표시함. 없으면 접어 놓음"-->
+        <StackLayout Padding="0,10,0,10"
+                     BackgroundColor="White">
+            <Label Text="9/24 (목)" 
+                   HorizontalOptions="CenterAndExpand"
+                   FontSize="Title"/>
+            <Grid RowSpacing="10"
+                  Margin="0,20,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource FirstColWidth}"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="시간"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="0"/>
+                    <Label Text="스케줄"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"
+                           Grid.Column="1"/>
+                </Grid>
+                <CollectionView 
+                            x:Name="DailyScheduleCollectionView"
+                            Grid.Row="1"
+                            SelectionMode="Single">
+                    <d:CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>스케줄1</x:String>
+                            <x:String>스케줄2</x:String>
+                            <x:String>스케줄3</x:String>
+                            <x:String>스케줄4</x:String>
+                            <x:String>스케줄5</x:String>
+                        </x:Array>
+                    </d:CollectionView.ItemsSource>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnSpacing="0"
+                              BackgroundColor="LightGray">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="{StaticResource ScheduleRowHeight}"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{StaticResource FirstColWidth}"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout BackgroundColor="White"
+                                         Margin="0,1,1,1"
+                                         VerticalOptions="FillAndExpand"
+                                         Grid.Column="0">
+                                    <Label Text="08" 
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                                <StackLayout BackgroundColor="White"
+                                         Grid.Column="1"
+                                         Margin="0,1,0,1">
+                                    <Label Text="{Binding .}"
+                                       VerticalOptions="CenterAndExpand"
+                                       HorizontalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

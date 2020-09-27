@@ -4,7 +4,7 @@ using System.Text;
 using SQLite;
 
 
-namespace EasyTimeTable.DataAccessLayer
+namespace EasyTimeTable.DataAccessLayer.SqliteEntity
 {
     public class ScheduleTimetable
     {
@@ -17,6 +17,7 @@ namespace EasyTimeTable.DataAccessLayer
         public int StartMinute { get; set; }
         public int EndHour { get; set; }
         public int EndMinute { get; set; }
+        public bool IsIterativeSchedule { get; set; } = true;
 
     }
 }

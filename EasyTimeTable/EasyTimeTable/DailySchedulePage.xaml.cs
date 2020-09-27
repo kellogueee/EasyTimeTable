@@ -10,15 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace EasyTimeTable
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DisplayCalendarPage : ContentPage
+    public partial class DailySchedulePage : ContentPage
     {
-        public DisplayCalendarPage()
+        public DailySchedulePage()
         {
             InitializeComponent();
-        }
-        protected override bool OnBackButtonPressed()
-        {
-            return base.OnBackButtonPressed();
         }
     }
 }

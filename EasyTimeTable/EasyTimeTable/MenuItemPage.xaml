@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EasyTimeTable.MenuItemPage"
-             Title="더보기">
+             x:Class="EasyTimeTable.MenuItemPage">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button">
@@ -18,10 +17,12 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand">
-            <Button Text="시간표 추가하기"
+            <Button Text="일정 추가하기"
                     Clicked="OnAddTimetableButtonClicked"/>
-            <Button Text="달력보기"
-                    Clicked="OnDisplayCalendarButtonClicked"/>
+            <!--<Button Text="달력보기"
+                    Clicked="OnDisplayCalendarButtonClicked"/>-->
+            <Button Text="일간표 보기"
+                    Clicked="OnDisplayDailyScheduleButtonClicked"/>
             <Button Text="설정"
                     Clicked="OnConfigurationButtonClicked"/>
         </StackLayout>

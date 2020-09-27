@@ -138,4 +138,22 @@
       <Name>EasyTimeTable</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\sun64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\moon64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddIcon64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddIcon96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\moon48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\sun48.png" />
+  </ItemGroup>
 </Project>

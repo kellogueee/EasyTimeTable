@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using EasyTimeTable.Constant;
+using EasyTimeTable.DataAccessLayer.SqliteEntity;
 
 namespace EasyTimeTable.DataAccessLayer
 {
@@ -17,7 +18,8 @@ namespace EasyTimeTable.DataAccessLayer
             _database.CreateTableAsync<ScheduleTimetable>().Wait();
         }
 
-        public Task<List<ScheduleTimetable>> GetAllSchedule()
+
+        public Task<List<ScheduleTimetable>> GetAllScheduleAsync()
         {
             return _database.Table<ScheduleTimetable>().ToListAsync();
         }

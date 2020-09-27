@@ -1,11 +1,14 @@
 ﻿using EasyTimeTable.DataAccessLayer;
+using EasyTimeTable.DataAccessLayer.SqliteEntity;
 using EasyTimeTable.Models;
 using EasyTimeTable.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+using Xamarin.Forms.Markup;
 using Xamarin.Forms.Xaml;
 
 namespace EasyTimeTable
@@ -17,20 +20,25 @@ namespace EasyTimeTable
 
         private static string[] colorArray = new string[] { "#ff837f", "#89a5ea", "#a5ea89", "#ffcb6b", "#e96ec2", "#5dc2c4", "#cbde8c" };
         private static string[] dateNameArray = new string[] {"시간", "월", "화", "수", "목", "금", "토", "일" };
-        //private static readonly int[] dayHours = new int[] { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
-        //private static readonly int[] nightHours = new int[] { 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7 };
-        private static Color currentSelectedItemBackgroundColor = Color.LightGray;
+        private List<int> selecteDates = new List<int>();
+        
+        private Color currentSelectedItemBackgroundColor = Color.LightGray;
+        
 
+        private ScheduleTimetable selectedSchedule;
+        private readonly IDatabase<ScheduleTimetable> _database;
 
         //그냥 추가 눌렀을때
         public AddTimetableSchedulePage()
         {
             InitializeComponent();
-
+            _database = new DatabaseService().SQLiteDatabase;
             CreateColorBoxs(ColorBoxGridList);
             CreateDateBoxStacks(DateBoxGridList);
             CreateHourBoxStacks(StartHourBoxGrid, DayNightSwitch_Start);
             CreateHourBoxStacks(EndHourBoxGrid, DayNightSwitch_End);
+
+            selectedSchedule = new ScheduleTimetable();
 
         }
 
@@ -38,16 +46,20 @@ namespace EasyTimeTable
         public AddTimetableSchedulePage(int hour, int date)
         {
             InitializeComponent();
-
+            _database = new DatabaseService().SQLiteDatabase;
             //기본세팅
             CreateColorBoxs(ColorBoxGridList);
             CreateDateBoxStacks(DateBoxGridList);
             CreateHourBoxStacks(StartHourBoxGrid, DayNightSwitch_Start);
             CreateHourBoxStacks(EndHourBoxGrid, DayNightSwitch_End);
 
+            selecteDates.Add(date);
+
             //추가세팅
             SetDayNightSwitchToggled(hour, DayNightSwitch_Start, StartHourBoxGrid);
             SetDateBoxGridList(date);
+
+            selectedSchedule = new ScheduleTimetable();
         }
 
         //시간표 스케줄 눌렀을 때
@@ -55,14 +67,38 @@ namespace EasyTimeTable
         {
             InitializeComponent();
 
+            selectedSchedule = schedule;
+            _database = new DatabaseService().SQLiteDatabase;
+
             //기본세팅
             CreateColorBoxs(ColorBoxGridList);
             CreateDateBoxStacks(DateBoxGridList);
             CreateHourBoxStacks(StartHourBoxGrid, DayNightSwitch_Start);
             CreateHourBoxStacks(EndHourBoxGrid, DayNightSwitch_End);
+            deleteButton.IsVisible = true;
+            saveButton.IsVisible = false;
+            saveButton2.IsVisible = true;
+            selecteDates.Add(schedule.WeekDate + 1);
 
 
+            SetSelectedColor(schedule.SelectedColor);
+            SetScheduleTitle(schedule.ScheduleTitle);
+            SetDateBoxGridList(schedule.WeekDate + 1);
+            SetDayNightSwitchToggled(schedule.StartHour, DayNightSwitch_Start, StartHourBoxGrid);
+            StartMinute.Value = schedule.StartMinute;
+            SetDayNightSwitchToggled(schedule.EndHour, DayNightSwitch_End, EndHourBoxGrid);
+            EndMinute.Value = schedule.EndMinute;
 
+        }
+
+        private void SetSelectedColor(string colorHex)
+        {
+            currentSelectedItemBackgroundColor = Color.FromHex(colorHex);
+        }
+
+        private void SetScheduleTitle(string title)
+        {
+            ScheduleTitle.Text = title;
         }
 
         private void SetDateBoxGridList(int date)
@@ -80,7 +116,8 @@ namespace EasyTimeTable
             }
         }
 
-
+        //이 메서드도 현재 고정값임. 수정해야함
+        //DayHourArray와 NightHourArray를 만들어서 contain여부를 가지고 if분기를 만들예정
         private void SetDayNightSwitchToggled(int hour, Switch DayOrNight, Grid HourBoxGrid)
         {
             //주간표다.
@@ -96,6 +133,8 @@ namespace EasyTimeTable
                 DayOrNight.IsToggled = true;
                 SetHourGridBox(HourBoxGrid, hour);
             }
+
+
         }
 
         private void SetHourGridBox(Grid StartOrEnd, int hour)
@@ -108,9 +147,57 @@ namespace EasyTimeTable
                 if (int.Parse(label.Text) == hour)
                 {
                     stack.BackgroundColor = currentSelectedItemBackgroundColor;
+
+                    if(StartOrEnd.StyleId== "StartHourBoxGrid")
+                    {
+                        startHourLabel.Text = ((Label)stack.Children.FirstOrDefault()).Text;
+
+                    }
+                    else if (StartOrEnd.StyleId == "EndHourBoxGrid")
+                    {
+                        endHourLabel.Text = ((Label)stack.Children.FirstOrDefault()).Text;
+                    }
+
                     break;
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 저장할때만 사용한다.
+        /// </summary>
+        /// <returns></returns>
+        private List<ScheduleTimetable> GetListCurrentSettedSchedule()
+        {
+            var schedules = new List<ScheduleTimetable>();
+
+            foreach (var item in selecteDates)
+            {
+                var insert = new ScheduleTimetable
+                {
+                    SelectedColor = currentSelectedItemBackgroundColor.ToHex(),
+                    WeekDate = item - 1,
+                    StartHour = int.Parse(startHourLabel.Text),
+                    StartMinute = (int)StartMinute.Value,
+                    EndHour = int.Parse(endHourLabel.Text),
+                    EndMinute = (int)EndMinute.Value
+                };
+
+                if (ScheduleTitle.Text == null)
+                {
+                    insert.ScheduleTitle = "제목없음";
+                }
+                else
+                {
+                    insert.ScheduleTitle = ScheduleTitle.Text;
+                }
+
+                schedules.Add(insert);
+
+            }
+
+            return schedules;
         }
 
 
@@ -169,7 +256,6 @@ namespace EasyTimeTable
                 if (childStack.BackgroundColor != Color.White)
                 {
                     childStack.BackgroundColor = selectedBackgroundColor;
-                    break;
                 }
             }
         }
@@ -256,7 +342,8 @@ namespace EasyTimeTable
             var dateName = new Label
             {
                 Style = (Style)Resources.Where(x => x.Key == "DateName").FirstOrDefault().Value,
-                Text = dateNameArray[col+1]
+                Text = dateNameArray[col+1],
+                StyleId= (col + 1).ToString()
             };
 
             return dateName;
@@ -264,21 +351,20 @@ namespace EasyTimeTable
 
         private void OnDateTapGestureRecognizerTapped(object sender, EventArgs e)
         {
-            var middleStack = (StackLayout)sender;
-            DateBoxGridClear();
-            middleStack.BackgroundColor = currentSelectedItemBackgroundColor;
-        }
-
-        private void DateBoxGridClear()
-        {
-            foreach (var item in DateBoxGridList.Children)
+            var innerStack = (StackLayout)sender;
+            var date = ((Label)innerStack.Children.FirstOrDefault()).StyleId;
+            if (selecteDates.Contains(int.Parse(date)))
             {
-                var parent = (StackLayout)item;
-                var child = (StackLayout)parent.Children.FirstOrDefault();
-                child.BackgroundColor = Color.White;
+                selecteDates.Remove(int.Parse(date));
+                innerStack.BackgroundColor = Color.White;
+            }
+            else
+            {
+                selecteDates.Add(int.Parse(date));
+                innerStack.BackgroundColor = currentSelectedItemBackgroundColor;
             }
         }
-
+        
         #endregion
 
         #region 시간 설정 박스 부분
@@ -316,6 +402,9 @@ namespace EasyTimeTable
             return boxStack;
         }
 
+
+
+        //지금 이 메서드에는 오전 오후 시간대가 정해져있는데 훗날 사용자 편의 시간대 설정을 위해서는 메서드 수정을 해야한다.
         private Label CreateHourLabel(int row, int col, Switch dayNightSwitch)
         {
             var DayNightTrigger = new DataTrigger(typeof(Label));
@@ -332,6 +421,10 @@ namespace EasyTimeTable
                 Style = (Style)Resources.Where(x => x.Key == "Hours").FirstOrDefault().Value
             };
 
+
+
+            //수정이 되어야할 부분
+            //지금은 오전: 8~19시 야간: 20~7시 고정값
             if (row == 0)
             {
                 var hour = col + 8;
@@ -385,30 +478,69 @@ namespace EasyTimeTable
         {
             var stack = (StackLayout)sender;
             var grid = (Grid)stack.Parent;
-            var gridName = grid.Id.ToString();
+            var gridName = grid.StyleId.ToString();
 
             if (gridName == "StartHourBoxGrid")
             {
-
+                startHourLabel.Text = ((Label)stack.Children.FirstOrDefault()).Text;
             }
             else if (gridName == "EndHourBoxGrid")
             {
-
+                endHourLabel.Text = ((Label)stack.Children.FirstOrDefault()).Text;
             }
 
             HourBoxBackgroundColorClear(grid);
             stack.BackgroundColor = currentSelectedItemBackgroundColor;
+            
         }
 
         private void OnStartSwitchToggled(object sender, EventArgs e)
         {
             HourBoxBackgroundColorClear(StartHourBoxGrid);
+            startHourLabel.Text = "";
         }
 
         private void OnEndSwitchToggled(object sender, EventArgs e)
         {
             HourBoxBackgroundColorClear(EndHourBoxGrid);
+            endHourLabel.Text = "";
         }
+        #endregion
+
+        #region 버튼이벤트
+        private async void OnDeleteButtonClicked(object sender, EventArgs e)
+        {
+            var willDelete = await DisplayAlert("스케쥴 삭제", "해당 스케쥴을 삭제 하시겠습니까?", "네", "아니오");
+            if (willDelete)
+            {
+                await _database.DeleteSchedule(selectedSchedule);
+                await Navigation.PopModalAsync();
+            }
+        }
+        private async void OnSaveButtonClicked(object sender, EventArgs e)
+        {
+            var sches = GetListCurrentSettedSchedule();
+            foreach (var item in sches)
+            {
+                await _database.AddSchedule(item);
+            }
+            await Navigation.PopModalAsync();
+        }
+        private async void OnCancelButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopModalAsync();
+        }
+        private async void OnUpdateButtonClicked(object sender, EventArgs e)
+        {
+            await _database.DeleteSchedule(selectedSchedule);
+            var sches = GetListCurrentSettedSchedule();
+            foreach (var item in sches)
+            {
+                await _database.AddSchedule(item);
+            }
+            await Navigation.PopModalAsync();
+        }
+
         #endregion
     }
 }

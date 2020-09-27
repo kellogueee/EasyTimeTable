@@ -17,7 +17,7 @@ namespace EasyTimeTable
             InitializeComponent();
         }
 
-
+        //완료
         private async void OnAddTimetableButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new AddTimetableSchedulePage());
@@ -25,12 +25,17 @@ namespace EasyTimeTable
 
         private async void OnDisplayCalendarButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new DisplayCalendarPage());
+            await Navigation.PushAsync(new CalendarPage());
         }
+        private async void OnDisplayDailyScheduleButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DailySchedulePage());
+        }
+
 
         private async void OnConfigurationButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new ConfigurationPage());
+            await Navigation.PushAsync(new ConfigurationPage());
         }
     }
 }

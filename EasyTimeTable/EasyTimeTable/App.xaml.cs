@@ -24,8 +24,10 @@ namespace EasyTimeTable
 
         //        return database;
         //    }
-           
+
         //}
+        public static int languague = 0;
+
 
         public App()
         {
@@ -39,6 +41,8 @@ namespace EasyTimeTable
             //MainPage = new PageDesignTest(20,0);
             //MainPage = new NavigationPage(new MainPageDesignTest());
             //MainPage = new NavigationPage(new MainPageDesignTest2());
+            //MainPage = new DailySchedulePage();
+            //MainPage = new NavigationPage(new CalendarPage());
         }
 
         protected override void OnStart()

@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EasyTimeTable.ConfigurationPage">
+             x:Class="EasyTimeTable.ConfigurationPage"
+             Title="설정">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="설정페이지"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="언어선택박스"/>
+            <Label Text="시작화면스케줄 설정: 주간표냐 일간표냐 월간표냐."/>
+            <Label Text="모든 스케줄 지우기"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

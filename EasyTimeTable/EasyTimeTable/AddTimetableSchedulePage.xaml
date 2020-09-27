@@ -10,9 +10,9 @@
         <Style TargetType="Entry">
             <Setter Property="FontSize" Value="{StaticResource PageFontsize}"/>
         </Style>
-        <x:Double x:Key="ColorSquareBoxSide">44</x:Double>
+        <x:Double x:Key="SquareBoxSide">40</x:Double>
         <Style TargetType="Label" x:Key="DateName">
-            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/> 
             <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
             <Setter Property="FontSize" Value="15"/>
         </Style>
@@ -34,26 +34,28 @@
     <ContentPage.Content>
         <ScrollView Padding="15">
             <StackLayout>
-
                 <!--색깔 선택박스-->
                 <!--밑에 컬럼, 로우 데피니션도 c#코드로 바꿀것 나중에-->
+                <!--반복설정을 만들어야함. -->
                 <StackLayout>
                     <Label Text="색깔"/>
                     <StackLayout Orientation="Horizontal">
-                        <ScrollView>
+                        <ScrollView Orientation="Horizontal"
+                                    HorizontalScrollBarVisibility="Never"
+                                    VerticalScrollBarVisibility="Never">
                             <Grid ColumnSpacing="10"
                               x:Name="ColorBoxGridList">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="{StaticResource ColorSquareBoxSide}"/>
+                                    <RowDefinition Height="{StaticResource SquareBoxSide}"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
                                 </Grid.ColumnDefinitions>
 
                             </Grid>
@@ -69,24 +71,30 @@
                            x:Name="ScheduleTitle"/>
                 </StackLayout>
 
+                <!--반복 스케줄 여부-->
+                <!--반복스케줄이면 요일을 보여주고 아니면 날짜 선택을 하게한다.-->
+                
                 <!--요일-->
+                <!--다른요일도 설정 가능하게 해야함. -->
                 <StackLayout Margin="0,20,0,0">
                     <Label Text="요일"/>
                     <StackLayout Orientation="Horizontal">
-                        <ScrollView>
-                            <Grid ColumnSpacing="10"
+                        <ScrollView Orientation="Horizontal"
+                                    HorizontalScrollBarVisibility="Never"
+                                    VerticalScrollBarVisibility="Never">
+                            <Grid ColumnSpacing="5"
                               x:Name="DateBoxGridList">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="{StaticResource ColorSquareBoxSide}"/>
+                                    <RowDefinition Height="{StaticResource SquareBoxSide}"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
-                                    <ColumnDefinition Width="{StaticResource ColorSquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
+                                    <ColumnDefinition Width="{StaticResource SquareBoxSide}"/>
                                 </Grid.ColumnDefinitions>
 
                             </Grid>
@@ -97,7 +105,7 @@
                 <!--시작시간-->
                 <StackLayout Margin="0,20,0,0">
                     <Label Text="시작시간"/>
-                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                    <StackLayout Orientation="Horizontal" Margin="0,5,0,0">
                         <Label VerticalOptions="CenterAndExpand" Text="주간">
                             <Label.Triggers>
                                 <DataTrigger TargetType="Label"
@@ -114,7 +122,7 @@
                                 Toggled="OnStartSwitchToggled"
                                 HorizontalOptions="StartAndExpand"
                                 />
-                        <Label Text="08" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
+                        <Label x:Name="startHourLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
                         <Label VerticalOptions="CenterAndExpand" HorizontalOptions="End" Text="시"/>
                     </StackLayout>
                     <Grid RowSpacing="0"
@@ -122,8 +130,8 @@
                           BackgroundColor="LightGray"
                           x:Name="StartHourBoxGrid">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="{StaticResource SquareBoxSide}"/>
+                            <RowDefinition Height="{StaticResource SquareBoxSide}"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -152,7 +160,7 @@
                 <!--종료시간-->
                 <StackLayout Margin="0,20,0,0">
                     <Label Text="종료시간"/>
-                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                    <StackLayout Orientation="Horizontal" Margin="0,5,0,0">
                         <Label VerticalOptions="CenterAndExpand" Text="주간">
                             <Label.Triggers>
                                 <DataTrigger TargetType="Label"
@@ -168,7 +176,7 @@
                                 ThumbColor="LightGray"
                                 Toggled="OnEndSwitchToggled"
                                 HorizontalOptions="StartAndExpand"/>
-                        <Label Text="08" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
+                        <Label x:Name="endHourLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
                         <Label VerticalOptions="CenterAndExpand" HorizontalOptions="End" Text="시"/>
                     </StackLayout>
                     <Grid RowSpacing="0"
@@ -176,8 +184,8 @@
                           BackgroundColor="LightGray"
                           x:Name="EndHourBoxGrid">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="{StaticResource SquareBoxSide}"/>
+                            <RowDefinition Height="{StaticResource SquareBoxSide}"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -191,7 +199,7 @@
                     </Grid>
                     <StackLayout Orientation="Horizontal"
                                  HorizontalOptions="EndAndExpand">
-                        <Label Text="{Binding Source={x:Reference StartMinute},Path=Value, StringFormat='{0:F0}'}"/>
+                        <Label Text="{Binding Source={x:Reference EndMinute},Path=Value, StringFormat='{0:F0}'}"/>
                         <Label Text="분"/>
                     </StackLayout>
 
@@ -201,7 +209,43 @@
                             Maximum="59"
                             x:Name="EndMinute"/>
                 </StackLayout>
-
+                <Grid Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button 
+                            Text="삭제하기"
+                            BackgroundColor="#EE5F44"
+                            CornerRadius="5"
+                            x:Name="deleteButton"
+                            IsVisible="false"
+                            TextColor="White"
+                            Clicked="OnDeleteButtonClicked"/>
+                    <Button 
+                            Grid.Column="0"
+                            Text="저장하기"
+                            BackgroundColor="{StaticResource ThemeColor}"
+                            x:Name="saveButton"
+                            CornerRadius="5"
+                            TextColor="White"
+                            Clicked="OnSaveButtonClicked"/>
+                    <Button 
+                            Grid.Column="1"
+                            Text="취소"
+                            BackgroundColor="LightGray"
+                            CornerRadius="5"
+                            x:Name="cancelButton"
+                            Clicked="OnCancelButtonClicked"/>
+                </Grid>
+                <Button IsVisible="false"
+                        Text="수정하기"
+                        x:Name="saveButton2"
+                        BackgroundColor="{StaticResource ThemeColor}"
+                        CornerRadius="5"
+                        TextColor="White"
+                        Clicked="OnUpdateButtonClicked"
+                        Margin="0,10,0,20"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

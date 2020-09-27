@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EasyTimeTable.CalendarPage">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="2020.09"
+                   HorizontalOptions="Center"
+                   TextColor="White"
+                   FontSize="Title"
+                    BackgroundColor="Transparent"/>
+            <Grid HorizontalOptions="EndAndExpand"
+                  ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="이전"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        Grid.Column="0"
+                        HorizontalOptions="EndAndExpand"/>
+                <Button Text="다음"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        Grid.Column="1"
+                        HorizontalOptions="End"/>
+            </Grid>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <!--달력보기 콤보박스로 년,월 선택할 수 있게 표시.-->
+    <ContentPage.Content>
+        <Grid BackgroundColor="LightGray"
+                  ColumnSpacing="1"
+                  RowSpacing="1"
+                  x:Name="Calender">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--일-->
+            <StackLayout BackgroundColor="White"
+                             Grid.Row="0"
+                             Grid.Column="0"
+                             VerticalOptions="FillAndExpand">
+                <Label Text="일"
+                           TextColor="Red"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <!--월-->
+            <StackLayout BackgroundColor="White"
+                             Grid.Row="0"
+                             Grid.Column="1"
+                             VerticalOptions="FillAndExpand">
+                <Label Text="월"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <!--화-->
+            <StackLayout BackgroundColor="White"
+                             Grid.Row="0"
+                             Grid.Column="2"
+                             VerticalOptions="FillAndExpand">
+                <Label Text="화"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <!--수-->
+            <StackLayout BackgroundColor="White"
+                             Grid.Row="0"
+                             Grid.Column="3"
+                             VerticalOptions="FillAndExpand">
+                <Label Text="수"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <!--목-->
+            <StackLayout BackgroundColor="White"
+                             Grid.Row="0"
+                             Grid.Column="4"
+                             VerticalOptions="FillAndExpand">
+                <Label Text="목"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <!--금-->
+            <StackLayout BackgroundColor="White"
+                             Grid.Row="0"
+                             Grid.Column="5"
+                             VerticalOptions="FillAndExpand">
+                <Label Text="금"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <!--토-->
+            <StackLayout BackgroundColor="White"
+                             Grid.Row="0"
+                             Grid.Column="6"
+                             VerticalOptions="FillAndExpand">
+                <Label Text="토"
+                           TextColor="Blue"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="6"
+                         Grid.ColumnSpan="7"
+                         BackgroundColor="White">
+                <Label Text="여기에는 오늘 스케줄 간략하게만 표시"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

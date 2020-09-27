@@ -7,7 +7,7 @@ namespace EasyTimeTable.DataAccessLayer
 {
     public interface IDatabase<T>
     {
-        public Task<List<T>> GetAllSchedule();
+        public Task<List<T>> GetAllScheduleAsync();
         public Task<List<T>> GetAllScheduleByWeekdate(int date);
         public Task AddSchedule(T schedule);
         public Task UpdateSchedule(T schedule);

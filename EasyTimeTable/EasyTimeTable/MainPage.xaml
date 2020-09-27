@@ -4,49 +4,62 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:EasyTimeTable;assembly=EasyTimeTable"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              mc:Ignorable="d"
              x:Class="EasyTimeTable.MainPage">
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal">
-            <ImageButton BackgroundColor="Transparent" 
-                         Source="{local:EmbeddedImageResource EasyTimeTable.Assets.Image.AddIcon.png}"
-                         HeightRequest="30"
-                         WidthRequest="30"
-                         HorizontalOptions="StartAndExpand"
-                         VerticalOptions="CenterAndExpand"
-                         Clicked="OnMenuPageButtonClicked"/>
-            <ImageButton BackgroundColor="Transparent"
-                         Source="{local:EmbeddedImageResource EasyTimeTable.Assets.Image.moon.png}"
-                         HeightRequest="30"
-                         WidthRequest="30"
-                         HorizontalOptions="End"
-                         VerticalOptions="CenterAndExpand"
-                         Clicked="OnChangeDayToNightButtonClicked"
-                         x:Name="Night"/>
-            <ImageButton BackgroundColor="Transparent"
-                         Source="{local:EmbeddedImageResource EasyTimeTable.Assets.Image.sun.png}"
-                         HeightRequest="30"
-                         WidthRequest="30"
-                         HorizontalOptions="End"
-                         VerticalOptions="CenterAndExpand"
-                         IsVisible="false"
-                         Clicked="OnChangeNightToDayButtonClicked"
-                         x:Name="Day"/>
-            <Button BackgroundColor="Transparent"
-                    Text="주말"
-                    TextColor="White"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="End"
-                    Clicked="OnChangeWeekdaysToWeekendButtonClicked"
-                    x:Name="Weekend"/>
-            <Button BackgroundColor="Transparent"
-                    Text="평일"
-                    TextColor="White"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="End"
-                    Clicked="OnChangeWeekendToWeekdaysButtonClicked"
-                    x:Name="Weekday"
-                    IsVisible="false"/>
+            <forms:CachedImage Source="AddIcon96.png"
+                                   BackgroundColor="Transparent"
+                                   Grid.Column="0">
+                <forms:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="OnMenuPageButtonClicked"/>
+                </forms:CachedImage.GestureRecognizers>
+            </forms:CachedImage>
+            <Grid HorizontalOptions="EndAndExpand"
+                  ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <forms:CachedImage Source="sun64.png"
+                                   x:Name="Day"
+                                   BackgroundColor="Transparent"
+                                   Grid.Column="0"
+                                   HorizontalOptions="End"
+                                   Aspect="AspectFit">
+                    <forms:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer
+                        Tapped="OnChangeDayToNightButtonClicked"/>
+                    </forms:CachedImage.GestureRecognizers>
+                </forms:CachedImage>
+                <forms:CachedImage Source="moon64.png"
+                                   x:Name="Night"
+                                   BackgroundColor="Transparent"
+                                   Grid.Column="0"
+                                   IsVisible="false"
+                                   HorizontalOptions="End"
+                                   Aspect="AspectFit">
+                    <forms:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer
+                        Tapped="OnChangeNightToDayButtonClicked"/>
+                    </forms:CachedImage.GestureRecognizers>
+                </forms:CachedImage>
+                <Button BackgroundColor="Transparent"
+                        Text="평일"
+                        TextColor="White"
+                        Clicked="OnChangeWeekdaysToWeekendButtonClicked"
+                        x:Name="Weekday"
+                        Grid.Column="1"/>
+                <Button BackgroundColor="Transparent"
+                        Text="주말"
+                        TextColor="White"
+                        Clicked="OnChangeWeekendToWeekdaysButtonClicked"
+                        x:Name="Weekend"
+                        IsVisible="false"
+                        Grid.Column="1"/>
+            </Grid>
         </StackLayout>
     </NavigationPage.TitleView>
     <ContentPage.Resources>
@@ -55,6 +68,7 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
+        <!--<forms:CachedImage Source="sun94.png"/>-->
         <Grid RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
