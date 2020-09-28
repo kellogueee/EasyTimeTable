@@ -174,15 +174,18 @@ namespace EasyTimeTable
 
             foreach (var item in selecteDates)
             {
+
+
                 var insert = new IterativeSchedule
                 {
                     SelectedColor = currentSelectedItemBackgroundColor.ToHex(),
-                    WeekDate = item - 1,
+                    WeekDate = item,
                     StartHour = int.Parse(startHourLabel.Text),
                     StartMinute = (int)StartMinute.Value,
                     EndHour = int.Parse(endHourLabel.Text),
                     EndMinute = (int)EndMinute.Value
                 };
+
 
                 if (ScheduleTitle.Text == null)
                 {
@@ -514,6 +517,7 @@ namespace EasyTimeTable
             if (willDelete)
             {
                 await _database.DeleteSchedule(selectedSchedule);
+                this.IsVisible = false;
                 await Navigation.PopModalAsync();
             }
         }
@@ -524,10 +528,12 @@ namespace EasyTimeTable
             {
                 await _database.AddSchedule(item);
             }
+            this.IsVisible = false;
             await Navigation.PopModalAsync();
         }
         private async void OnCancelButtonClicked(object sender, EventArgs e)
         {
+            this.IsVisible = false;
             await Navigation.PopModalAsync();
         }
         private async void OnUpdateButtonClicked(object sender, EventArgs e)
@@ -538,6 +544,7 @@ namespace EasyTimeTable
             {
                 await _database.AddSchedule(item);
             }
+            this.IsVisible = false;
             await Navigation.PopModalAsync();
         }
 

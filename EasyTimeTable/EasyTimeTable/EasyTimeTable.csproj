@@ -24,7 +24,6 @@
     <None Remove="Assets\Image\sun128.png" />
     <None Remove="Assets\Image\sun64.png" />
     <None Remove="Assets\Image\sun96.png" />
-    <None Remove="Assets\Image\sunny-day.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,10 +50,6 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="Assets\Image\sunny-day.png" />
   </ItemGroup>
 
   <ItemGroup>

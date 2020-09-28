@@ -1,4 +1,5 @@
 ﻿using EasyTimeTable.DataAccessLayer;
+using EasyTimeTable.TestPage;
 using System;
 using System.IO;
 using Xamarin.Forms;
@@ -35,7 +36,7 @@ namespace EasyTimeTable
 
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            //MainPage = new NavigationPage(new MainPage());
             //MainPage = new ColorChagneTest();
             //MainPage = new PageDesign_AddTimetableByGrid();
             //MainPage = new PageDesignTest(20,0);
@@ -43,6 +44,7 @@ namespace EasyTimeTable
             //MainPage = new NavigationPage(new MainPageDesignTest2());
             //MainPage = new DailySchedulePage();
             //MainPage = new NavigationPage(new CalendarPage());
+            MainPage = new NavigationPage(new MyPage());
         }
 
         protected override void OnStart()
