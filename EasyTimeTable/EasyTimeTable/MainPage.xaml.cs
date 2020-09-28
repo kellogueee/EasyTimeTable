@@ -42,16 +42,9 @@ namespace EasyTimeTable
             InitializeComponent();
 
             _database = new DatabaseService().SQLiteDatabase;
+            //_database.DeleteAllSchedule();
             //_databaseServiceTest = new SQLiteDatabaseTest().SQLiteDatabaseService;
-            
-        }
-
-        //MainPage보다 늦게일어남
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
             InitializeBasicTable();
-
             RemoveCurrentTable();
             View[] tempArray = new View[TableBodyGrid.Children.Count];
 
@@ -68,31 +61,37 @@ namespace EasyTimeTable
             InitializeScheduleInTabletable();
 
             //보여질 테이블 정하기.
-
             //평일 낮
             if (Day.IsVisible && Weekday.IsVisible)
             {
                 GenerateTable(DefaultDayHours, weekday);
             }
-            
+
             //평일 밤
             else if (Night.IsVisible && Weekday.IsVisible)
             {
                 GenerateTable(DefaultNightHours, weekday);
             }
-            
+
             //주말 낮
             else if (Day.IsVisible && Weekend.IsVisible)
             {
                 GenerateTable(DefaultDayHours, weekend);
             }
-            
+
             //주말 밤
             else if (Night.IsVisible && Weekend.IsVisible)
             {
                 GenerateTable(DefaultNightHours, weekend);
             }
 
+        }
+
+        //MainPage보다 늦게일어남
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            
         }
 
 

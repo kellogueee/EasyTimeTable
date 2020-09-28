@@ -32,7 +32,8 @@
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView Padding="15">
+        <ScrollView Padding="15"
+                    BackgroundColor="Transparent">
             <StackLayout>
                 <!--색깔 선택박스-->
                 <!--밑에 컬럼, 로우 데피니션도 c#코드로 바꿀것 나중에-->
@@ -73,6 +74,15 @@
 
                 <!--반복 스케줄 여부-->
                 <!--반복스케줄이면 요일을 보여주고 아니면 날짜 선택을 하게한다.-->
+                <!--
+                <Label Text="반복여부"/>
+                <Switch x:Name="IterativeScheduleSwitch"
+                        OnColor="#2196F3"
+                        ThumbColor="LightGray"
+                        HorizontalOptions="StartAndExpand"/>
+                <StackLayout IsVisible="{Binding Source={x:Reference IterativeScheduleSwitch},Path=IsToggled}">
+                    
+                </StackLayout>-->
                 
                 <!--요일-->
                 <!--다른요일도 설정 가능하게 해야함. -->
@@ -172,11 +182,13 @@
                             </Label.Triggers>
                         </Label>
                         <Switch x:Name="DayNightSwitch_End"
+                                IsToggled="{Binding Source={x:Reference DayNightSwitch_Start},Path=IsToggled}"
+                                IsVisible="false"
                                 OnColor="#2196F3"
                                 ThumbColor="LightGray"
                                 Toggled="OnEndSwitchToggled"
                                 HorizontalOptions="StartAndExpand"/>
-                        <Label x:Name="endHourLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalOptions="End"/>
+                        <Label x:Name="endHourLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand"/>
                         <Label VerticalOptions="CenterAndExpand" HorizontalOptions="End" Text="시"/>
                     </StackLayout>
                     <Grid RowSpacing="0"

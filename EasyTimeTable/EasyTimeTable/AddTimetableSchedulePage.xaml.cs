@@ -32,6 +32,10 @@ namespace EasyTimeTable
         public AddTimetableSchedulePage()
         {
             InitializeComponent();
+            var rnd = new Random();
+            rnd.Next(0, 6);
+
+            currentSelectedItemBackgroundColor = Color.FromHex(colorArray[rnd.Next(0, 6)]);
             _database = new DatabaseService().SQLiteDatabase;
             CreateColorBoxs(ColorBoxGridList);
             CreateDateBoxStacks(DateBoxGridList);
@@ -40,12 +44,17 @@ namespace EasyTimeTable
 
             selectedSchedule = new IterativeSchedule();
 
+            
+
         }
 
         //시간표 빈칸 눌렀을 때
         public AddTimetableSchedulePage(int hour, int date)
         {
             InitializeComponent();
+            var rnd = new Random();
+            rnd.Next(0, 6);
+            currentSelectedItemBackgroundColor = Color.FromHex(colorArray[rnd.Next(0, 6)]);
             _database = new DatabaseService().SQLiteDatabase;
             //기본세팅
             CreateColorBoxs(ColorBoxGridList);
@@ -60,6 +69,7 @@ namespace EasyTimeTable
             SetDateBoxGridList(date);
 
             selectedSchedule = new IterativeSchedule();
+            
         }
 
         //시간표 스케줄 눌렀을 때
@@ -519,11 +529,18 @@ namespace EasyTimeTable
         }
         private async void OnSaveButtonClicked(object sender, EventArgs e)
         {
+            if (CheckLogicBetweenStartAndEnd())
+            {
+                await DisplayAlert("저장실패", "종료시간이 시작시간보다 빠를 수 없습니다.", "Ok");
+                return;
+            };
             var sches = GetListCurrentSettedSchedule();
             foreach (var item in sches)
             {
                 await _database.AddSchedule(item);
             }
+
+
             await Navigation.PopModalAsync();
         }
         private async void OnCancelButtonClicked(object sender, EventArgs e)
@@ -532,6 +549,11 @@ namespace EasyTimeTable
         }
         private async void OnUpdateButtonClicked(object sender, EventArgs e)
         {
+            if (CheckLogicBetweenStartAndEnd())
+            {
+                await DisplayAlert("저장실패", "종료시간이 시작시간보다 빠를 수 없습니다.", "Ok");
+                return;
+            };
             await _database.DeleteSchedule(selectedSchedule);
             var sches = GetListCurrentSettedSchedule();
             foreach (var item in sches)
@@ -541,6 +563,19 @@ namespace EasyTimeTable
             await Navigation.PopModalAsync();
         }
 
+
+
+        private bool CheckLogicBetweenStartAndEnd()
+        {
+            int start = int.Parse(startHourLabel.Text);
+            int end = int.Parse(endHourLabel.Text);
+
+            if (end - start < 0)
+            {
+                return true;
+            }
+            return false;
+        }
         #endregion
     }
 }

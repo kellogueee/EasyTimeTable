@@ -21,8 +21,8 @@
                     Clicked="OnAddTimetableButtonClicked"/>
             <!--<Button Text="달력보기"
                     Clicked="OnDisplayCalendarButtonClicked"/>-->
-            <Button Text="일간표 보기"
-                    Clicked="OnDisplayDailyScheduleButtonClicked"/>
+            <!--<Button Text="일간표 보기"
+                    Clicked="OnDisplayDailyScheduleButtonClicked"/>-->
             <Button Text="설정"
                     Clicked="OnConfigurationButtonClicked"/>
         </StackLayout>

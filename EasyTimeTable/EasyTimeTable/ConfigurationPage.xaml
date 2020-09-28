@@ -4,10 +4,14 @@
              x:Class="EasyTimeTable.ConfigurationPage"
              Title="설정">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="언어선택박스"/>
-            <Label Text="시작화면스케줄 설정: 주간표냐 일간표냐 월간표냐."/>
-            <Label Text="모든 스케줄 지우기"/>
+        <StackLayout Padding="10">
+            <Button Text="모든 일정 삭제"
+                    TextColor="White"
+                     BackgroundColor="#EE5F44"
+                    Clicked="OnAllScheduleDeleteClicked"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    CornerRadius="5"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
