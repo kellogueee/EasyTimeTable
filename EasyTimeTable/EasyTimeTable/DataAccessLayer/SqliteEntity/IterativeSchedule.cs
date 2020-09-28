@@ -6,7 +6,7 @@ using SQLite;
 
 namespace EasyTimeTable.DataAccessLayer.SqliteEntity
 {
-    public class ScheduleTimetable
+    public class IterativeSchedule
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }

@@ -25,8 +25,8 @@ namespace EasyTimeTable
         private Color currentSelectedItemBackgroundColor = Color.LightGray;
         
 
-        private ScheduleTimetable selectedSchedule;
-        private readonly IDatabase<ScheduleTimetable> _database;
+        private IterativeSchedule selectedSchedule;
+        private readonly IDatabase<IterativeSchedule> _database;
 
         //그냥 추가 눌렀을때
         public AddTimetableSchedulePage()
@@ -38,7 +38,7 @@ namespace EasyTimeTable
             CreateHourBoxStacks(StartHourBoxGrid, DayNightSwitch_Start);
             CreateHourBoxStacks(EndHourBoxGrid, DayNightSwitch_End);
 
-            selectedSchedule = new ScheduleTimetable();
+            selectedSchedule = new IterativeSchedule();
 
         }
 
@@ -59,11 +59,11 @@ namespace EasyTimeTable
             SetDayNightSwitchToggled(hour, DayNightSwitch_Start, StartHourBoxGrid);
             SetDateBoxGridList(date);
 
-            selectedSchedule = new ScheduleTimetable();
+            selectedSchedule = new IterativeSchedule();
         }
 
         //시간표 스케줄 눌렀을 때
-        public AddTimetableSchedulePage(ScheduleTimetable schedule)
+        public AddTimetableSchedulePage(IterativeSchedule schedule)
         {
             InitializeComponent();
 
@@ -168,13 +168,13 @@ namespace EasyTimeTable
         /// 저장할때만 사용한다.
         /// </summary>
         /// <returns></returns>
-        private List<ScheduleTimetable> GetListCurrentSettedSchedule()
+        private List<IterativeSchedule> GetListCurrentSettedSchedule()
         {
-            var schedules = new List<ScheduleTimetable>();
+            var schedules = new List<IterativeSchedule>();
 
             foreach (var item in selecteDates)
             {
-                var insert = new ScheduleTimetable
+                var insert = new IterativeSchedule
                 {
                     SelectedColor = currentSelectedItemBackgroundColor.ToHex(),
                     WeekDate = item - 1,

@@ -1,6 +1,7 @@
 ﻿using EasyTimeTable.Constant;
 using EasyTimeTable.DataAccessLayer;
 using EasyTimeTable.DataAccessLayer.SqliteEntity;
+using EasyTimeTable.DBCodeTestFolder;
 using FFImageLoading.Forms;
 using System;
 using System.Collections.Generic;
@@ -32,8 +33,8 @@ namespace EasyTimeTable
         private int[] DefaultNightHours = new int[] { 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6, 7 };
         private static double RowHeight = 50;
 
-        private readonly IDatabase<ScheduleTimetable> _database;
-
+        private readonly IDatabase<IterativeSchedule> _database;
+        private readonly IDatabaseServiceTest _databaseServiceTest;
 
         //여기가 Appearing보다 먼저 일어남
         public MainPage()
@@ -41,19 +42,15 @@ namespace EasyTimeTable
             InitializeComponent();
 
             _database = new DatabaseService().SQLiteDatabase;
-            InitializeBasicTable();
+            //_databaseServiceTest = new SQLiteDatabaseTest().SQLiteDatabaseService;
+            
         }
-
 
         //MainPage보다 늦게일어남
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            for(var i = 0; i < 200000; i++)
-            {
-
-            }
+            InitializeBasicTable();
 
             RemoveCurrentTable();
             View[] tempArray = new View[TableBodyGrid.Children.Count];
@@ -210,6 +207,9 @@ namespace EasyTimeTable
         {
 
             var schedules = _database.GetAllScheduleAsync().Result;
+
+
+
             foreach (var item in schedules)
             {
                 //+1을 하는 이유는 DB에 저장한 Weekdate는 월요일부터 일요일까지 차례로 0부터 6까지 숫자가 부여.
@@ -291,7 +291,7 @@ namespace EasyTimeTable
             return false;
         }
 
-        private StackLayout GenerateScheduleStack(ScheduleTimetable schedule)
+        private StackLayout GenerateScheduleStack(IterativeSchedule schedule)
         {
 
             int startMinute = schedule.StartMinute;
@@ -335,7 +335,7 @@ namespace EasyTimeTable
 
 
 
-        private StackLayout GeneratePartialScheduleStack(ScheduleTimetable schedule)
+        private StackLayout GeneratePartialScheduleStack(IterativeSchedule schedule)
         {
             var stack = new StackLayout { BackgroundColor = Color.FromHex(schedule.SelectedColor) };
 

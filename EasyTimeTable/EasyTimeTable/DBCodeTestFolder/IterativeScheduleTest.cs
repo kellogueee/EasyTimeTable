@@ -1,11 +1,12 @@
-﻿using System;
+﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using SQLite;
 
-namespace EasyTimeTable.DataAccessLayer.SqliteEntity
+namespace EasyTimeTable.DBCodeTestFolder
 {
-    public class SingleScheduleTest
+    public class IterativeScheduleTest
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
@@ -16,10 +17,9 @@ namespace EasyTimeTable.DataAccessLayer.SqliteEntity
         public int StartMinute { get; set; }
         public int EndHour { get; set; }
         public int EndMinute { get; set; }
-        public bool IsIterativeSchedule { get; set; } = false;
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
+        public bool IsIterativeSchedule { get; set; } = true;
 
+        [OneToMany]
+        public List<CanceledIterativeScheduleTest> Canceledes { get; set; }
     }
 }

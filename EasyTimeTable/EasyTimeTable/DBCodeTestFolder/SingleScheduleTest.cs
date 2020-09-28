@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using SQLite;
 
-namespace EasyTimeTable.DataAccessLayer.SqliteEntity
+namespace EasyTimeTable.DBCodeTestFolder
 {
     public class SingleScheduleTest
     {
@@ -20,6 +20,5 @@ namespace EasyTimeTable.DataAccessLayer.SqliteEntity
         public int Year { get; set; }
         public int Month { get; set; }
         public int Day { get; set; }
-
     }
 }
