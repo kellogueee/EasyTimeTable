@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="EasyTimeTable.FirstIndicatorPage">
+    <ContentPage.Content>
+        <StackLayout Padding="5"
+                     BackgroundColor="White">
+            <StackLayout VerticalOptions="FillAndExpand">
+                <CarouselView ItemsSource="{Binding Introductions}"
+                              IndicatorView="indicatorView"
+                              VerticalOptions="FillAndExpand">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <forms:CachedImage Source="{Binding ImageSource}"
+                                                   BackgroundColor="Transparent"
+                                                   VerticalOptions="StartAndExpand"
+                                                   HeightRequest="500"
+                                                   Aspect="Fill">
+                                </forms:CachedImage>
+                                <Label Text="{Binding Information}"
+                                           Margin="20"
+                                           VerticalOptions="End"
+                                           HorizontalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <IndicatorView x:Name="indicatorView"
+                       IndicatorsShape="Square"
+                       IndicatorColor="LightGray"
+                       SelectedIndicatorColor="DarkGray"
+                       HorizontalOptions="Center"
+                       VerticalOptions="End"
+                       Margin="0,0,0,10" />
+            </StackLayout>
+            <Button Text="시작하기"
+                    BackgroundColor="{StaticResource ThemeColor}"
+                    CornerRadius="5"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="End"
+                    Clicked="OnStartButtonClicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -2,6 +2,7 @@
 using EasyTimeTable.TestPage;
 using System;
 using System.IO;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,42 +10,35 @@ namespace EasyTimeTable
 {
     public partial class App : Application
     {
-
-        //static Database database;
-
-        //public static Database Database
-        //{
-        //    get
-        //    {
-        //        if (database == null)
-        //        {
-        //            database = new Database(Path
-        //                .Combine(Environment
-        //                .GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "table.db3"));
-        //        }
-
-        //        return database;
-        //    }
-
-        //}
-        public static int languague = 0;
-
+        public static string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FirstIndicator.txt");
 
         public App()
         {
             Device.SetFlags(new[] { "Shapes_Experimental", "Brush_Experimental" });
-
             InitializeComponent();
 
-            //MainPage = new NavigationPage(new MainPage());
-            //MainPage = new ColorChagneTest();
-            //MainPage = new PageDesign_AddTimetableByGrid();
-            //MainPage = new PageDesignTest(20,0);
-            //MainPage = new NavigationPage(new MainPageDesignTest());
-            //MainPage = new NavigationPage(new MainPageDesignTest2());
-            //MainPage = new DailySchedulePage();
-            //MainPage = new NavigationPage(new CalendarPage());
-            MainPage = new NavigationPage(new MyPage());
+            //if (File.Exists(fileName))
+            //{
+            //    var FirstOrNot = File.ReadAllText(fileName).Trim();
+
+            //    //시작인디케이터 표시
+            //    if (FirstOrNot == "true")
+            //    {
+            //        MainPage= new FirstIndicatorPage();
+
+            //    }
+            //    //아니면 그냥
+            //    else
+            //    {
+            //        MainPage = new NavigationPage(new DayAndWeekdayPage());
+            //    }
+            //}
+            //else
+            //{
+            //    MainPage = new FirstIndicatorPage();
+            //}
+
+            MainPage = new FirstIndicatorPage();
         }
 
         protected override void OnStart()

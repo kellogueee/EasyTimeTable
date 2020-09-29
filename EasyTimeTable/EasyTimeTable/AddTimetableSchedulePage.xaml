@@ -35,6 +35,7 @@
         <ScrollView Padding="15"
                     BackgroundColor="Transparent">
             <StackLayout>
+                
                 <!--색깔 선택박스-->
                 <!--밑에 컬럼, 로우 데피니션도 c#코드로 바꿀것 나중에-->
                 <!--반복설정을 만들어야함. -->

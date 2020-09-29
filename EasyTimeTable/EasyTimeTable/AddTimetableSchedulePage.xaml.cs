@@ -19,7 +19,7 @@ namespace EasyTimeTable
 
 
         private static string[] colorArray = new string[] { "#ff837f", "#89a5ea", "#a5ea89", "#ffcb6b", "#e96ec2", "#5dc2c4", "#cbde8c" };
-        private static string[] dateNameArray = new string[] {"시간", "월", "화", "수", "목", "금", "토", "일" };
+        private static string[] dateNameArray = new string[] {"일","월","화","수","목","금","토" };
         private List<int> selecteDates = new List<int>();
         
         private Color currentSelectedItemBackgroundColor = Color.LightGray;
@@ -88,12 +88,12 @@ namespace EasyTimeTable
             deleteButton.IsVisible = true;
             saveButton.IsVisible = false;
             saveButton2.IsVisible = true;
-            selecteDates.Add(schedule.WeekDate + 1);
+            selecteDates.Add(schedule.WeekDate);
 
 
             SetSelectedColor(schedule.SelectedColor);
             SetScheduleTitle(schedule.ScheduleTitle);
-            SetDateBoxGridList(schedule.WeekDate + 1);
+            SetDateBoxGridList(schedule.WeekDate);
             SetDayNightSwitchToggled(schedule.StartHour, DayNightSwitch_Start, StartHourBoxGrid);
             StartMinute.Value = schedule.StartMinute;
             SetDayNightSwitchToggled(schedule.EndHour, DayNightSwitch_End, EndHourBoxGrid);
@@ -118,7 +118,8 @@ namespace EasyTimeTable
                 var parent = (StackLayout)item;
                 var child = (StackLayout)parent.Children.FirstOrDefault();
                 var childchild = (Label)child.Children.FirstOrDefault();
-                if (dateNameArray.IndexOf(childchild.Text) == date)
+                var id = int.Parse(childchild.StyleId);
+                if (id == date)
                 {
                     child.BackgroundColor = currentSelectedItemBackgroundColor;
                     break;
@@ -143,8 +144,6 @@ namespace EasyTimeTable
                 DayOrNight.IsToggled = true;
                 SetHourGridBox(HourBoxGrid, hour);
             }
-
-
         }
 
         private void SetHourGridBox(Grid StartOrEnd, int hour)
@@ -187,7 +186,7 @@ namespace EasyTimeTable
                 var insert = new IterativeSchedule
                 {
                     SelectedColor = currentSelectedItemBackgroundColor.ToHex(),
-                    WeekDate = item - 1,
+                    WeekDate = item,
                     StartHour = int.Parse(startHourLabel.Text),
                     StartMinute = (int)StartMinute.Value,
                     EndHour = int.Parse(endHourLabel.Text),
@@ -352,10 +351,9 @@ namespace EasyTimeTable
             var dateName = new Label
             {
                 Style = (Style)Resources.Where(x => x.Key == "DateName").FirstOrDefault().Value,
-                Text = dateNameArray[col+1],
-                StyleId= (col + 1).ToString()
             };
-
+            dateName.Text = dateNameArray[(col + 1) % 7];
+            dateName.StyleId = ((col + 1) % 7).ToString();
             return dateName;
         }
 
@@ -529,6 +527,33 @@ namespace EasyTimeTable
         }
         private async void OnSaveButtonClicked(object sender, EventArgs e)
         {
+
+            if(selecteDates.Count==0|| selecteDates == null)
+            {
+                await DisplayAlert("저장실패", "요일을 선택하세요.", "Ok");
+                return;
+            }
+
+            try
+            {
+                int.Parse(startHourLabel.Text);
+            }
+            catch
+            {
+                await DisplayAlert("저장실패", "시작시간을 설정하세요.", "Ok");
+                return;
+            }
+
+            try
+            {
+                int.Parse(endHourLabel.Text);
+            }
+            catch
+            {
+                await DisplayAlert("저장실패", "종료시간을 설정하세요.", "Ok");
+                return;
+            }
+
             if (CheckLogicBetweenStartAndEnd())
             {
                 await DisplayAlert("저장실패", "종료시간이 시작시간보다 빠를 수 없습니다.", "Ok");
@@ -549,6 +574,32 @@ namespace EasyTimeTable
         }
         private async void OnUpdateButtonClicked(object sender, EventArgs e)
         {
+            if (selecteDates.Count == 0 || selecteDates == null)
+            {
+                await DisplayAlert("저장실패", "요일을 선택하세요.", "Ok");
+                return;
+            }
+
+            try
+            {
+                int.Parse(startHourLabel.Text);
+            }
+            catch
+            {
+                await DisplayAlert("저장실패", "시작시간을 설정하세요.", "Ok");
+                return;
+            }
+
+            try
+            {
+                int.Parse(endHourLabel.Text);
+            }
+            catch
+            {
+                await DisplayAlert("저장실패", "종료시간을 설정하세요.", "Ok");
+                return;
+            }
+
             if (CheckLogicBetweenStartAndEnd())
             {
                 await DisplayAlert("저장실패", "종료시간이 시작시간보다 빠를 수 없습니다.", "Ok");
@@ -570,12 +621,37 @@ namespace EasyTimeTable
             int start = int.Parse(startHourLabel.Text);
             int end = int.Parse(endHourLabel.Text);
 
-            if (end - start < 0)
+            //주간이다
+            if (start > 7 && start < 20)
             {
-                return true;
+                if (end - start < 0)
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
+
+            //야간
+            else
+            {
+                start -= 20;
+                end -= 20;
+                if (start < 0)
+                {
+                    start += 24;
+                }
+                if (end < 0)
+                {
+                    end += 24;
+                }
+                if (end - start < 0)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
+
         #endregion
     }
 }

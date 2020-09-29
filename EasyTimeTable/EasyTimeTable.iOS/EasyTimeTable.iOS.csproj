@@ -156,4 +156,34 @@
   <ItemGroup>
     <BundleResource Include="Resources\sun48.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddIcon48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddIcon56.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\AddIcon36.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Intro6.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Intro1.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Intro2.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Intro3.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Intro4.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Intro5.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\logo.png" />
+  </ItemGroup>
 </Project>
