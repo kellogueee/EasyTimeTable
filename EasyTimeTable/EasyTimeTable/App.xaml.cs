@@ -1,5 +1,6 @@
-﻿using EasyTimeTable.DataAccessLayer;
-using EasyTimeTable.TestPage;
+﻿using EasyTimeTable.DatabaseLayer;
+using EasyTimeTable.ViewModels;
+using EasyTimeTable.Views;
 using System;
 using System.IO;
 using System.Reflection;
@@ -10,36 +11,30 @@ namespace EasyTimeTable
 {
     public partial class App : Application
     {
-        public static string fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FirstIndicator.txt");
+        public FlagSettingsViewModel Settings { get; private set; }
 
         public App()
         {
             Device.SetFlags(new[] { "Shapes_Experimental", "Brush_Experimental" });
             InitializeComponent();
+            Current.Properties.Clear();
 
-            //if (File.Exists(fileName))
-            //{
-            //    var FirstOrNot = File.ReadAllText(fileName).Trim();
+            Settings = new FlagSettingsViewModel(Current.Properties);
 
-            //    //시작인디케이터 표시
-            //    if (FirstOrNot == "true")
-            //    {
-            //        MainPage= new FirstIndicatorPage();
+            
+            if (!Settings.IsSkipCarousel)
+            {
+                MainPage = new FirstInformationCarouselPage();
+            }
+            else
+            {
+                MainPage = new EasyTimetablePage();
+            }
+            //MainPage = new EasyTimetablePage();
 
-            //    }
-            //    //아니면 그냥
-            //    else
-            //    {
-            //        MainPage = new NavigationPage(new DayAndWeekdayPage());
-            //    }
-            //}
-            //else
-            //{
-            //    MainPage = new FirstIndicatorPage();
-            //}
 
-            MainPage = new FirstIndicatorPage();
         }
+
 
         protected override void OnStart()
         {
@@ -47,6 +42,7 @@ namespace EasyTimeTable
 
         protected override void OnSleep()
         {
+            Settings.SaveState(Current.Properties);
         }
 
         protected override void OnResume()

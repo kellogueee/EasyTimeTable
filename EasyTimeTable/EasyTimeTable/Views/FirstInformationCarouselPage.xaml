@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EasyTimeTable.Views.FirstInformationCarouselPage"
+             BindingContext="{Binding Source={x:Static Application.Current},Path=Settings}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="시작하기"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Clicked="OnStartButtonClicked"/>
+            <Switch x:Name="skip" VerticalOptions="Center"
+                    IsToggled="{Binding IsSkipCarousel}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

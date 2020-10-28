@@ -6,14 +6,52 @@
              mc:Ignorable="d"
              x:Class="EasyTimeTable.App">
     <Application.Resources>
-        <Color x:Key="MppGreen">#5dc2c4</Color>
-        <Color x:Key="ThemeColor">#2196F3</Color>
-        <x:String x:Key="AddIconString">AddIcon96.png</x:String>
-        <x:Double x:Key="firstColWidth">40</x:Double>
-        <x:Double x:Key="firstColWidthTwice">80</x:Double>
-        <x:Double x:Key="RowHeight">60</x:Double>
+        <!--Light Colors-->
+        <Color x:Key="LightPageBackgroundColor">White</Color>
+        <Color x:Key="LightCellBackgroundColor">White</Color>
+        <Color x:Key="LightNavigationBarColor">White</Color>
+        <Color x:Key="LightFrameBorderColor">Gray</Color>
+        <Color x:Key="LightPrimaryTextColor">Black</Color>
+        <Color x:Key="LightTertiaryTextColor">Gray</Color>
+
+        <!-- Dark colors -->
+        <Color x:Key="DarkPageBackgroundColor">Black</Color>
+        <Color x:Key="DarkCellBackgroundColor">Black</Color>
+        <Color x:Key="DarkNavigationBarColor">#1e1d1d</Color>
+        <Color x:Key="DarkFrameBorderColor">WhiteSmoke</Color>
+        <Color x:Key="DarkPrimaryTextColor">White</Color>
+        <Color x:Key="DarkTertiaryTextColor">WhiteSmoke</Color>
+
+
         <Style TargetType="NavigationPage">
-            <Setter Property="NavigationPage.BarBackgroundColor" Value="#2196F3"/>
+            <Setter Property="BarBackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource LightNavigationBarColor},Dark={StaticResource DarkNavigationBarColor}}"/>
+            <Setter Property="BarTextColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
         </Style>
+        
+        <Style TargetType="Frame">
+            <Setter Property="BorderColor"
+                    Value="Transparent"/>
+        </Style>
+
+        <Style TargetType="Grid">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource LightFrameBorderColor}, Dark={StaticResource DarkFrameBorderColor}}"/>
+        </Style>
+
+        <Style TargetType="StackLayout" x:Key="GridCell">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource LightCellBackgroundColor},Dark={StaticResource DarkCellBackgroundColor}}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="LabelinCell">
+            <Setter Property="VerticalOptions"
+                    Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions"
+                    Value="CenterAndExpand"/>
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
+        </Style>
+
     </Application.Resources>
 </Application>

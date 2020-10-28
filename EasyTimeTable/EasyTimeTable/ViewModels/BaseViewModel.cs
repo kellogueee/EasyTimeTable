@@ -1,43 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EasyTimeTable.ViewModels
 {
-    public class BaseViewModel : ObservableObject
+    public class BaseViewModel : INotifyPropertyChanged
     {
-        bool isBusy;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public bool IsBusy
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            get => isBusy;
-            set => SetProperty(ref isBusy, value, onChanged: () => OnPropertyChanged(nameof(IsNotBusy)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public bool IsNotBusy => !IsBusy;
-
-
-        public virtual void OnAppearing()
-        {
-
-        }
-
-        public virtual void OnDisappearing()
-        {
-
-        }
-
-
-        internal event Func<string, Task> DoDisplayAlert;
-
-
-        //public Task DisplayAlertAsync(string message)
-        //{
-        //    return DoDisplayAlert?.Invoke(message) ?? Task.CompletedTask;
-        //}
-
-        public Task DisplayAlertAsync(string message) => DoDisplayAlert?.Invoke(message) ?? Task.CompletedTask;
-
     }
 }
