@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace EasyTimeTable.Views
+namespace EasyTimeTable.Model
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EasyTimetablePageDetail : ContentPage
+    public partial class AddScheduleModelDetail : ContentPage
     {
-        public EasyTimetablePageDetail()
+        public AddScheduleModelDetail()
         {
             InitializeComponent();
         }

@@ -4,14 +4,14 @@
              x:Class="EasyTimeTable.Views.EasyTimetablePage"
              xmlns:pages="clr-namespace:EasyTimeTable.Views"
              BackgroundColor="black">
-  <MasterDetailPage.Master>
-    <pages:EasyTimetablePageMaster x:Name="MasterPage" />
-  </MasterDetailPage.Master>
-  <MasterDetailPage.Detail>
-        <NavigationPage BackgroundColor="black">
-      <x:Arguments>
-        <pages:DayAndWeekdayTimetable />
-      </x:Arguments>
-    </NavigationPage>
-  </MasterDetailPage.Detail>
+    <MasterDetailPage.Master>
+        <pages:EasyTimetablePageMaster x:Name="MasterPage" />
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <pages:EasyTimetableMainPage />
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
 </MasterDetailPage>

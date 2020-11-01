@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:custom="clr-namespace:EasyTimeTable.ResourceRenderer"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
@@ -13,7 +14,12 @@
         <Color x:Key="LightFrameBorderColor">Gray</Color>
         <Color x:Key="LightPrimaryTextColor">Black</Color>
         <Color x:Key="LightTertiaryTextColor">Gray</Color>
-
+        <Color x:Key="LightRadioBorderColor">black</Color>
+        <Color x:Key="LightMasterPageBackgroundColor">#03A9F4</Color>
+        <x:String x:Key="downArrowLight">downArrow32Light</x:String>
+        <x:String x:Key="AddIconLight">AddIcon96Light</x:String>
+        
+        
         <!-- Dark colors -->
         <Color x:Key="DarkPageBackgroundColor">Black</Color>
         <Color x:Key="DarkCellBackgroundColor">Black</Color>
@@ -21,8 +27,26 @@
         <Color x:Key="DarkFrameBorderColor">WhiteSmoke</Color>
         <Color x:Key="DarkPrimaryTextColor">White</Color>
         <Color x:Key="DarkTertiaryTextColor">WhiteSmoke</Color>
+        <Color x:Key="DarkEntryBackgroundColor">#272626</Color>
+        <Color x:Key="DarkRadioBorderColor">WhiteSmoke</Color>
+        <Color x:Key="DarkMasterPageBackgroundColor">#0470a1</Color>
+        <x:String x:Key="downArrowDark">downArrow32Dark</x:String>
+        <x:String x:Key="AddIconDark">AddIcon96Dark</x:String>
 
 
+        <Style TargetType="RadioButton">
+            <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor},Dark={StaticResource DarkRadioBorderColor}}"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="BorderWidth" Value="2"/>
+            <Setter Property="CornerRadius" Value="90"/>
+        </Style>
+
+        <Style TargetType="Grid" x:Key="MasterPageBackground">
+            <Setter Property="BackgroundColor"
+                    Value="{AppThemeBinding Light={StaticResource LightMasterPageBackgroundColor},Dark={StaticResource DarkMasterPageBackgroundColor}}"/>
+        </Style>
+        
+        
         <Style TargetType="NavigationPage">
             <Setter Property="BarBackgroundColor"
                     Value="{AppThemeBinding Light={StaticResource LightNavigationBarColor},Dark={StaticResource DarkNavigationBarColor}}"/>
@@ -43,6 +67,8 @@
         <Style TargetType="StackLayout" x:Key="GridCell">
             <Setter Property="BackgroundColor"
                     Value="{AppThemeBinding Light={StaticResource LightCellBackgroundColor},Dark={StaticResource DarkCellBackgroundColor}}"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
         </Style>
         <Style TargetType="Label" x:Key="LabelinCell">
             <Setter Property="VerticalOptions"
@@ -52,6 +78,21 @@
             <Setter Property="TextColor"
                     Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
         </Style>
-
+        <Style TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
+        </Style>
+        <Style TargetType="custom:BorderlessEditor">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
+            <Setter Property="PlaceholderColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
+        </Style>
+        <Style TargetType="custom:BorderlessEntry">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
+            <Setter Property="PlaceholderColor"
+                    Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
+        </Style>
     </Application.Resources>
 </Application>

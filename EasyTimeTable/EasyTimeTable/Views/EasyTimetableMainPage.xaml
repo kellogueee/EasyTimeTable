@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resource="clr-namespace:EasyTimeTable.Resx"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="EasyTimeTable.Views.EasyTimetableMainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame">
+                <Setter Property="Padding" Value="1"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label FontSize="Title" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" x:Name="todayTitle"/>
+            <forms:CachedImage Source="sun64.png" 
+                           BackgroundColor="Transparent" 
+                           Aspect="AspectFit" 
+                           HorizontalOptions="End"
+                           Margin="0,0,20,0">
+                <forms:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDayScheduleTapped"/>
+                </forms:CachedImage.GestureRecognizers>
+            </forms:CachedImage>
+            <forms:CachedImage Source="moon64.png" 
+                           BackgroundColor="Transparent" 
+                           Aspect="AspectFit" 
+                           HorizontalOptions="End"
+                           Margin="0,0,20,0">
+                <forms:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNightScheduleTapped"/>
+                </forms:CachedImage.GestureRecognizers>
+            </forms:CachedImage>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <Grid RowSpacing="1" ColumnSpacing="1" x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackLayout Style="{StaticResource GridCell}" Grid.Column="0" Grid.Row="0" Margin="0,0.5,0,0">
+            <Label Text="{x:Static resource:AppResources.Hour}" Style="{StaticResource LabelinCell}"/>
+        </StackLayout>
+        
+        <ScrollView Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Scrolled="OnHorizontalScroll" 
+                    x:Name="horizontalScroll" HorizontalScrollBarVisibility="Never">
+            <Grid x:Name="HorizontalGrid" ColumnSpacing="1" RowSpacing="1" HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Column="0" x:Name="Monday" Margin="0,0.5,0,0">
+                    <Label Text="{x:Static resource:AppResources.Monday}" Style="{StaticResource LabelinCell}"/>
+                </StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Column="1" x:Name="Tuesday" Margin="0,0.5,0,0">
+                    <Label Text="{x:Static resource:AppResources.Tuesday}" Style="{StaticResource LabelinCell}"/>
+                </StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Column="2" x:Name="Wednesday" Margin="0,0.5,0,0">
+                    <Label Text="{x:Static resource:AppResources.Wednesday}"  Style="{StaticResource LabelinCell}"/>
+                </StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Column="3" x:Name="Thursday" Margin="0,0.5,0,0">
+                    <Label Text="{x:Static resource:AppResources.Thursday}" Style="{StaticResource LabelinCell}"/>
+                </StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Column="4" x:Name="Friday" Margin="0,0.5,0,0">
+                    <Label Text="{x:Static resource:AppResources.Friday}" Style="{StaticResource LabelinCell}"/>
+                </StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Column="5" x:Name="Saturday" Margin="0,0.5,0,0">
+                    <Label Text="{x:Static resource:AppResources.Saturday}" Style="{StaticResource LabelinCell}" TextColor="#33B5E5"/>
+                </StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Column="6" x:Name="Sunday" Margin="0,0.5,0,0">
+                    <Label Text="{x:Static resource:AppResources.Sunday}" Style="{StaticResource LabelinCell}" TextColor="Red"/>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+        <ScrollView Grid.Row="1" Grid.Column="0" Scrolled="OnVerticalScroll" x:Name="verticalScroll" VerticalScrollBarVisibility="Never">
+            <Grid RowSpacing="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="0"><Label Style="{StaticResource LabelinCell}"  x:Name="h0" Text="00"/></StackLayout>       
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="1"><Label Style="{StaticResource LabelinCell}"  x:Name="h1" Text="01"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="2"><Label Style="{StaticResource LabelinCell}"  x:Name="h2" Text="02"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="3"><Label Style="{StaticResource LabelinCell}"  x:Name="h3" Text="03"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="4"><Label Style="{StaticResource LabelinCell}"  x:Name="h4" Text="04"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="5"><Label Style="{StaticResource LabelinCell}"  x:Name="h5" Text="05"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="6"><Label Style="{StaticResource LabelinCell}"  x:Name="h6" Text="06"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="7"><Label Style="{StaticResource LabelinCell}"  x:Name="h7" Text="07"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="8"><Label Style="{StaticResource LabelinCell}"  x:Name="h8" Text="08"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="9"><Label Style="{StaticResource LabelinCell}"  x:Name="h9" Text="09"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="10"><Label Style="{StaticResource LabelinCell}" x:Name="h10" Text="10"/></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="11"><Label Style="{StaticResource LabelinCell}" x:Name="h11" Text="11"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="12"><Label Style="{StaticResource LabelinCell}" x:Name="h12" Text="12"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="13"><Label Style="{StaticResource LabelinCell}" x:Name="h13" Text="13"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="14"><Label Style="{StaticResource LabelinCell}" x:Name="h14" Text="14"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="15"><Label Style="{StaticResource LabelinCell}" x:Name="h15" Text="15"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="16"><Label Style="{StaticResource LabelinCell}" x:Name="h16" Text="16"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="17"><Label Style="{StaticResource LabelinCell}" x:Name="h17" Text="17"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="18"><Label Style="{StaticResource LabelinCell}" x:Name="h18" Text="18"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="19"><Label Style="{StaticResource LabelinCell}" x:Name="h19" Text="19"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="20"><Label Style="{StaticResource LabelinCell}" x:Name="h20" Text="20"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="21"><Label Style="{StaticResource LabelinCell}" x:Name="h21" Text="21"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="22"><Label Style="{StaticResource LabelinCell}" x:Name="h22" Text="22"/></StackLayout>          
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="23"><Label Style="{StaticResource LabelinCell}" x:Name="h23" Text="23"/></StackLayout>          
+            </Grid>
+        </ScrollView>
+
+        <ScrollView Grid.Row="1" Grid.Column="1" Orientation="Both" 
+                    x:Name="intersection" Scrolled="OnIntersectionScroll" 
+                    HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+            <!--<StackLayout  BackgroundColor="DarkGoldenrod" HeightRequest="1000" WidthRequest="1000">
+                <Label Text="1" FontSize="Title"/>
+            </StackLayout>-->
+            <Grid RowSpacing="1" ColumnSpacing="1" x:Name="IntersectionGrid" HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="0" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="0" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="0" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="0" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="0" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="0" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="0" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="1" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="1" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="1" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="1" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="1" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="1" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="1" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="2" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="2" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="2" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="2" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="2" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="2" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="2" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="3" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="3" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="3" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="3" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="3" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="3" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="3" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="4" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="4" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="4" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="4" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="4" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="4" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="4" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="5" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="5" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="5" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="5" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="5" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="5" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="5" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="6" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="6" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="6" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="6" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="6" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="6" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="6" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="7" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="7" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="7" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="7" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="7" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="7" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="7" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="8" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="8" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="8" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="8" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="8" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="8" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="8" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="9" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="9" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="9" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="9" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="9" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="9" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="9" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="10" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="10" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="10" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="10" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="10" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="10" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="10" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="11" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="11" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="11" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="11" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="11" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="11" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="11" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+
+
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="12" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="12" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="12" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="12" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="12" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="12" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="12" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="13" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="13" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="13" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="13" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="13" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="13" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="13" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="14" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="14" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="14" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="14" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="14" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="14" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="14" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="15" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="15" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="15" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="15" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="15" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="15" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="15" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="16" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="16" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="16" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="16" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="16" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="16" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="16" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="17" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="17" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="17" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="17" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="17" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="17" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="17" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="18" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="18" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="18" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="18" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="18" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="18" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="18" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="19" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="19" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="19" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="19" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="19" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="19" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="19" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="20" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="20" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="20" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="20" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="20" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="20" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="20" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="21" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="21" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="21" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="21" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="21" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="21" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="21" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="22" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="22" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="22" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="22" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="22" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="22" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="22" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="23" Grid.Column="0"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="23" Grid.Column="1"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="23" Grid.Column="2"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="23" Grid.Column="3"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="23" Grid.Column="4"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="23" Grid.Column="5"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                <StackLayout Style="{StaticResource GridCell}" Grid.Row="23" Grid.Column="6"><StackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnCellTapped"/></StackLayout.GestureRecognizers></StackLayout>
+                
+                
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

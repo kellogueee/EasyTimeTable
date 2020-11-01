@@ -18,6 +18,17 @@ namespace EasyTimeTable.DatabaseLayer
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Schedule>().Wait();
+            _database.CreateTableAsync<AddedColor>().Wait();
+        }
+
+        public Task<List<AddedColor>> GetAllColorsAsync()
+        {
+            return _database.Table<AddedColor>().ToListAsync();
+        }
+
+        public Task AddColorAsync(AddedColor addedColor)
+        {
+            return _database.InsertAsync(addedColor);
         }
 
         public Task<List<Schedule>> GetAllScheduleAsync()
@@ -25,27 +36,32 @@ namespace EasyTimeTable.DatabaseLayer
             return _database.Table<Schedule>().ToListAsync();
         }
 
-        public Task<List<Schedule>> GetAllScheduleByWeekdate(int date)
+        public Task<List<Schedule>> GetAllScheduleAsyncByWeekdate(int date)
         {
             return _database.Table<Schedule>().Where(x => x.ScheuldeWeekdate == date).ToListAsync();
         }
 
-        public Task AddSchedule(Schedule schedule)
+        public Task<Schedule> GetScheduleById(int id)
+        {
+            return _database.Table<Schedule>().Where(x => x.ID == id).FirstOrDefaultAsync();
+        }
+
+        public Task AddScheduleAsync(Schedule schedule)
         {
             return _database.InsertAsync(schedule);
         }
 
-        public Task UpdateSchedule(Schedule schedule)
+        public Task UpdateScheduleAsync(Schedule schedule)
         {
             return _database.UpdateAsync(schedule);
         }
 
-        public Task DeleteSchedule(Schedule schedule)
+        public Task DeleteScheduleAsync(Schedule schedule)
         {
             return _database.DeleteAsync(schedule);
         }
 
-        public Task DeleteAllSchedule()
+        public Task DeleteAllScheduleAsync()
         {
             return _database.DeleteAllAsync<Schedule>();
         }

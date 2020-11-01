@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace EasyTimeTable.Views
+namespace EasyTimeTable.Model
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EasyTimetablePage : MasterDetailPage
+    public partial class AddScheduleModel : MasterDetailPage
     {
-        public EasyTimetablePage()
+        public AddScheduleModel()
         {
             InitializeComponent();
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
@@ -20,17 +20,13 @@ namespace EasyTimeTable.Views
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as EasyTimetablePageMasterMenuItem;
+            var item = e.SelectedItem as AddScheduleModelMasterMenuItem;
             if (item == null)
                 return;
 
             var page = (Page)Activator.CreateInstance(item.TargetType);
-            if (item.Id > 0)
-            {
-                page.Title = item.Title;
+            page.Title = item.Title;
 
-            }
-            
             Detail = new NavigationPage(page);
             IsPresented = false;
 

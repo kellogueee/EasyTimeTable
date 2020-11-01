@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:custom="clr-namespace:EasyTimeTable.ResourceRenderer"
+             xmlns:resource="clr-namespace:EasyTimeTable.Resx"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="EasyTimeTable.Views.AddShcedulePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="custom:BorderlessPicker">
+                <Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightPrimaryTextColor},Dark={StaticResource DarkPrimaryTextColor}}"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="Label">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            </Style>
+            <Style TargetType="Frame">
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource LightFrameBorderColor},Dark={StaticResource DarkFrameBorderColor} }"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource LightPageBackgroundColor},Dark={StaticResource DarkPageBackgroundColor}}"/>
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="40" Padding="15" Style="{StaticResource GridCell}">
+                <!--색깔 고르기-->
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static resource:AppResources.SelectColor}" FontSize="Subtitle"/>
+                        <Button Text="{x:Static resource:AppResources.Edit}" 
+                                Padding="0" 
+                                FontSize="Small" 
+                                HeightRequest="20" 
+                                WidthRequest="45" 
+                                HorizontalOptions="EndAndExpand"
+                                Clicked="OnColorEditButtonClicked"/>
+                    </StackLayout>
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <Grid ColumnSpacing="10" x:Name="ColorGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <!--여기는 코드베이스-->
+                        </Grid>
+                    </ScrollView>
+                </StackLayout>
+
+                <!--제목-->
+                <StackLayout>
+                    <Label Text="{x:Static resource:AppResources.Title}" FontSize="Subtitle" />
+                    <Frame BorderColor="{Binding SelectedCurrentBackgroundColor}">
+                        <custom:BorderlessEntry Placeholder="{x:Static resource:AppResources.InsertTitle}" FontSize="Small" x:Name="title" Text="{Binding ScheduleTitle}" />
+                    </Frame>
+                </StackLayout>
+
+                <!--내용-->
+                <StackLayout>
+                    <Label Text="{x:Static resource:AppResources.Contents}" FontSize="Subtitle"/>
+                    <Frame BorderColor="{Binding SelectedCurrentBackgroundColor}" HeightRequest="150" Padding="2">
+                        <custom:BorderlessEditor Placeholder="{x:Static resource:AppResources.InsertContents}" FontSize="Small" x:Name="contents" Text="{Binding ScheduleContents}"/>
+                    </Frame>
+                </StackLayout>
+
+
+                <!--요일 추가할 때만-->
+                <StackLayout x:Name="DayofWeekStackForAdd">
+                    <Label Text="{x:Static resource:AppResources.DayofWeek}" FontSize="Subtitle"/>
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <StackLayout Orientation="Horizontal" Spacing="15">
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox Color="{Binding SelectedCurrentBackgroundColor}" CheckedChanged="OnDayofWeekCheckboxChecked" ClassId="1" x:Name="monCheck"/>
+                                <Label Text="{x:Static resource:AppResources.Monday}" FontSize="Medium"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox Color="{Binding SelectedCurrentBackgroundColor}" CheckedChanged="OnDayofWeekCheckboxChecked" ClassId="2" x:Name="tueCheck"/>
+                                <Label Text="{x:Static resource:AppResources.Tuesday}" FontSize="Medium"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox Color="{Binding SelectedCurrentBackgroundColor}" CheckedChanged="OnDayofWeekCheckboxChecked" ClassId="3" x:Name="wedCheck"/>
+                                <Label Text="{x:Static resource:AppResources.Wednesday}" FontSize="Medium"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox Color="{Binding SelectedCurrentBackgroundColor}" CheckedChanged="OnDayofWeekCheckboxChecked" ClassId="4" x:Name="thuCheck"/>
+                                <Label Text="{x:Static resource:AppResources.Thursday}" FontSize="Medium"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox Color="{Binding SelectedCurrentBackgroundColor}" CheckedChanged="OnDayofWeekCheckboxChecked" ClassId="5" x:Name="friCheck"/>
+                                <Label Text="{x:Static resource:AppResources.Friday}" FontSize="Medium"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox Color="{Binding SelectedCurrentBackgroundColor}" CheckedChanged="OnDayofWeekCheckboxChecked" ClassId="6" x:Name="satCheck"/>
+                                <Label Text="{x:Static resource:AppResources.Saturday}" FontSize="Medium"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox Color="{Binding SelectedCurrentBackgroundColor}" CheckedChanged="OnDayofWeekCheckboxChecked" ClassId="0" x:Name="sunCheck"/>
+                                <Label Text="{x:Static resource:AppResources.Sunday}" FontSize="Medium"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                </StackLayout>
+
+
+
+                <!--요일 수정 할때만-->
+                <StackLayout x:Name="DayofWeekStackForUpdate" IsVisible="false">
+                    <Label Text="{x:Static resource:AppResources.DayofWeek}" FontSize="Subtitle"/>
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <StackLayout Orientation="Horizontal" Spacing="15">
+                            <StackLayout Orientation="Horizontal">
+                                <RadioButton  CheckedChanged="OnDayofWeekRadioButtonChecked" GroupName="dayofWeek" ClassId="1" x:Name="monRadio"/>
+                                <Label Text="{x:Static resource:AppResources.Monday}" FontSize="Medium"/>                                                                
+                            </StackLayout>                                                                                                                               
+                            <StackLayout Orientation="Horizontal">
+                                <RadioButton  CheckedChanged="OnDayofWeekRadioButtonChecked" GroupName="dayofWeek" ClassId="2" x:Name="tueRadio"/>
+                                <Label Text="{x:Static resource:AppResources.Tuesday}" FontSize="Medium"/>                                                               
+                            </StackLayout>                                                                                                                               
+                            <StackLayout Orientation="Horizontal">
+                                <RadioButton CheckedChanged="OnDayofWeekRadioButtonChecked" GroupName="dayofWeek" ClassId="3" x:Name="wedRadio"/>
+                                <Label Text="{x:Static resource:AppResources.Wednesday}" FontSize="Medium"/>                                                             
+                            </StackLayout>                                                                                                                               
+                            <StackLayout Orientation="Horizontal">
+                                <RadioButton CheckedChanged="OnDayofWeekRadioButtonChecked" GroupName="dayofWeek" ClassId="4" x:Name="thuRadio"/>
+                                <Label Text="{x:Static resource:AppResources.Thursday}" FontSize="Medium"/>                                                              
+                            </StackLayout>                                                                                                                               
+                            <StackLayout Orientation="Horizontal">
+                                <RadioButton  CheckedChanged="OnDayofWeekRadioButtonChecked" GroupName="dayofWeek" ClassId="5" x:Name="friRadio"/>
+                                <Label Text="{x:Static resource:AppResources.Friday}" FontSize="Medium"/>                                                                
+                            </StackLayout>                                                                                                                               
+                            <StackLayout Orientation="Horizontal">
+                                <RadioButton  CheckedChanged="OnDayofWeekRadioButtonChecked" GroupName="dayofWeek" ClassId="6" x:Name="satRadio"/>
+                                <Label Text="{x:Static resource:AppResources.Saturday}" FontSize="Medium"/>                                                              
+                            </StackLayout>                                                                                                                               
+                            <StackLayout Orientation="Horizontal">
+                                <RadioButton CheckedChanged="OnDayofWeekRadioButtonChecked" GroupName="dayofWeek" ClassId="0" x:Name="sunRadio"/>
+                                <Label Text="{x:Static resource:AppResources.Sunday}" FontSize="Medium"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                </StackLayout>
+
+
+
+
+                <!--스케줄 반복 여부-->
+                <StackLayout x:Name="IterationStack">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{x:Static resource:AppResources.Iteration}" FontSize="Subtitle"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <CheckBox  x:Name="IterativeCheckbox" Color="{Binding SelectedCurrentBackgroundColor}"/>
+                            <Label Text="{x:Static resource:AppResources.NotIterative}"/>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <!--날찌 피커-->
+                    <StackLayout x:Name="datePicker">
+                        <Label Text="{x:Static resource:AppResources.ScheduleDate}" FontSize="Subtitle" IsVisible="{Binding Source={x:Reference IterativeCheckbox}, Path=IsChecked}"/>
+                        <StackLayout IsVisible="{Binding Source={x:Reference IterativeCheckbox}, Path=IsChecked}">
+                            <Grid BackgroundColor="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Frame Grid.Column="0"
+                               BorderColor="{Binding SelectedCurrentBackgroundColor}">
+                                    <Grid BackgroundColor="Transparent">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <custom:BorderlessPicker Title="{x:Static resource:AppResources.Year}"
+                                                             ItemsSource="{Binding Years}"
+                                                             SelectedItem="{Binding SelectedYear}">
+
+                                        </custom:BorderlessPicker>
+                                        <forms:CachedImage 
+                                        Grid.Column="1"
+                                        Source="{AppThemeBinding Light={StaticResource downArrowLight},Dark={StaticResource downArrowDark}}"
+                                        BackgroundColor="Transparent"
+                                        Aspect="AspectFit"
+                                        Opacity="0.5">
+                                            <forms:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnComboBoxFrameTapped"/>
+                                            </forms:CachedImage.GestureRecognizers>
+                                        </forms:CachedImage>
+                                    </Grid>
+
+                                </Frame>
+                                <Frame Grid.Column="1"
+                               BorderColor="{Binding SelectedCurrentBackgroundColor}">
+                                    <Grid BackgroundColor="Transparent">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <custom:BorderlessPicker Title="{x:Static resource:AppResources.Month}"
+                                                             ItemsSource="{Binding Months}"
+                                                             SelectedItem="{Binding SelectedMonth}">
+
+                                        </custom:BorderlessPicker>
+                                        <forms:CachedImage 
+                                        Grid.Column="1"
+                                        Source="{AppThemeBinding Light={StaticResource downArrowLight},Dark={StaticResource downArrowDark}}"
+                                        BackgroundColor="Transparent"
+                                        Aspect="AspectFit"
+                                        Opacity="0.5">
+                                            <forms:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnComboBoxFrameTapped"/>
+                                            </forms:CachedImage.GestureRecognizers>
+                                        </forms:CachedImage>
+                                    </Grid>
+
+                                </Frame>
+                                <Frame Grid.Column="2"
+                                BorderColor="{Binding SelectedCurrentBackgroundColor}">
+                                    <Grid BackgroundColor="Transparent">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <custom:BorderlessPicker Title="{x:Static resource:AppResources.Date}"
+                                                             ItemsSource="{Binding Days}"
+                                                             SelectedItem="{Binding SelectedDay}">
+
+                                        </custom:BorderlessPicker>
+                                        <forms:CachedImage 
+                                        Grid.Column="1"
+                                        Source="{AppThemeBinding Light={StaticResource downArrowLight},Dark={StaticResource downArrowDark}}"
+                                        BackgroundColor="Transparent"
+                                        Aspect="AspectFit"
+                                        Opacity="0.5">
+                                            <forms:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnComboBoxFrameTapped"/>
+                                            </forms:CachedImage.GestureRecognizers>
+                                        </forms:CachedImage>
+                                    </Grid>
+
+                                </Frame>
+                            </Grid>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+
+
+                <!--일정 시간-->
+                <StackLayout>
+                    <Label Text="{x:Static resource:AppResources.ScheduleTime}" FontSize="Subtitle"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <!--시작시간 분-->
+
+                        <Label Text="{x:Static resource:AppResources.StartTime}" Grid.Column="0" Grid.Row="0"/>
+
+                        <Grid Grid.Column="0" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame Grid.Column="0"
+                               BorderColor="{Binding SelectedCurrentBackgroundColor}">
+                                <Grid BackgroundColor="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <custom:BorderlessPicker Title="{x:Static resource:AppResources.Hour}"
+                                                             ItemsSource="{Binding StartHours}"
+                                                             SelectedItem="{Binding SelectedStartHour}">
+
+                                    </custom:BorderlessPicker>
+                                    <forms:CachedImage 
+                                        Grid.Column="1"
+                                        Source="{AppThemeBinding Light={StaticResource downArrowLight},Dark={StaticResource downArrowDark}}"
+                                        BackgroundColor="Transparent"
+                                        Aspect="AspectFit"
+                                        Opacity="0.5">
+                                        <forms:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnComboBoxFrameTapped"/>
+                                        </forms:CachedImage.GestureRecognizers>
+                                    </forms:CachedImage>
+                                </Grid>
+                                
+                            </Frame>
+
+                            <Label Text=":" HorizontalOptions="CenterAndExpand" Grid.Column="1"/>
+
+                            <Frame Grid.Column="2"
+                                BorderColor="{Binding SelectedCurrentBackgroundColor}">
+                                <Grid BackgroundColor="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <custom:BorderlessPicker Title="{x:Static resource:AppResources.Minute}"
+                                                             ItemsSource="{Binding StartMinutes}"
+                                                             SelectedItem="{Binding SelectedStartMinute}">
+
+                                    </custom:BorderlessPicker>
+                                    <forms:CachedImage 
+                                        Grid.Column="1"
+                                        Source="{AppThemeBinding Light={StaticResource downArrowLight},Dark={StaticResource downArrowDark}}"
+                                        BackgroundColor="Transparent"
+                                        Aspect="AspectFit"
+                                        Opacity="0.5">
+                                        <forms:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnComboBoxFrameTapped"/>
+                                        </forms:CachedImage.GestureRecognizers>
+                                    </forms:CachedImage>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+
+                        <!--가운데-->
+                        <Label Text="~" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand"/>
+
+
+                        <!--종료시간 분-->
+
+                        <Label Text="{x:Static resource:AppResources.EndTime}" Grid.Column="2" Grid.Row="0"/>
+
+                        <Grid Grid.Column="2" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame Grid.Column="0"
+                               BorderColor="{Binding SelectedCurrentBackgroundColor}">
+                                <Grid BackgroundColor="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <custom:BorderlessPicker Title="{x:Static resource:AppResources.Hour}"
+                                                             ItemsSource="{Binding EndHours}"
+                                                             SelectedItem="{Binding SelectedEndHour}">
+
+                                    </custom:BorderlessPicker>
+                                    <forms:CachedImage 
+                                        Grid.Column="1"
+                                        Source="{AppThemeBinding Light={StaticResource downArrowLight},Dark={StaticResource downArrowDark}}"
+                                        BackgroundColor="Transparent"
+                                        Aspect="AspectFit"
+                                        Opacity="0.5">
+                                        <forms:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnComboBoxFrameTapped"/>
+                                        </forms:CachedImage.GestureRecognizers>
+                                    </forms:CachedImage>
+                                </Grid>
+                                
+                            </Frame>
+
+                            <Label Text=":" HorizontalOptions="CenterAndExpand" Grid.Column="1"/>
+
+                            <Frame Grid.Column="2"
+                               BorderColor="{Binding SelectedCurrentBackgroundColor}">
+                                <Grid BackgroundColor="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <custom:BorderlessPicker Title="{x:Static resource:AppResources.Minute}"
+                                                             ItemsSource="{Binding EndMinutes}"
+                                                             SelectedItem="{Binding SelectedEndMinute}">
+
+                                    </custom:BorderlessPicker>
+                                    <forms:CachedImage 
+                                        Grid.Column="1"
+                                        Source="{AppThemeBinding Light={StaticResource downArrowLight},Dark={StaticResource downArrowDark}}"
+                                        BackgroundColor="Transparent"
+                                        Aspect="AspectFit"
+                                        Opacity="0.5">
+                                        <forms:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnComboBoxFrameTapped"/>
+                                        </forms:CachedImage.GestureRecognizers>
+                                    </forms:CachedImage>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </Grid>
+                </StackLayout>
+
+
+
+
+                <!--버튼-->
+                <Grid VerticalOptions="EndAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0"
+                            x:Name="saveButton"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="#2d8fea"
+                            TextColor="White"
+                            Text="{x:Static resource:AppResources.Save}"
+                            Clicked="OnSaveButtonClicked"/>
+                    <Button Grid.Column="0"
+                            x:Name="updateButton"
+                            IsVisible="false"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="#2d8fea"
+                            TextColor="White"
+                            Text="{x:Static resource:AppResources.Update}"
+                            Clicked="OnUpdateButtonClicked"/>
+                    <Button Grid.Column="1"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="LightGray"
+                            TextColor="White"
+                            Text="{x:Static resource:AppResources.Cancel}"
+                            Clicked="OnCancelButtonClicked"/>
+                    <Button BackgroundColor="#EE5F44"
+                            VerticalOptions="End"
+                            HorizontalOptions="FillAndExpand"
+                            TextColor="White"
+                            IsVisible="false"
+                            Text="{x:Static resource:AppResources.Remove}"
+                            x:Name="removeButton"
+                            Clicked="OnRemoveButtonClicked"
+                            Grid.Row="1" Grid.ColumnSpan="2"/>
+                </Grid>
+                
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

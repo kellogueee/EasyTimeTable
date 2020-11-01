@@ -61,11 +61,56 @@ namespace EasyTimeTable.Resx {
         }
         
         /// <summary>
+        ///   일정추가과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string AddSchedule {
+            get {
+                return ResourceManager.GetString("AddSchedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   타임매니저과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string AppName {
+            get {
+                return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   취소하기과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   설정과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string Configuration {
             get {
                 return ResourceManager.GetString("Configuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   내용과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Contents {
+            get {
+                return ResourceManager.GetString("Contents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   일과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -79,11 +124,47 @@ namespace EasyTimeTable.Resx {
         }
         
         /// <summary>
+        ///   요일과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string DayofWeek {
+            get {
+                return ResourceManager.GetString("DayofWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   편집과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   종료 시간과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string EndTime {
+            get {
+                return ResourceManager.GetString("EndTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   금과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string Friday {
             get {
                 return ResourceManager.GetString("Friday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   홈화면과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
             }
         }
         
@@ -97,11 +178,56 @@ namespace EasyTimeTable.Resx {
         }
         
         /// <summary>
+        ///   내용을 입력하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string InsertContents {
+            get {
+                return ResourceManager.GetString("InsertContents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   제목을 입력하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string InsertTitle {
+            get {
+                return ResourceManager.GetString("InsertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   반복 여부과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Iteration {
+            get {
+                return ResourceManager.GetString("Iteration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   분과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Minute {
+            get {
+                return ResourceManager.GetString("Minute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   월과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string Monday {
             get {
                 return ResourceManager.GetString("Monday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   월과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
             }
         }
         
@@ -115,11 +241,110 @@ namespace EasyTimeTable.Resx {
         }
         
         /// <summary>
+        ///   내용없음과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Nocontent {
+            get {
+                return ResourceManager.GetString("Nocontent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   반복하지 않음과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string NotIterative {
+            get {
+                return ResourceManager.GetString("NotIterative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   제목없음과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Notitle {
+            get {
+                return ResourceManager.GetString("Notitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   확인과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   준비중입니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Prepearing {
+            get {
+                return ResourceManager.GetString("Prepearing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   삭제하기과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   토과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string Saturday {
             get {
                 return ResourceManager.GetString("Saturday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   저장하기과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   저장할 날짜과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string ScheduleDate {
+            get {
+                return ResourceManager.GetString("ScheduleDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   일정 시간과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string ScheduleTime {
+            get {
+                return ResourceManager.GetString("ScheduleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   색깔과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string SelectColor {
+            get {
+                return ResourceManager.GetString("SelectColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   시작 시간과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string StartTime {
+            get {
+                return ResourceManager.GetString("StartTime", resourceCulture);
             }
         }
         
@@ -142,11 +367,29 @@ namespace EasyTimeTable.Resx {
         }
         
         /// <summary>
+        ///   제목과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   화과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string Tuesday {
             get {
                 return ResourceManager.GetString("Tuesday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   수정하기과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
             }
         }
         
@@ -174,6 +417,15 @@ namespace EasyTimeTable.Resx {
         internal static string Weekend {
             get {
                 return ResourceManager.GetString("Weekend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   년도과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
     }

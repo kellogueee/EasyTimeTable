@@ -117,26 +117,101 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddSchedule" xml:space="preserve">
+    <value>Add schedule</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Time Manager</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
+  </data>
+  <data name="Contents" xml:space="preserve">
+    <value>Contents</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Day</value>
   </data>
   <data name="Day" xml:space="preserve">
     <value>Day</value>
   </data>
+  <data name="DayofWeek" xml:space="preserve">
+    <value>Day of week</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End time</value>
+  </data>
   <data name="Friday" xml:space="preserve">
     <value>Fri</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="Hour" xml:space="preserve">
     <value>Hour</value>
   </data>
+  <data name="InsertContents" xml:space="preserve">
+    <value>Insert contents.</value>
+  </data>
+  <data name="InsertTitle" xml:space="preserve">
+    <value>Insert title.</value>
+  </data>
+  <data name="Iteration" xml:space="preserve">
+    <value>Iteration</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>Minute</value>
+  </data>
   <data name="Monday" xml:space="preserve">
     <value>Mon</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
   </data>
   <data name="Night" xml:space="preserve">
     <value>Night</value>
   </data>
+  <data name="Nocontent" xml:space="preserve">
+    <value>No content</value>
+  </data>
+  <data name="NotIterative" xml:space="preserve">
+    <value>No iteration</value>
+  </data>
+  <data name="Notitle" xml:space="preserve">
+    <value>No title</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Prepearing" xml:space="preserve">
+    <value>Coming soon.</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="Saturday" xml:space="preserve">
     <value>Sat</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ScheduleDate" xml:space="preserve">
+    <value>Date to save</value>
+  </data>
+  <data name="ScheduleTime" xml:space="preserve">
+    <value>Schedule time</value>
+  </data>
+  <data name="SelectColor" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start time</value>
   </data>
   <data name="Sunday" xml:space="preserve">
     <value>Sun</value>
@@ -144,8 +219,14 @@
   <data name="Thursday" xml:space="preserve">
     <value>Thu</value>
   </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="Tuesday" xml:space="preserve">
     <value>Tue</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
   </data>
   <data name="Wednesday" xml:space="preserve">
     <value>Wed</value>
@@ -155,5 +236,8 @@
   </data>
   <data name="Weekend" xml:space="preserve">
     <value>Weekend</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
   </data>
 </root>

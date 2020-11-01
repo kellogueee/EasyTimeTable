@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyTimeTable.Resx;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -25,6 +26,8 @@ namespace EasyTimeTable.Views
             ListView = MenuItemsListView;
         }
 
+
+
         class EasyTimetablePageMasterViewModel : INotifyPropertyChanged
         {
             public ObservableCollection<EasyTimetablePageMasterMenuItem> MenuItems { get; set; }
@@ -33,11 +36,9 @@ namespace EasyTimeTable.Views
             {
                 MenuItems = new ObservableCollection<EasyTimetablePageMasterMenuItem>(new[]
                 {
-                    new EasyTimetablePageMasterMenuItem { Id = 0, Title = "Page 1" },
-                    new EasyTimetablePageMasterMenuItem { Id = 1, Title = "Page 2" },
-                    new EasyTimetablePageMasterMenuItem { Id = 2, Title = "Page 3" },
-                    new EasyTimetablePageMasterMenuItem { Id = 3, Title = "Page 4" },
-                    new EasyTimetablePageMasterMenuItem { Id = 4, Title = "Page 5" },
+                    new EasyTimetablePageMasterMenuItem { Id = 0, Title = AppResources.Home,TargetType=typeof(EasyTimetableMainPage) },
+                    new EasyTimetablePageMasterMenuItem { Id = 1, Title = AppResources.AddSchedule,TargetType=typeof(AddShcedulePage) },
+                    new EasyTimetablePageMasterMenuItem { Id = 2, Title = AppResources.Configuration,TargetType=typeof(ConfigurationPage) }
                 });
             }
 

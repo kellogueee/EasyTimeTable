@@ -30,7 +30,6 @@
     <EmbeddedResource Include="Assets\Image\AddIcon.png" />
     <EmbeddedResource Include="Assets\Image\AddIcon128.png" />
     <EmbeddedResource Include="Assets\Image\AddIcon64.png" />
-    <EmbeddedResource Include="Assets\Image\AddIcon96.png" />
     <EmbeddedResource Include="Assets\Image\moon.png" />
     <EmbeddedResource Include="Assets\Image\moon128.png" />
     <EmbeddedResource Include="Assets\Image\moon64.png" />
@@ -48,12 +47,21 @@
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1560" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="AddTimetableSchedulePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Model\AddScheduleModel.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Model\AddScheduleModelDetail.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Model\AddScheduleModelMaster.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Temp\ConfigurationPage.xaml">
@@ -93,16 +101,22 @@
     <EmbeddedResource Update="TestPage\MainPageTest.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DayAndWeekdayTimetable.xaml">
+    <EmbeddedResource Update="Views\AddShcedulePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ConfigurationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\EasyTimetableMainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\EasyTimetablePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EasyTimetablePageDetail.xaml">
+    <EmbeddedResource Update="Views\EasyTimetablePageMaster.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EasyTimetablePageMaster.xaml">
+    <EmbeddedResource Update="Views\EditColorPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FirstInformationCarouselPage.xaml">
@@ -119,11 +133,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\Flags\" />
-    <Folder Include="Constants\" />
+    <Compile Update="Views\EasyTimetableMainPage.xaml.cs">
+      <DependentUpon>EasyTimetableMainPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
